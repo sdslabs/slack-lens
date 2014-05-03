@@ -1,35 +1,33 @@
-=begin
+# this script helps to index a message
 
---parameters
-user
-timestamp
-message
-channel
-
-=end
+require 'json'
 
 require_relative 'client.rb'
+require_relative '../config/configer.rb'
 
-# Helps to index a message
 class Index
-	# initialize Index class and set class var as message
-	def initialize(msg)
+	# set class var :message as argument
+ 	def initialize(msg)
 		@message = msg
 	end
 
 	# index a message object
 	def index()
 		# ES client
-		client = Client.new
+		es = ES.new
+		client = es.client()
 
-		client.index index: 'testing',
-					 type: 'message',
-					 id: 1,
-					 body: {
-					 	user: 'nemo',
-					 	message: 'we won CCTC \m/',
-					 	channel: 'general',
-					 	timestamp: 123212324
-					 }
+		client.index 	index: 'testing',
+			     				type: 'message',
+			     				id: 3,
+			     				body: {
+				   					user: @message['user'],
+				 						message: @message['message'],
+				 						channel: @message['channel'],
+				 						timestamp: @message['timestamp']
+			     				}
 	end
 end
+
+# take message as a JSON object and index it
+Index.new(JSON.parse('{"user":"sm", "message":"solani", "channel":"general", "timestamp": "3454534"}')).index()

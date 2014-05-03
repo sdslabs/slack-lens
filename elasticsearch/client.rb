@@ -1,10 +1,14 @@
 require 'elasticsearch'
 
-# ElaticSearch client instance
-class Client
+class ES
 	def initialize
 		# Connect to localhost:9200 by default:
-		client = Elasticsearch::Client.new log: true
-		return client
+		@es = Elasticsearch::Client.new log: true
+	end
+	
+	# ElasticSearch instance
+	def client
+		return @es
 	end
 end
+
