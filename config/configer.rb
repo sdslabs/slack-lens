@@ -3,12 +3,12 @@
 require 'yaml'
 
 # config file
-config_file = YAML.load_file('../config/config.yaml')
+$config_file = YAML.load_file('../config/config.yaml')
 
 class Configer
 	# yaml config file object
-	def initialize(file)
-		@config = file
+	def initialize()
+		@config = $config_file
 	end
 
 	# returns value for keyword
@@ -25,6 +25,3 @@ class Configer
 		return 'no value for #{key}'
 	end
 end
-
-cfg = Configer.new(config_file)
-puts cfg.value('inde')

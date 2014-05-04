@@ -9,6 +9,7 @@ class Index
 	# set class var :message as argument
  	def initialize(msg)
 		@message = msg
+		@config = Configer.new()
 	end
 
 	# index a message object
@@ -17,9 +18,8 @@ class Index
 		es = ES.new
 		client = es.client()
 
-		client.index 	index: 'testing',
-			     				type: 'message',
-			     				id: 3,
+		client.index 	index: @config.value('index'),
+			     				type: @config.value('type'),
 			     				body: {
 				   					user: @message['user'],
 				 						message: @message['message'],
@@ -29,5 +29,4 @@ class Index
 	end
 end
 
-# take message as a JSON object and index it
-Index.new(JSON.parse('{"user":"sm", "message":"solani", "channel":"general", "timestamp": "3454534"}')).index()
+Index.new(JSON.parse('{"user":"aps", "message":"whatever", "channel":"muzi", "timestamp": "564621"}')).index()

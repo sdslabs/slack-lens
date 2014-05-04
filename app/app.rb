@@ -1,20 +1,37 @@
 require 'sinatra'
+require 'haml'
 
-# basic home page routing
+# Home Page
 get '/' do
-	"slack-lens : SDSLabs"
+	haml :index
 end
 
-# initial search routing
-get '/search/:keyword/:query' do
-	keyword = params[:keyword]
-	query = params[:query]
+# Channel Archieve
+get '/channel/:channel' do
+	"channel data of #{params[:channel]}"
+end
 
-	# right now basic for message only
-	if keyword == 'message'
-		"message"
-	# if keyword does not match
-	else
-		"no keyword match"
-	end
+# User Archieve
+get '/user/:user' do
+	"user data for #{params[:user]}"
+end
+
+# Route for single message
+get '/message/:msg_id' do
+	"message with link"
+end
+
+# Total Stats for slack
+get '/stats' do
+	"total stats"
+end
+
+# Stats for a channel
+get '/stats/channel/:channel' do
+	"stats for channel #{params[:channel]}"
+end
+
+# Stats for a user
+get '/stats/user/:user' do
+	"stats for user #{params[:user]}"
 end
