@@ -1,0 +1,18 @@
+#
+# - channel: <channel>
+#   creator:
+#     name: <username>
+#     uid: <uid>
+#
+
+-
+  channel: general
+  creator:
+    name: sm
+    uid: U1
+
+-
+  channel: muzi
+  creator:
+    name: nemo
+    uid: U2

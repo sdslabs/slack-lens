@@ -7,7 +7,7 @@ $config_file = YAML.load_file('../config/config.yaml')
 
 class Configer
 	# yaml config file object
-	def initialize()
+	def initialize
 		@config = $config_file
 	end
 
@@ -22,6 +22,6 @@ class Configer
 
 	# when key is not there
 	def error(key)
-		return 'no value for #{key}'
+		return nil
 	end
 end

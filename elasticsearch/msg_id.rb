@@ -1,6 +1,6 @@
 # this script assigns/returns 'id' for a message according to 'channel'
 # uses total message count for that channel
-# then each message is tracked by :channel+msgid
+# then each message is tracked by #{channel + msgid}
 
 require 'rest-client'
 require 'json'
@@ -19,12 +19,12 @@ class MsgID
 	def assign
 		# if index already exists for channel
 		begin
-			response = RestClient.get "#{@config.value('url')}/#{@channel}/#{@config.value('type')}/_count"
+			response = RestClient.get "#{@config.value('url')}/#{@channel}/Message/_count"
 			total = JSON.parse(response)['count']
 	    id = total+1
 	    return id
 
-	  # index doesn't exists, creates new
+	  # index doesn't exists for channel
 		rescue
 			RestClient.put "#{@config.value('url')}/#{@channel}", :UserAgent => "slack-lens"
 			return 1

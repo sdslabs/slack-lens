@@ -32,4 +32,4 @@ class Index
 	end
 end
 
-Index.new(JSON.parse('{"user":"ravi", "message":"go kill yourself", "channel":"general", "timestamp": 564621}')).index()
+Index.new(JSON.parse('{"user":"ankita", "message":"I am chudail", "channel":"genaral", "timestamp": 455415}')).index()

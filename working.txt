@@ -1,0 +1,8 @@
+# initially user needs to be authenticated with slack [think on duplicate teams]# on authentication app will redirect to '/', there team's data will be visible.
+# for example : public channels, users under team and there will be a search box
+# we will serve this team data on our own. for this, inside project directory
+# BECAUSE WE WANT TO HAVE DATA FOR A 'CHANNEL/USER' AFTER 'DELETING/REMOVING' ALSO
+# 'slack-data/channels.yaml' will have basic info about all channels
+# USERS.YAML SEEMS TO HELP EXTRA AS SLACK SHOWS USERNAMES IN A DIFFERENT WAY : U.ID
+# 'slack-data/users.yaml' will have basic info about all users
+# we will update them on any diff in info by 'slack-data/*' and info by slack.

@@ -1,14 +1,33 @@
 require 'sinatra'
 require 'haml'
+require 'json'
+require 'rest-client'
+require_relative '../config/configer.rb'
+
+
+def data(channel)
+  begin
+    response = RestClient.get "#{Configer.new().value('url')}/#{channel}/Message/_search"
+    messages = JSON.parse(response)['hits']['hits']
+    return messages[1]['_source']['user']
+  rescue
+    return 'None'
+  end
+end
 
 # Home Page
+# RIGHT NOW : USING DIRECTLY THIS (without authentication route)
 get '/' do
 	haml :index
 end
 
 # Channel Archieve
 get '/channel/:channel' do
-	"channel data of #{params[:channel]}"
+  haml :channel,
+  :locals => {
+    :title => params[:channel],
+    :data => data(params[:channel])
+  }
 end
 
 # User Archieve
@@ -34,4 +53,9 @@ end
 # Stats for a user
 get '/stats/user/:user' do
 	"stats for user #{params[:user]}"
+end
+
+# 404
+not_found do
+  'nothing here, baby!!'
 end
