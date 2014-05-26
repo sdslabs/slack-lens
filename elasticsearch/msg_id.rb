@@ -5,6 +5,7 @@
 require 'rest-client'
 require 'json'
 require_relative '../config/configer.rb'
+require_relative '../slack-data/slackdata.rb'
 
 
 class MsgID
@@ -13,6 +14,7 @@ class MsgID
 	def initialize(channel)
 		@channel = channel
 		@config = Configer.new()
+		@slackdata = SlackData.new() 
 	end
 
 	# assigns id, using total message count
@@ -21,11 +23,12 @@ class MsgID
 		begin
 			response = RestClient.get "#{@config.value('url')}/#{@channel}/Message/_count"
 			total = JSON.parse(response)['count']
-	    id = total+1
-	    return id
+	                id = total+1
+	                return id
 
-	  # index doesn't exists for channel
+	        # index doesn't exists for channel
 		rescue
+                        @slackdata.add_channel({:name => @channel})
 			RestClient.put "#{@config.value('url')}/#{@channel}", :UserAgent => "slack-lens"
 			return 1
 		end

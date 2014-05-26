@@ -23,16 +23,16 @@ class SlackData
     @channel_data = YAML.load_file(@channel_file)
   end
 
-  # argument => user : json object
+  # argument => user : hash object
   def add_user(arg)
-    user = {"user"=>{"id"=>arg["id"], "name"=>arg["name"]}}
+    user = {"user"=>{"id" => arg[:id], "name" => arg[:name]}}
     user_data = @user_data.push(user)
     File.open(@user_file, 'w'){ |f| f.write user_data.to_yaml }
   end
 
-  # argument => channel : json object
+  # argument => channel : hash object
   def add_channel(arg)
-    channel = {"channel"=>arg["channel"], "creator"=>{"name"=>arg["name"], "uid"=>arg["id"]}}
+    channel = {"channel" => arg[:name]}
     channel_data = @channel_data.push(channel)
     File.open(@channel_file, 'w'){ |f| f.write channel_data.to_yaml }
   end

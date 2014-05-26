@@ -40,6 +40,10 @@ get '/message/:msg_id' do
 	"message with link"
 end
 
+=begin
+will consider these routes later
+
+
 # Total Stats for slack
 get '/stats' do
 	"total stats"
@@ -54,6 +58,8 @@ end
 get '/stats/user/:user' do
 	"stats for user #{params[:user]}"
 end
+
+=end
 
 # 404
 not_found do
