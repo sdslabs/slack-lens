@@ -6,3 +6,5 @@
 # USERS.YAML SEEMS TO HELP EXTRA AS SLACK SHOWS USERNAMES IN A DIFFERENT WAY : U.ID
 # 'slack-data/users.yaml' will have basic info about all users
 # we will update them on any diff in info by 'slack-data/*' and info by slack.
+
+# `hubot-script/` will contain hubot scripts to listen in slack and to power slack-lens API that will help user to use it, right there in slack

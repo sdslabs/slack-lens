@@ -4,40 +4,41 @@ require 'json'
 require 'rest-client'
 require_relative '../config/configer.rb'
 
-
-def data(channel)
-  begin
-    response = RestClient.get "#{Configer.new().value('url')}/#{channel}/Message/_search"
-    messages = JSON.parse(response)['hits']['hits']
-    return messages[1]['_source']['user']
-  rescue
-    return 'None'
-  end
-end
-
 # Home Page
 # RIGHT NOW : USING DIRECTLY THIS (without authentication route)
 get '/' do
-	haml :index
+  haml :index,
+  :locals => {
+    :value => '',
+    :view => 'Index'
+  }
 end
 
 # Channel Archieve
 get '/channel/:channel' do
   haml :channel,
   :locals => {
-    :title => params[:channel],
-    :data => data(params[:channel])
+    :value => params[:channel],
+    :view => 'Channel'
   }
 end
 
 # User Archieve
 get '/user/:user' do
-	"user data for #{params[:user]}"
+  haml :user,
+  :locals => {
+    :value => params[:user],
+    :view => 'User'
+  }
 end
 
 # Route for single message
 get '/message/:msg_id' do
-	"message with link"
+  haml :message,
+  :locals => {
+    :value => params[:msg_id],
+    :view => 'Message'
+  }
 end
 
 =begin
