@@ -3,3 +3,4 @@ Gemfile.lock
 docs.txt
 slack-data/channels.yaml
 slack-data/users.yaml
+bower_components

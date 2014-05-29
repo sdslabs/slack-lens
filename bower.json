@@ -1,0 +1,28 @@
+{
+  "name": "Slack-lens",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sdslabs/slack-lens",
+  "authors": [
+    "Pravendra Singh <hackpravj@gmail.com>"
+  ],
+  "description": "A search backend application for Slack allowing you to break 10K free search limit",
+  "dependencies": {
+    "bootstrap-sass-official": "~3.1.1"
+  },
+  "keywords": [
+    "slack",
+    "chat",
+    "elasticsearch",
+    "mongodb",
+    "sinatra"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
