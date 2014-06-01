@@ -2,16 +2,38 @@ require 'sinatra'
 require 'haml'
 require 'json'
 require 'rest-client'
-require_relative '../config/configer.rb'
 
-# Home Page
-# RIGHT NOW : USING DIRECTLY THIS (without authentication route)
+require_relative '../config/configer.rb'
+require_relative 'helpers/permission.rb'
+require_relative 'helpers/authenticator.rb'
+
+enable :sessions
+# ask for user permission
 get '/' do
-  haml :index,
-  :locals => {
-    :value => '',
-    :view => 'Index'
-  }
+  # generates the oauth access token
+  if params[:code] and params[:state] and !session[:oauth_access_token]
+    authenticator = Authenticator.new()
+    address = authenticator.address(params[:code], params[:state])
+    
+    if authenticator.token(address)
+      session[:oauth_access_token] = authenticator.token(address)
+      redirect to('/')
+    else
+      'things wrong'
+    end
+    
+  else
+    if session[:oauth_access_token]
+      # things to do when user is logged in
+      # I think instead of redirecting to home, render things that you have for '/home'
+      redirect to('/channel/muzi')
+
+    # ask user to grant permissions
+    else
+      permission = Permission.new()
+      redirect to(permission.address())
+    end
+  end
 end
 
 # Channel Archieve

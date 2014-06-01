@@ -6,7 +6,15 @@
     - else
       %title="Slack-lens"
 
-    %meta{:name => 'author', :content => 'SDSLabs'}
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
+    %meta{:name => 'author', :content => 'Team SDSLabs'}
     %meta{:name => 'description', :content => 'A search backend application for Slack allowing you to break 10K free search limit'}
+
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/compiled/bootstrap.css'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/sass/style.css'}
   %body
+
+    %div{:class => 'header'}
+      %div{:class => 'header-slacklens'}
+        %h2="Slack-lens"
     = yield
