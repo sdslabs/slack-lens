@@ -6,6 +6,7 @@ require 'rest-client'
 require_relative '../config/configer.rb'
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
+require_relative 'helpers/indexer.rb'
 
 
 enable :sessions
@@ -83,6 +84,12 @@ get '/message/:msg_id' do
     :value => params[:msg_id],
     :view => 'Message'
   }
+end
+
+# index a message object coming from Slack
+post '/index' do
+  indexer = Indexer.new()
+  indexer.index(params)
 end
 
 =begin

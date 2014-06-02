@@ -1,0 +1,14 @@
+%div{:class => 'container-fluid'}
+  %div{:class => 'row home-nav'}
+    %div{:class => 'home-channels col-md-4'}
+      %h3
+        %a{:href => '/channels'}Channels
+    %div{:class => 'home-members col-md-4 col-md-offset-4'}
+      %h3
+        %a{:href => '/users'}Members
+    
+  %div{:class => 'row home-search'}
+    %form{:role => 'form', :class => 'col-md-4 col-md-offset-4 search-form'}
+      %div{:class => 'form-group'}
+        %input{:type => 'text', :class => 'form-control input-lg', :placeholder => ' Enter a search keyword'}
+        %button{:type => 'submit', :class => 'btn btn-info btn-lg btn-block'}Search your Slack-lens

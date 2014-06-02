@@ -32,3 +32,21 @@
   margin-top: 40%;
 }
 
+
+/* --- home --- */
+.search-form input {
+  margin-bottom: 5px;
+}
+
+.home-search, .home-nav {
+  margin-top: 5%
+}
+
+.home-channels, .home-members {
+  text-align: center;
+}
+
+.home-channels a, .home-members a {
+  text-decoration: none;
+}
+
