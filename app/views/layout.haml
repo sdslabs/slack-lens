@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    - if locals[:view] != 'Index'
+    - if locals[:view] != nil
       %title="#{locals[:view]} · #{locals[:value]}" 
     - else
       %title="Slack-lens"

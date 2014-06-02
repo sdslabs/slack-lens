@@ -7,9 +7,11 @@ require_relative '../config/configer.rb'
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
 
+
 enable :sessions
+
 # ask for user permission
-get '/' do
+get '/login' do
   # generates the oauth access token
   if params[:code] and params[:state] and !session[:oauth_access_token]
     authenticator = Authenticator.new()
@@ -17,16 +19,14 @@ get '/' do
     
     if authenticator.token(address)
       session[:oauth_access_token] = authenticator.token(address)
-      redirect to('/')
+      redirect to('/home')
     else
       'things wrong'
     end
     
   else
     if session[:oauth_access_token]
-      # things to do when user is logged in
-      # I think instead of redirecting to home, render things that you have for '/home'
-      redirect to('/channel/muzi')
+      redirect to('/home')
 
     # ask user to grant permissions
     else
@@ -34,6 +34,28 @@ get '/' do
       redirect to(permission.address())
     end
   end
+end
+
+# view that asks for login, if not logged in
+get '/' do
+  if !session[:oauth_access_token]
+    haml :login,
+    :locals => {
+      :value => nil,
+      :view => 'Login'
+    }
+  else
+    redirect to('/home')
+  end
+end
+
+# home page for application
+get '/home' do
+  haml :home,
+  :locals => {
+    :value => nil,
+    :view => 'Home'
+  }
 end
 
 # Channel Archieve
