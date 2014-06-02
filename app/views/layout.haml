@@ -1,5 +1,5 @@
 !!!
-%html
+%html{:lang => 'en'}
   %head
     - if locals[:view] != nil
       %title="#{locals[:view]} · #{locals[:value]}" 
@@ -10,8 +10,8 @@
     %meta{:name => 'author', :content => 'Team SDSLabs'}
     %meta{:name => 'description', :content => 'A search backend application for Slack allowing you to break 10K free search limit'}
 
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/compiled/bootstrap.css'}
-    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/sass/style.css'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/bootstrap.css'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/style.css'}
   %body
 
     %div{:class => 'header'}

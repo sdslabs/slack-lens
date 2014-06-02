@@ -1,0 +1,35 @@
+/* --- parent --- */
+.html, body {
+  height: 100%;
+}
+
+
+/* --- header --- */
+.header {
+  background-color: #f7f7f7;
+  width: 100%;
+  height: 10%;
+  overflow: hidden;
+  box-shadow: 0 5px 5px -5px #333; 
+}
+
+.header-slacklens {
+  color: darkgray;
+  float: left;
+  font-family: arial;
+  font-style: bold;
+  margin-left: 5%;
+  width: 100%; 
+}
+
+
+/* --- login --- */
+.login-message {
+  text-align: center;
+}
+
+.login-form {
+  margin-top: 40%;
+  height: 100px;
+}
+

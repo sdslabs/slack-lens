@@ -41,7 +41,7 @@ get '/' do
   if !session[:oauth_access_token]
     haml :login,
     :locals => {
-      :value => nil,
+      :value => 'Slack-lens',
       :view => 'Login'
     }
   else
@@ -53,7 +53,7 @@ end
 get '/home' do
   haml :home,
   :locals => {
-    :value => nil,
+    :value => 'Slack-lens',
     :view => 'Home'
   }
 end
@@ -108,5 +108,9 @@ end
 
 # 404
 not_found do
-  'nothing here, baby!!'
+  haml :error,
+  :locals => {
+    :value => 'Slack-lens',
+    :view => 'Error'
+  }
 end
