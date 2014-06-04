@@ -22,11 +22,11 @@
 module.exports = (robot) ->
   robot.hear /.*/, (msg) ->
       
-      http = require 'http'
+    http = require 'http'
 
     if process.env.HUBOT_SLACKLENS_URL? and process.env.HUBOT_SLACKLENS_TOKEN?
 
-      slacklens_url = process.env.HUBOT_SLACKLENS_URL
+      slacklens_url = process.env.HUBOT_SLACKLENS_URL.match(/https?:\/\/(.*)/)[1]
       slacklens_token = process.env.HUBOT_SLACKLENS_TOKEN
 
       # chat message from your slack channels
@@ -56,8 +56,8 @@ module.exports = (robot) ->
         "Content-Length": chatdata.length
 
       options =
-        host: "pravj.ngrok.com"
-        path: "/"
+        host: slacklens_url
+        path: "/index"
         method: "POST"
         headers: headers
 

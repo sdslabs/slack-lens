@@ -9,12 +9,22 @@ require_relative 'helpers/authenticator.rb'
 require_relative 'helpers/indexer.rb'
 
 
+helpers do
+  def loggedin
+    if session[:oauth_access_token]
+      return true
+    else
+      return false
+    end
+  end
+end
+
 enable :sessions
 
 # ask for user permission
 get '/login' do
   # generates the oauth access token
-  if params[:code] and params[:state] and !session[:oauth_access_token]
+  if params[:code] and params[:state] and !loggedin()
     authenticator = Authenticator.new()
     address = authenticator.address(params[:code], params[:state])
     
@@ -26,7 +36,7 @@ get '/login' do
     end
     
   else
-    if session[:oauth_access_token]
+    if loggedin()
       redirect to('/home')
 
     # ask user to grant permissions
@@ -39,7 +49,7 @@ end
 
 # view that asks for login, if not logged in
 get '/' do
-  if !session[:oauth_access_token]
+  if !loggedin()
     haml :login,
     :locals => {
       :value => 'Slack-lens',
@@ -88,9 +98,15 @@ end
 
 # index a message object coming from Slack
 post '/index' do
-  indexer = Indexer.new()
-  indexer.index(params)
+  #indexer = Indexer.new()
+  #indexer.index(params)
+  [200, 'OK']
 end
+
+get '/index' do
+  haml :home
+end
+
 
 =begin
 will consider these routes later
