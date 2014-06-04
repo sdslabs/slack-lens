@@ -97,10 +97,10 @@ get '/message/:msg_id' do
 end
 
 # index a message object coming from Slack
-post '/index' do
+post '/hubot/slack-webhook' do
   #indexer = Indexer.new()
   #indexer.index(params)
-  [200, 'OK']
+  [200,'OK']
 end
 
 get '/index' do
