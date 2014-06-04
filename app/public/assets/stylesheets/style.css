@@ -22,6 +22,10 @@
   width: 100%; 
 }
 
+.header-slacklens a {
+  text-decoration: none;
+}
+
 
 /* --- login --- */
 .login-message {
