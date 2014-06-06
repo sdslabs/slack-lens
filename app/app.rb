@@ -4,14 +4,16 @@ require 'json'
 require 'rest-client'
 
 require_relative '../config/configer.rb'
+require_relative '../elasticsearch/index.rb'
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
 require_relative 'helpers/indexer.rb'
+require_relative 'helpers/userdata.rb'
 
 
 helpers do
   def loggedin
-    if session[:oauth_access_token]
+    if session[:user]
       return true
     else
       return false
@@ -29,7 +31,10 @@ get '/login' do
     address = authenticator.address(params[:code], params[:state])
     
     if authenticator.token(address)
-      session[:oauth_access_token] = authenticator.token(address)
+      token = authenticator.token(address)
+      ud = Userdata.new(token)
+      session[:user] = ud.data()[0]
+      session[:uid] = ud.data()[1]
       redirect to('/home')
     else
       'things wrong'
