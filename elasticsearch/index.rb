@@ -10,8 +10,9 @@ require_relative '../config/configer.rb'
 
 class Index
   # set class var :message as argument
-  def initialize(msg)
-    @message = msg
+  def initialize(json_str)
+    @json = (JSON.parse(json_str))
+    @message = @json['chatdata']
     @config = Configer.new()
   end
 

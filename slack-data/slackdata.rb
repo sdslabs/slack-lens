@@ -11,10 +11,10 @@ class SlackData
 
   def initialize
     # user data file's path
-    @user_file = './users.yaml'
+    @user_file = '../slack-data/users.yaml'
 
     # channel data file's path
-    @channel_file = './channel.yaml'
+    @channel_file = '../slack-data/channels.yaml'
 
     # yaml data object in users file
     @user_data = YAML.load_file(@user_file)
@@ -23,16 +23,16 @@ class SlackData
     @channel_data = YAML.load_file(@channel_file)
   end
 
-  # argument => user : hash object
+  # argument => user : array object
   def add_user(arg)
-    user = {"user"=>{"id" => arg[:id], "name" => arg[:name]}}
+    user = {"user" => {"id" => arg[0], "name" => arg[1]}}
     user_data = @user_data.push(user)
     File.open(@user_file, 'w'){ |f| f.write user_data.to_yaml }
   end
 
-  # argument => channel : hash object
+  # argument => channel : array object
   def add_channel(arg)
-    channel = {"channel" => arg[:name]}
+    channel = {"channel" => arg[0]}
     channel_data = @channel_data.push(channel)
     File.open(@channel_file, 'w'){ |f| f.write channel_data.to_yaml }
   end

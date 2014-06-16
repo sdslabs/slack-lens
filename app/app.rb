@@ -2,12 +2,13 @@ require 'sinatra'
 require 'haml'
 require 'json'
 require 'rest-client'
+require 'rack'
 
 require_relative '../config/configer.rb'
 require_relative '../elasticsearch/index.rb'
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
-require_relative 'helpers/indexer.rb'
+#require_relative 'helpers/indexer.rb'
 require_relative 'helpers/userdata.rb'
 
 
@@ -18,6 +19,10 @@ helpers do
     else
       return false
     end
+  end
+
+  def p(params)
+     Rack::Utils.parse_nested_query(params)
   end
 end
 
@@ -102,16 +107,23 @@ get '/message/:msg_id' do
 end
 
 # index a message object coming from Slack
+=begin
 post '/hubot/slack-webhook' do
   #indexer = Indexer.new()
   #indexer.index(params)
   [200,'OK']
 end
+=end
 
 get '/index' do
   haml :home
 end
 
+post '/index' do
+  indexer = Index.new(request.body.read)
+  indexer.index()
+  [200, 'donewithshit']
+end
 
 =begin
 will consider these routes later

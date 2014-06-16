@@ -29,7 +29,7 @@ class MsgID
 
     # index doesn't exists for channel
     rescue
-      @slackdata.add_channel({:name => @channel})
+      @slackdata.add_channel([@channel])
       RestClient.put "#{@config.value('url')}/#{@channel}", :UserAgent => "slack-lens"
       return 1
     end
