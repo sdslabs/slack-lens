@@ -6,6 +6,7 @@
 
 require 'rest-client'
 require 'json'
+
 require_relative '../config/configer.rb'
 require_relative '../slack-data/slackdata.rb'
 
@@ -30,7 +31,7 @@ class MsgID
     # index doesn't exists for channel
     rescue
       @slackdata.add_channel([@channel])
-      RestClient.put "#{@config.value('url')}/#{@channel}", :UserAgent => "slack-lens"
+      RestClient.put "#{@config.value('url')}/#{@channel}", "", {:'User-Agent' => 'Slack-lens'}
       return 1
     end
   end

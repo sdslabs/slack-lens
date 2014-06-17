@@ -6,9 +6,9 @@ require 'rack'
 
 require_relative '../config/configer.rb'
 require_relative '../elasticsearch/index.rb'
+
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
-#require_relative 'helpers/indexer.rb'
 require_relative 'helpers/userdata.rb'
 
 
@@ -19,10 +19,6 @@ helpers do
     else
       return false
     end
-  end
-
-  def p(params)
-     Rack::Utils.parse_nested_query(params)
   end
 end
 
@@ -122,7 +118,6 @@ end
 post '/index' do
   indexer = Index.new(request.body.read)
   indexer.index()
-  [200, 'donewithshit']
 end
 
 =begin
