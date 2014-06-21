@@ -55,7 +55,6 @@ class SlackData
   def change_username(uid, name)
     i, j  = 0, nil
 
-    puts "initially length #{@user_data.length}"
     @user_data.each do |user|
       if user['user']['id'] == uid
 	# remove this object
@@ -63,17 +62,10 @@ class SlackData
       end
       i = i + 1
     end
-    puts "-----------------removing index #{j}-------------------------"
-    puts "length at time of removing #{@user_data.length}"
     remove_user(j)
 
-    puts "length after removing #{@user_data.length}"
-
-    puts "-----------------------------adding -------------------"
     # add again with updated username
     add_user([uid, name])
-    puts name
-    puts "length after adding #{@user_data.length}"
   end
 
   # argument => user : array object
