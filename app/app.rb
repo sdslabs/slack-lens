@@ -10,6 +10,7 @@ require_relative '../elasticsearch/index.rb'
 require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
 require_relative 'helpers/userdata.rb'
+require_relative 'helpers/manage_user.rb'
 
 
 helpers do
@@ -34,8 +35,14 @@ get '/login' do
     if authenticator.token(address)
       token = authenticator.token(address)
       ud = Userdata.new(token)
+
+      # manage users list in Slackdata
+      mu = ManageUser.new(ud.data()[0], ud.data()[1])
+      mu.manage()
+
       session[:user] = ud.data()[0]
       session[:uid] = ud.data()[1]
+
       redirect to('/home')
     else
       'things wrong'
@@ -72,6 +79,24 @@ get '/home' do
   :locals => {
     :value => 'Slack-lens',
     :view => 'Home'
+  }
+end
+
+# Channel list
+get '/channels' do
+  haml :channels,
+  :locals => {
+    :value => 'Slack-lens',
+    :view => 'Channels'
+  }
+end
+
+# Users list
+get '/users' do
+  haml :users,
+  :locals => {
+    :value => 'Slack-lens',
+    :view => 'Users'
   }
 end
 
