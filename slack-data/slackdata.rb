@@ -82,4 +82,22 @@ class SlackData
     File.open(@channel_file, 'w'){ |f| f.write channel_data.to_yaml }
   end
 
+  # returns array of all channels
+  def channels
+    result = []
+    @channel_data.each do |channel|
+      result.push(channel['channel'])
+    end
+    result
+  end
+
+  # returns array of all users
+  def users
+    result = []
+    @user_data.each do |user|
+      result.push(user['user']['name'])
+    end
+    result
+  end
+
 end

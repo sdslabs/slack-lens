@@ -11,6 +11,8 @@ require_relative 'helpers/permission.rb'
 require_relative 'helpers/authenticator.rb'
 require_relative 'helpers/userdata.rb'
 require_relative 'helpers/manage_user.rb'
+require_relative 'helpers/channels.rb'
+require_relative 'helpers/users.rb'
 
 
 helpers do
@@ -62,6 +64,8 @@ end
 
 # view that asks for login, if not logged in
 get '/' do
+# leaving login for now : so that I can work without a tunnel
+=begin
   if !loggedin()
     haml :login,
     :locals => {
@@ -71,6 +75,8 @@ get '/' do
   else
     redirect to('/home')
   end
+=end
+  redirect to('/home')
 end
 
 # home page for application
@@ -84,19 +90,25 @@ end
 
 # Channel list
 get '/channels' do
+  channels = Channels.new()
   haml :channels,
   :locals => {
     :value => 'Slack-lens',
-    :view => 'Channels'
+    :view => 'Channels',
+    :team => channels.team(),
+    :channels => channels.list()
   }
 end
 
 # Users list
 get '/users' do
+  users = Users.new()
   haml :users,
   :locals => {
     :value => 'Slack-lens',
-    :view => 'Users'
+    :view => 'Users',
+    :team => users.team(),
+    :users => users.list()
   }
 end
 
