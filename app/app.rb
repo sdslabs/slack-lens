@@ -26,6 +26,7 @@ helpers do
 end
 
 enable :sessions
+set :session_secret, 'secret'
 
 # ask for user permission
 get '/login' do
