@@ -1,27 +1,20 @@
-# Configer, Helps to supply config variables across the project
+#
+# Configer module Helps to supply config variables across the project
+#
 
 require 'yaml'
 
-# config file
-$config_file = YAML.load_file('../config/config.yaml')
+module Slacklens
+  module Configer
 
-class Configer
-	# yaml config file object
-	def initialize
-		@config = $config_file
-	end
+    extend self
 
-	# returns value for keyword
-	def value(key)
-		if @config[key] == nil
-			error(key)
-		else
-			return @config[key]
-		end
-	end
+    # array object of yaml config file data
+    Config_file = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yaml'))
 
-	# when key is not there
-	def error(key)
-		return nil
-	end
+    # return value of a key in yaml file data
+    def value(key)
+      Config_file[key] != nil ? Config_file[key] : nil
+    end
+  end
 end

@@ -11,6 +11,10 @@ require 'slack-lens/models'
 require 'slack-lens/helpers'
 require 'slack-lens/routes'
 
+require 'config/configer'
+
+require 'slack-data/slackdatanew'
+
 module Slacklens
   class App < Sinatra::Base
 
@@ -21,7 +25,7 @@ module Slacklens
     set :session_secret, 'a public secret will be an ENV var in production'
 
     get '/sdslabs' do
-      'YAY!!'
+      'yay'
     end
 
     # start server, if this ruby file executed directly
