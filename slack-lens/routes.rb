@@ -1,6 +1,13 @@
 module Slacklens
   module Routes
-    #require 'app/routes/base'
-    #require 'app/routes/index'
+    require 'slack-lens/routes/base'
+
+    require 'slack-lens/routes/login'
+    require 'slack-lens/routes/home'
+
+    require 'slack-lens/routes/channels'
+    require 'slack-lens/routes/users'
+
+    require 'slack-lens/routes/messages'
   end
 end
