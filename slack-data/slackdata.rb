@@ -42,9 +42,9 @@ module Slacklens
 	if user['user']['id'] == uid
 	  return true
 	end
-
-	return false
       end
+
+      return false
     end
 
     # remove user object

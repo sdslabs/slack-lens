@@ -7,7 +7,7 @@
 module Slacklens
   module Helpers
 
-    class CommonData
+    class Commondata
       def self.team
 	Slacklens::Slackdata.value('team')
       end

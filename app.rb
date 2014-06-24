@@ -23,15 +23,12 @@ module Slacklens
     enable :sessions
     set :session_secret, 'a public secret that will be ENV var in production'
 
-    get '/sdslabs' do
-      'yay'
-    end
-
     # start server, if this ruby file executed directly
     run! if app_file == $0
 
     use Slacklens::Routes::Base
     use Slacklens::Routes::Login
+    use Slacklens::Routes::Index
     use Slacklens::Routes::Home
     use Slacklens::Routes::Channels
     use Slacklens::Routes::Users

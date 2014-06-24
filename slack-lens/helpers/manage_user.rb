@@ -9,9 +9,10 @@ module Slacklens
   module Helpers
 
     class ManageUser
-      def self.manage(name, id)
-
-	slackdata = Slacklens::Slackdata
+      def self.manage(data)
+        slackdata = Slacklens::Slackdata
+	name = data[0]
+	id = data[1]
 
         if slackdata.have_userid(id)
           # change username

@@ -1,5 +1,5 @@
 #
-# Userdata class collects userdata from oauth token
+# UserData class collects userdata from oauth token
 #
 
 
@@ -7,7 +7,6 @@ module Slacklens
   module Helpers
 
     class Userdata
-
       # collects username and userid using Slack's identity test
       def self.data(token)
         begin
