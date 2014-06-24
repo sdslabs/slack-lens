@@ -8,13 +8,13 @@ module Slacklens
 
     class Permission
       def self.address
-        @@configer = Slacklens::Configer
+        config = Slacklens::Configer
 
         # query variables, according to Slack API
-        client_id = @@configer.value('client_id')
-        scope = @@configer.value('scope')
-        state = @@configer.value('state')
-        team = @@configer.value('slack_team_id')
+        client_id = config.value('client_id')
+        scope = config.value('scope')
+        state = config.value('state')
+        team = config.value('slack_team_id')
 
         oauth_endpoint = "https://slack.com/oauth/authorize"
 

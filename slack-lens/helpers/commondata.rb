@@ -9,7 +9,7 @@ module Slacklens
 
     class CommonData
       def self.team
-	Slacklens::Configer.value('team')
+	Slacklens::Slackdata.value('team')
       end
 
       def self.channels

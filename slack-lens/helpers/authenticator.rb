@@ -1,5 +1,5 @@
 #
-# this class authenticate user for a Slack Team
+# Authenticator class authenticate user for a Slack Team
 #
 
 module Slacklens
@@ -9,10 +9,10 @@ module Slacklens
       # returns address that will provide oauth access token
       def self.address(code, state)
 
-        @@config = Slacklens::Configer
+        config = Slacklens::Configer
 
-        client_id = @@config.value('client_id')
-        client_secret = @@config.value('client_secret')
+        client_id = config.value('client_id')
+        client_secret = config.value('client_secret')
         redirect_uri = 'https://pravj.ngrok.com/login'
   
         # Slack API method endpoint that exchange code with OAuth token
