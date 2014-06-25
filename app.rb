@@ -7,13 +7,13 @@ Bundler.require
 # so things can be used with 'require' only
 $: << File.expand_path('../', __FILE__)
 
+require 'config/configer'
+require 'slack-data/slackdata'
+require 'elasticsearch/slackelastic'
+
 require 'slack-lens/models'
 require 'slack-lens/helpers'
 require 'slack-lens/routes'
-
-require 'config/configer'
-
-require 'slack-data/slackdata'
 
 module Slacklens
   class App < Sinatra::Base
@@ -33,6 +33,7 @@ module Slacklens
     use Slacklens::Routes::Channels
     use Slacklens::Routes::Users
     use Slacklens::Routes::Messages
+    use Slacklens::Routes::IndexMessage
 
   end
 end

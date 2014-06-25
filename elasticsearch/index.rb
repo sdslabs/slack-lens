@@ -1,42 +1,42 @@
 #
-# this script index messages
+# SlackElastic::Index class index message objects
 #
 
-require 'json'
+module Slacklens
+  module SlackElastic
 
-require_relative 'client.rb'
-require_relative 'msg_id.rb'
-require_relative '../config/configer.rb'
+    class Index
 
-class Index
-  # set class var :message as argument
-  def initialize(json_str)
-    @message = JSON.parse(json_str)
-    @config = Configer.new()
-  end
+      def self.index(json_str)
+	
+	message = JSON.parse(json_str)
+	config = Slacklens::Configer
 
-  # index a message object
-  def index()
-    # index message, if they are coming from authenticated source
-    if @message['token'] == @config.value('state')
-      # ES client
-      es = ES.new
-      client = es.client()
+	es = Slacklens::SlackElastic::ES
+	client = es.client()
+	msgid = Slacklens::SlackElastic::MsgID
 
-      # different index for each channel
-      client.index index: @message['channel'],
-      type: 'Message',
-      body: {
-        username: @message['username'],
-        message: @message['message'],
-        channel: @message['channel'],
-        timestamp: @message['timestamp'],
-        msgid: MsgID.new(@message['channel']).assign()
-      }
+	# index message, if they are coming from valid source
+	if message['token'] == config.value('state')
+	  
+	  # different index for each channel in ElasticSearch
+	  client.index index: message['channel'],
+          type: 'Message',
+          body: {
+            username: message['username'],
+            message: message['message'],
+            channel: message['channel'],
+            timestamp: message['timestamp'],
+            msgid: msgid.new(message['channel']).assign()
+          }
 
-      [201, 'Message successfully indexed']
-    else
-      [400, 'Authentication Error : invalid token']
+	  [201, 'Message successfully indexed']
+
+	else
+	  [400, 'Authentication Error : Invalid token']
+	end
+      end
     end
+
   end
 end

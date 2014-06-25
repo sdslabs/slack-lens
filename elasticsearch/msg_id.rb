@@ -1,38 +1,36 @@
 #
-# this script assigns/returns 'id' for a message according to 'channel'
+# MsgID class assigns/returns 'id' for a message according to 'channel'
 # uses total message count for that channel
 # then each message is tracked by #{channel + msgid}
 #
 
-require 'rest-client'
-require 'json'
+module Slacklens
+  module SlackElastic
 
-require_relative '../config/configer.rb'
-require_relative '../slack-data/slackdata.rb'
+    class MsgID
+      def initialize(channel)
+	@channel = channel
+	@config = Slacklens::Configer
+	@slackdata = Slacklens::Slackdata
+      end
 
+      # assigns id, using total message count
+      def assign
+	# if index already exists for channel
+        begin
+          response = RestClient.get "#{@config.value('url')}/#{@channel}/Message/_count"
+          total = JSON.parse(response)['count']
+          id = total+1
+          return id
 
-class MsgID
-  # set channel argument as instance var
-  def initialize(channel)
-    @channel = channel
-    @config = Configer.new()
-    @slackdata = SlackData.new() 
-  end
-
-  # assigns id, using total message count
-  def assign
-    # if index already exists for channel
-    begin
-      response = RestClient.get "#{@config.value('url')}/#{@channel}/Message/_count"
-      total = JSON.parse(response)['count']
-      id = total+1
-      return id
-
-    # index doesn't exists for channel
-    rescue
-      @slackdata.add_channel([@channel])
-      RestClient.put "#{@config.value('url')}/#{@channel}", "", {:'User-Agent' => 'Slack-lens'}
-      return 1
+        # index doesn't exists for channel
+        rescue
+          @slackdata.add_channel([@channel])
+          RestClient.put "#{@config.value('url')}/#{@channel}", "", {:'User-Agent' => 'Slack-lens'}
+          return 1
+        end
+      end
     end
+
   end
 end

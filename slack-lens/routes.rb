@@ -11,5 +11,6 @@ module Slacklens
     require 'slack-lens/routes/users'
 
     require 'slack-lens/routes/messages'
+    require 'slack-lens/routes/index_message'
   end
 end

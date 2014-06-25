@@ -1,14 +1,16 @@
-require 'elasticsearch'
+#
+# ES class return ElasticSearch Client's instance
+#
 
-class ES
-  def initialize
-    # Connect to localhost:9200 by default:
-    @es = Elasticsearch::Client.new log: true
-  end
-	
-  # ElasticSearch instance
-  def client
-    return @es
+module Slacklens
+  module SlackElastic
+
+    class ES
+      def self.client
+	es = Elasticsearch::Client.new log: true
+	return es
+      end
+    end
+
   end
 end
-
