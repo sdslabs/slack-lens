@@ -3,7 +3,7 @@ module Slacklens
 
     class Base < Sinatra::Base
       configure do
-	set :views, 'slack-lens/views'
+	set :views, 'app/views'
 	set :root, File.expand_path('../../', __FILE__)
       end
 

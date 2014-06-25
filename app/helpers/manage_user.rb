@@ -1,28 +1,30 @@
 #
-# this method manage users list in Slackdata
+# ManageUser class manage users list in Slackdata
 # add a new user instance, if not already there
 # update username in Slackdata, if user change it
 #
 
-require_relative '../../slack-data/slackdata.rb'
 
+module Slacklens
+  module Helpers
 
-class ManageUser
-  def initialize(username, userid)
-    @user = username
-    @uid = userid
-    @slackdata = SlackData.new()
-  end
+    class ManageUser
+      def self.manage(data)
+        slackdata = Slacklens::Slackdata
+	name = data[0]
+	id = data[1]
 
-  def manage
-    if @slackdata.have_userid(@uid)
-      # change username
-      if !(@slackdata.have_username(@user))
-	@slackdata.change_username(@uid, @user)
+        if slackdata.have_userid(id)
+          # change username
+          if !(slackdata.have_username(name))
+	    slackdata.change_username(id, name)
+          end
+        else
+          # add user to slackdata
+          slackdata.add_user([id, name])
+        end
       end
-    else
-      # add user to slackdata
-      @slackdata.add_user([@uid, @user])
     end
+
   end
 end

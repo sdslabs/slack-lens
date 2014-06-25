@@ -11,9 +11,9 @@ require 'config/configer'
 require 'slack-data/slackdata'
 require 'elasticsearch/slackelastic'
 
-require 'slack-lens/models'
-require 'slack-lens/helpers'
-require 'slack-lens/routes'
+require 'app/models'
+require 'app/helpers'
+require 'app/routes'
 
 module Slacklens
   class App < Sinatra::Base
