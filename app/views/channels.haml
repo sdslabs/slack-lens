@@ -1,4 +1,15 @@
-#h2="#{locals[:team]}"
+%div{:class => 'container-fluid'}
+  %div{:class => 'row'}
+    %div{:class => 'col-md-10 col-md-offset-1'}
+      %ul{:class => 'breadcrumb'}
+        %li
+          %a{:href => '/'}
+            ="#{locals[:team]}"
+        %li{:class => 'active'}
+          Channels
 
-- locals[:channels].each do |channel|
-  #h2="#{channel}"
+  %div{:class => 'row channel-list'}
+    - locals[:data].each do |channel|
+      %span{:class => 'col-md-2 well well-sm'}
+        %a{:href => "/channel/#{channel}"}
+          #h3="##{channel}"

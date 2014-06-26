@@ -2,11 +2,20 @@ module Slacklens
   module Routes
     class Channels < Base
       get '/channel/:channel' do
-	params[:channel]
+	haml :channel,
+	:locals => {
+	  :view => 'Channel',
+	  :value => params[:channel]
+	}
       end
 
       get '/channels' do
-	'channels'
+	haml :channels,
+	:locals => {
+	  :view => 'Channels',
+	  :team => (Slacklens::Helpers::Commondata).team(),
+	  :data => (Slacklens::Helpers::Commondata).channels()
+	}
       end
     end
   end

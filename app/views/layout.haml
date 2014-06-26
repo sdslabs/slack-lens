@@ -1,10 +1,10 @@
 !!!
 %html{:lang => 'en'}
   %head
-    - if locals[:view] != nil
+    - if locals[:value] != nil
       %title="#{locals[:view]} · #{locals[:value]}" 
     - else
-      %title="Slack-lens"
+      %title="Slack-lens · #{locals[:view]}"
 
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
     %meta{:name => 'author', :content => 'Team SDSLabs'}
@@ -12,6 +12,7 @@
 
     %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/bootstrap.css'}
     %link{:rel => 'stylesheet', :type => 'text/css', :href => '/assets/stylesheets/style.css'}
+
   %body
 
     %div{:class => 'header'}
@@ -19,3 +20,6 @@
         %h2
           %a{:href => '/'}Slack-lens
     = yield
+
+    %script{:type => 'text/javascript', :src => '/assets/js/jquery-1.10.2.js'}
+    %script{:type => 'text/javascript', :src => '/assets/js/structure.js'}

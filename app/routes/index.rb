@@ -5,7 +5,10 @@ module Slacklens
       # view that asks for login, if not logged in
       get '/' do
 	if !(loggedin())
-	  haml :login
+	  haml :login,
+	  :locals => {
+	    :view => 'Login'
+	  }
 	else
 	  redirect to('/home')
 	end

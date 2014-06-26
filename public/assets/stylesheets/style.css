@@ -6,7 +6,7 @@
 
 /* --- header --- */
 .header {
-  background-color: #f7f7f7;
+  background-color: #494a4e;
   width: 100%;
   height: 10%;
   overflow: hidden;
@@ -14,7 +14,6 @@
 }
 
 .header-slacklens {
-  color: darkgray;
   float: left;
   font-family: arial;
   font-style: bold;
@@ -24,6 +23,11 @@
 
 .header-slacklens a {
   text-decoration: none;
+  color: #9f9f9f;
+}
+
+.header-slacklens a:hover {
+  color: #bdbdc0;
 }
 
 
@@ -54,3 +58,21 @@
   text-decoration: none;
 }
 
+
+/* --- channels --- */
+.breadcrumb {
+  margin-top: 5px;
+  border: 1px solid #eeeeee;
+}
+
+.row-redefine {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.channel-data div{
+  text-align: left;
+  background: red;
+  margin-bottom: 10px;
+  margin-right: 2px;
+}

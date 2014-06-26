@@ -2,7 +2,10 @@ module Slacklens
   module Routes
     class Messages < Base
       get '/message/:msg_id' do
-	params[:msg_id]
+	haml :messages,
+	:locals => {
+	  :view => 'Messages'
+	}
       end
     end
   end

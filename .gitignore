@@ -1,3 +1,7 @@
+pastapp/
+public/assets/fonts/
+public/assets/javascripts/
+public/assets/stylesheets/ignore/
 workflow.txt
 Gemfile.lock
 docs.txt

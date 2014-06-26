@@ -3,7 +3,10 @@ module Slacklens
 
     class Home < Base
       get '/home' do
-	haml :home
+	haml :home,
+	:locals => {
+	  :view => 'Home'
+	}
       end
     end
 
