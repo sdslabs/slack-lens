@@ -1,6 +1,9 @@
 module Slacklens
   module Routes
     class Users < Base
+
+      commondata = Slacklens::Helpers::Commondata
+
       get '/user/:user' do
 	haml :user,
 	:locals => {
@@ -13,8 +16,8 @@ module Slacklens
 	haml :users,
 	:locals => {
 	  :view => 'Users',
-	  :team => (Slacklens::Helpers::Commondata).team(),
-	  :data => (Slacklens::Helpers::Commondata).users()
+	  :team => commondata.team(),
+	  :data => commondata.users()
 	}
       end
     end

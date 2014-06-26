@@ -18,7 +18,7 @@
   font-family: arial;
   font-style: bold;
   margin-left: 5%;
-  width: 100%; 
+  width: 100%;
 }
 
 .header-slacklens a {
@@ -59,20 +59,22 @@
 }
 
 
-/* --- channels --- */
+/* --- channels && users --- */
 .breadcrumb {
   margin-top: 5px;
   border: 1px solid #eeeeee;
 }
 
-.row-redefine {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+/* --- channel --- */
+.channel-left {
+  background: #e9ebe6;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
-.channel-data div{
-  text-align: left;
-  background: red;
-  margin-bottom: 10px;
-  margin-right: 2px;
+.channel-right {
 }
+
+.custom-label {
+  padding: .5em .6em .3em;
+} 
