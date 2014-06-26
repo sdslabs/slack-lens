@@ -12,7 +12,9 @@ module Slacklens
       get '/users' do
 	haml :users,
 	:locals => {
-	  :view => 'Users'
+	  :view => 'Users',
+	  :team => (Slacklens::Helpers::Commondata).team(),
+	  :data => (Slacklens::Helpers::Commondata).users()
 	}
       end
     end

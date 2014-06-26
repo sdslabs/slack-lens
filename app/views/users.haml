@@ -1,0 +1,15 @@
+%div{:class => 'container-fluid'}
+  %div{:class => 'row'}
+    %div{:class => 'col-md-10 col-md-offset-1'}
+      %ul{:class => 'breadcrumb'}
+        %li
+          %a{:href => '/'}
+            ="#{locals[:team]}"
+        %li{:class => 'active'}
+          Users
+
+  %div{:class => 'row user-list'}
+    - locals[:data].each do |user|
+      %span{:class => 'col-md-2 well well-sm'}
+        %a{:href => "/channel/#{user}"}
+          #h3="##{user}"
