@@ -23,11 +23,11 @@
 
 .header-slacklens a {
   text-decoration: none;
-  color: #9f9f9f;
+  color: #bdbdc0;
 }
 
 .header-slacklens a:hover {
-  color: #bdbdc0;
+  color: #9f9f9f;
 }
 
 
@@ -61,8 +61,17 @@
 
 /* --- channels && users --- */
 .breadcrumb {
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 0px;
   border: 1px solid #eeeeee;
+}
+
+.channel-list {
+  margin-top: 20px;
+}
+
+.user-list {
+  margin-top: 20px;
 }
 
 /* --- channel --- */
@@ -70,11 +79,76 @@
   background: #e9ebe6;
   padding-left: 0px;
   padding-right: 0px;
+  border-right: 1px solid #999999;
+}
+
+.channels {
+  background: #493d4b;
+  padding: 1em;
+}
+
+.channels-heading {
+  margin: 0 1em 10px;
+  color: #88878f;
+}
+
+.channels-heading:hover {
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.channels >  ul {
+  list-style: none;
+  -webkit-padding-start: 0px;
+}
+
+.channels ul li {
+  padding-left: 1.5em;
+}
+
+.channels ul li a {
+  color: inherit;
+}
+
+.channels-channel {
+  color: #929eaa;
+  font-size: 1.2em;
+}
+
+.channels-prefix {
+  color: #8b8b8b;
+}
+
+.custom-form-group {
+  margin-bottom: 0px;
+}
+
+.search-channel {
+  padding: 5px 15px 0px 15px;
+}
+
+.hz-divider {
+  width: 100%;
+  height: 1px;
+  background: #dcdcdc;
 }
 
 .channel-right {
 }
 
-.custom-label {
-  padding: .5em .6em .3em;
-} 
+.message-box {
+  /*border: 1px solid #dcdcdc;*/
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px #0f0f0f;
+}
+
+.message-element {
+  background: #e3e4e5;
+  border-bottom: 1px solid #cfcfcf;
+  padding: 5px 0px;
+}
+
+.message-element > .user {
+  color: #818f8f;
+  font-weight: bold;
+}

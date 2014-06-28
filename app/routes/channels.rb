@@ -3,12 +3,15 @@ module Slacklens
     class Channels < Base
 
       commondata = Slacklens::Helpers::Commondata
+      search = Slacklens::SlackElastic::Search
 
       get '/channel/:channel' do
 	haml :channel,
 	:locals => {
 	  :view => 'Channel',
-	  :value => params[:channel]
+	  :value => params[:channel],
+	  :team => commondata.team(),
+	  :channels => commondata.channels()
 	}
       end
 

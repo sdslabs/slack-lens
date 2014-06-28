@@ -2,50 +2,31 @@
   %div{:class => 'row'}
     / left-pannel : channel, status, search etc.
     %div{:class => 'col-md-3 channel-left'}
-      / channel last active
-      %div{:class => 'panel panel-default'}
-        %div{:class => 'panel-heading'}
-          %div{:class => 'panel-title'}
-            %span{:class => 'label label-success custom-label'}
-              Last Active
-            &nbsp;
-            %span
-              1 Hour ago
-      %hr
-      / message stats for channel
-      %canvas{:id => 'message-stats'}
-      %div{:class => 'panel panel-default'}
-        %div{:class => 'panel-heading'}
-          %div{:class => 'panel-title'}
-            Message Stats
-      / memory stats for channel
-      %canvas{:id => 'memory-stats'}
-      %div{:class => 'panel panel-default'}
-        %div{:class => 'panel-heading'}
-          %div{:class => 'panel-title'}
-            Storage Stats
+      / search channel
+      %form{:class => 'search-form search-channel', :role => 'form'}
+        %div{:class => 'form-group custom-form-group'}
+          %input{:class => 'form-control input-lg', :type => 'text', :placeholder => " Search Channel : ##{locals[:value]}"}
+      / horizontal divider
+      %div{:class => 'hz-divider'}
+      %div{:class => 'channels'}
+        %h4{:class => 'channels-heading'}
+          CHANNELS
+        %ul
+          - locals[:channels].each do |channel|
+            %li{:class => 'channels-channel'}
+              %a{:href => "/channel/#{channel}"}
+                %span{:class => 'channels-prefix'}
+                  ="#"
+                %span{:class => 'channels-data'}
+                  ="#{channel}"
     / right-pannel : messages related data
     %div{:class => 'col-md-9 channel-right'}
       %ul{:class => 'breadcrumb'}
         %li
           %a{:href => '/'}
-            SDSLabs
+            #{locals[:team]}
         %li
           %a{:href => '/channels'}
             Channels
         %li{:class => 'active'}
-          bottesting
-
-/ adding Chart.js for channel stats charts
-%script{:type => 'text/javascript', :src => '/assets/js/Chart.min.js'}
-:javascript
-  /* message stats chart */
-  var context = document.getElementById("message-stats").getContext("2d");
-  var data = [{value: 30, color: '#f68370'}, {value: 50, color: '#69d2e7'}];
-  var options = {segmentStrokeWidth: 1};
-  new Chart(context).Doughnut(data, options);
-  /* memory stats chart */
-  var context = document.getElementById("memory-stats").getContext("2d");
-  var data = [{value: 60, color: '#f68370'}, {value: 160, color: '#69d2e7'}];
-  var options = {segmentStrokeWidth: 1};
-  new Chart(context).Doughnut(data, options);
+          #{locals[:value]}
