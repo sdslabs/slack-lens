@@ -1,15 +1,21 @@
-/* --- parent --- */
-.html, body {
+body,html {
   height: 100%;
 }
 
+.custom-fluid {
+  height: 90%;
+}
+
+.custom-row {
+  height: 100%;
+}
 
 /* --- header --- */
 .header {
-  background-color: #494a4e;
-  width: 100%;
   height: 10%;
-  overflow: hidden;
+  background-color: #494a4e;
+  margin: 0px;
+  border-bottom: 0px;
   box-shadow: 0 5px 5px -5px #333; 
 }
 
@@ -17,8 +23,7 @@
   float: left;
   font-family: arial;
   font-style: bold;
-  margin-left: 5%;
-  width: 100%;
+  margin-left: 3em;
 }
 
 .header-slacklens a {
@@ -42,10 +47,6 @@
 
 
 /* --- home --- */
-.search-form input {
-  margin-bottom: 5px;
-}
-
 .home-search, .home-nav {
   margin-top: 5%
 }
@@ -66,25 +67,32 @@
   border: 1px solid #eeeeee;
 }
 
+/* --- channels --- */
 .channel-list {
   margin-top: 20px;
 }
 
+/* --- users --- */
 .user-list {
   margin-top: 20px;
 }
 
 /* --- channel --- */
 .channel-left {
+  position: relative;
+  height: 100%;
   background: #e9ebe6;
   padding-left: 0px;
   padding-right: 0px;
-  border-right: 1px solid #999999;
+  box-shadow: 0px 0px 5px 0px #333333;
 }
 
 .channels {
+  height: 75%;
+  /*margin-top: 1px;*/
   background: #493d4b;
   padding: 1em;
+  /*border-bottom: 2px solid whitesmoke;*/
 }
 
 .channels-heading {
@@ -108,6 +116,11 @@
 
 .channels ul li a {
   color: inherit;
+  text-decoration: none;
+}
+
+.channels ul li a:hover {
+  color: #88878f;
 }
 
 .channels-channel {
@@ -124,7 +137,8 @@
 }
 
 .search-channel {
-  padding: 5px 15px 0px 15px;
+  height: 10%;
+  padding: 2% 15px 2% 15px;
 }
 
 .hz-divider {
@@ -133,7 +147,34 @@
   background: #dcdcdc;
 }
 
+.user-section {
+  position: absolute;
+  bottom: 0;
+  background: #494a4e;
+  height: 15%;
+  width: 100%;
+  box-shadow: 0px 0px 5px 0px #333333;
+  padding: 1em;
+}
+
+.user-section-user-online {
+  color: #9f9f9f;
+  padding: 2px;
+}
+
+.user-section-user-name {
+  margin: 0px auto 0px;
+  font-size: 1.7em;
+  color: #bdbdc0;
+  cursor: pointer;
+}
+
+.user-section-user-name:hover {
+  color: #9f9f9f;
+}
+
 .channel-right {
+  height: 100%;
 }
 
 .message-box {
