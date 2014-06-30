@@ -1,5 +1,6 @@
 body,html {
   height: 100%;
+  background: #fdfcfc;
 }
 
 .custom-fluid {
@@ -79,7 +80,7 @@ body,html {
 
 /* --- channel --- */
 .channel-left {
-  position: relative;
+  /*position: relative;*/
   height: 100%;
   background: #e9ebe6;
   padding-left: 0px;
@@ -149,7 +150,7 @@ body,html {
 
 .user-section {
   position: absolute;
-  bottom: 0;
+  /*bottom: 0;*/
   background: #494a4e;
   height: 15%;
   width: 100%;
@@ -175,21 +176,35 @@ body,html {
 
 .channel-right {
   height: 100%;
+  overflow: auto;
 }
 
 .message-box {
-  /*border: 1px solid #dcdcdc;*/
-  border-radius: 4px;
-  box-shadow: 0px 0px 3px 0px #0f0f0f;
+  overflow-y: scroll;
+  border-radius: 0px 0px 2px 2px;
+  height: 90%;
+  /*box-shadow: 0px 0px 3px 0px #0f0f0f;*/
 }
 
 .message-element {
-  background: #e3e4e5;
+  background: #fdfdfd;
   border-bottom: 1px solid #cfcfcf;
-  padding: 5px 0px;
+  padding: 5px 5px;
 }
 
-.message-element > .user {
-  color: #818f8f;
+.message-user {
+  color: #060606;
   font-weight: bold;
+}
+
+.message-user a {
+  color: inherit;
+}
+
+.message-time {
+  color: #767676;
+}
+
+.message-time a {
+  color: inherit;
 }
