@@ -1,0 +1,24 @@
+%div{:class => 'col-md-7 channel-right'}
+  / breadcrumb showing current path
+  %ul{:class => 'breadcrumb'}
+    %li
+      %a{:href => '/'}
+        #{locals[:team]}
+    %li
+      %a{:href => '/channels'}
+        Channels
+    %li{:class => 'active'}
+      #{locals[:value]}
+  / message-box containg all messages
+  %div{:class => 'message-box'}
+    - (locals[:data].reverse).each do |message|
+      %div{:class => 'message-element'}
+        %span{:class => 'message-user'}
+          %a{:href => "/users/#{message['_source']['username']}"}
+            ="#{message['_source']['username']}"
+        %span{:class => 'message-time'}
+          %a{:href => "/message/#{message['_source']['msgid']}"}
+            ="#{message['_source']['timestamp']}"
+        %div
+          ="#{message['_source']['message']}"
+
