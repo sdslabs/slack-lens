@@ -18,7 +18,7 @@ module Slacklens
       def assign
 	# if index already exists for channel
         begin
-          response = RestClient.get "#{@config.value('url')}/#{@channel}/Message/_count"
+          response = RestClient.get "#{@config.value('url')}/#{@channel}/message/_count"
           total = JSON.parse(response)['count']
           id = total+1
           return id

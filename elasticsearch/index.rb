@@ -21,7 +21,7 @@ module Slacklens
 	  
 	  # different index for each channel in ElasticSearch
 	  client.index index: message['channel'],
-          type: 'Message',
+          type: 'message',
           body: {
             username: message['username'],
             message: message['message'],

@@ -89,7 +89,7 @@ body,html {
 }
 
 .channels {
-  height: 75%;
+  height: 85%;
   /*margin-top: 1px;*/
   background: #493d4b;
   padding: 1em;
@@ -190,11 +190,12 @@ body,html {
   background: #fdfdfd;
   border-bottom: 1px solid #cfcfcf;
   padding: 5px 5px;
+  color: #767676;
 }
 
 .message-user {
   color: #060606;
-  font-weight: bold;
+  font-size: 1.3em;
 }
 
 .message-user a {
@@ -203,6 +204,7 @@ body,html {
 
 .message-time {
   color: #767676;
+  font-size: 0.9em;
 }
 
 .message-time a {

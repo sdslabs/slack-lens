@@ -3,9 +3,9 @@
     / left-pannel : channel, status, search etc.
     %div{:class => 'col-md-2 channel-left'}
       / search channel
-      %form{:class => 'search-form search-channel', :role => 'form'}
-        %div{:class => 'form-group custom-form-group'}
-          %input{:class => 'form-control input-lg', :type => 'text', :placeholder => "Search ##{locals[:value]}"}
+      /%form{:class => 'search-form search-channel', :role => 'form'}
+      /  %div{:class => 'form-group custom-form-group'}
+      /    %input{:class => 'form-control input-lg', :type => 'text', :placeholder => "Search ##{locals[:value]}"}
       / channels list
       %div{:class => 'channels'}
         %h4{:class => 'channels-heading'}
@@ -39,16 +39,17 @@
           #{locals[:value]}
       / message-box containg all messages
       %div{:class => 'message-box'}
-        %div{:class => 'message-element'}
-          %span{:class => 'message-user'}
-            %a{:href => '/users/pravj'}
-              pravj
-          %span{:class => 'message-time'}
-            %a{:href => '/message/1'}
-              8:56 AM
-          %div
-            This is a test message
-        
+        - (locals[:data].reverse).each do |message|
+          %div{:class => 'message-element'}
+            %span{:class => 'message-user'}
+              %a{:href => "/users/#{message['_source']['username']}"}
+                ="#{message['_source']['username']}"
+            %span{:class => 'message-time'}
+              %a{:href => "/message/#{message['_source']['msgid']}"}
+                ="#{message['_source']['timestamp']}"
+            %div
+              ="#{message['_source']['message']}"
+
 / js things
 :javascript
   var msgH = $('.message-box').height() + 'px';

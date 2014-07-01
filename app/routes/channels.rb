@@ -11,7 +11,8 @@ module Slacklens
 	  :view => 'Channel',
 	  :value => params[:channel],
 	  :team => commondata.team(),
-	  :channels => commondata.channels()
+	  :channels => commondata.channels(),
+	  :data => search.recent(params[:channel])
 	}
       end
 

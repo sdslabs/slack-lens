@@ -7,8 +7,7 @@ module Slacklens
 
     class ES
       def self.client
-	es = Elasticsearch::Client.new log: true
-	return es
+	Elasticsearch::Client.new
       end
     end
 
