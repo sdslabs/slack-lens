@@ -11,13 +11,13 @@
       #{locals[:value]}
   / message-box containg all messages
   %div{:class => 'message-box'}
-    - (locals[:data].reverse).each do |message|
+    - locals[:data].each do |message|
       %div{:class => 'message-element'}
         %span{:class => 'message-user'}
           %a{:href => "/users/#{message['_source']['username']}"}
             ="#{message['_source']['username']}"
         %span{:class => 'message-time'}
-          %a{:href => "/message/#{locals[:value] + (message['_source']['msgid']).to_s}"}
+          %a{:href => "/message/#{locals[:value]}/#{message['_source']['msgid']}"}
             ="#{message['_source']['timestamp']}"
         %div
           ="#{message['_source']['message']}"

@@ -18,6 +18,14 @@ module Slacklens
 
 	result['hits']['hits']
       end
+      
+      # return 50 messages near a particular message in a channel
+      def self.message(msgid, channel)
+	response = Client.search index: channel, body: {from: msgid.to_i - 1, size: 50, sort: {msgid: {order: 'asc'}}}
+	result = JSON.parse(response.to_json)
+
+	result['hits']['hits']
+      end
 
       # search a particular channel
       def self.channel(keyword, channel)

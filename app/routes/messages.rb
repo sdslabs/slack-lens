@@ -1,12 +1,21 @@
 module Slacklens
   module Routes
     class Messages < Base
-      get '/message/:msg_id' do
+
+      commondata = Slacklens::Helpers::Commondata
+      search = Slacklens::SlackElastic::Search
+
+      get '/message/:channel/:msgid' do
 	haml :messages,
 	:locals => {
-	  :view => 'Messages'
+	  :view => 'Messages',
+	  :value => "#{params[:channel]}",
+	  :team => commondata.team(),
+          :channels => commondata.channels(),
+	  :data => search.message(params[:msgid], params[:channel])
 	}
       end
+
     end
   end
 end
