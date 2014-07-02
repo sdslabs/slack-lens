@@ -133,15 +133,6 @@ body,html {
   color: #8b8b8b;
 }
 
-.custom-form-group {
-  margin-bottom: 0px;
-}
-
-.search-channel {
-  height: 10%;
-  padding: 2% 15px 2% 15px;
-}
-
 .hz-divider {
   width: 100%;
   height: 1px;
@@ -209,4 +200,36 @@ body,html {
 
 .message-time a {
   color: inherit;
+}
+
+.channel-search {
+  height: 100%;
+}
+
+.custom-form-group {
+  margin-bottom: 0px;
+}
+
+.search-channel {
+  height: 8%;
+  margin-top: 5px;
+  padding: 2% 15px 2% 15px;
+}
+
+.channel-search-result {
+  height: 90%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.channel-search-result-element {
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.channel-search-result-element > div {
+  color: #767676;
+}
+
+.channel-search-result-element > .message-user {
+  margin-right: 4px;
 }

@@ -9,10 +9,31 @@
 
 / js things
 :javascript
-  var msgH = $('.message-box').height() + 'px';
+
+  /* scrollbar on message-box and search results */
+
   $(function(){
     $('.message-box').slimScroll({
-      height: msgH
+      height: $('.message-box').height() + 'px'
     });
-    $('.slimScrollDiv').scrollTop(1E10);
+
+    $('.channel-search-result').slimScroll({
+      height: $('.channel-search-result').height() + 'px'
+    });
+  });
+
+  /* search channel */
+
+  var form = $('form.search-channel');
+  var channel = form.attr('data-channel');
+
+  form.submit(function(e){
+    e.preventDefault();
+
+    var input = $('.search-channel input');
+    var keyword = input.val();
+
+    $.get('/search/' + channel, {keyword: keyword}, function(data){
+      $('.channel-search-result').html(data);
+    });
   });

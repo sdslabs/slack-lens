@@ -12,5 +12,7 @@ module Slacklens
 
     require 'app/routes/messages'
     require 'app/routes/index_message'
+
+    require 'app/routes/search'
   end
 end

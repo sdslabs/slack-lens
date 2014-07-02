@@ -34,6 +34,7 @@ module Slacklens
     use Slacklens::Routes::Users
     use Slacklens::Routes::Messages
     use Slacklens::Routes::IndexMessage
+    use Slacklens::Routes::Search
 
   end
 end

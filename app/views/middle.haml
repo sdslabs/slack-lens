@@ -17,7 +17,7 @@
           %a{:href => "/users/#{message['_source']['username']}"}
             ="#{message['_source']['username']}"
         %span{:class => 'message-time'}
-          %a{:href => "/message/#{message['_source']['msgid']}"}
+          %a{:href => "/message/#{locals[:value] + (message['_source']['msgid']).to_s}"}
             ="#{message['_source']['timestamp']}"
         %div
           ="#{message['_source']['message']}"
