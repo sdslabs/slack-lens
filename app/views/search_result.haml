@@ -1,0 +1,10 @@
+- locals[:data].each do |message|
+  %div{:class => 'channel-search-result-element'}
+    %span{:class => 'message-user'}
+      %a{:href => "/user/#{message['_source']['username']}"}
+        ="#{message['_source']['username']}"
+    %span{:class => 'message-time'}
+      %a{:href => "/message/#{locals[:channel] + (message['_source']['msgid']).to_s}"}
+        ="#{message['_source']['timestamp']}"
+    %div
+      ="#{message['_source']['message']}"

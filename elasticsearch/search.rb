@@ -21,29 +21,20 @@ module Slacklens
 
       # search a particular channel
       def self.channel(keyword, channel)
+	# use only fuzzy search for now
 	response = Client.search index: channel, body: {query: {fuzzy: {message: keyword}}}
 
-	# callback to generate HTML for this response
-	layout((JSON.parse(response.to_json))['hits']['hits'], channel)
-      end
+	# search result data
+	result = (JSON.parse(response.to_json))['hits']['hits']
 
-      # returns HTML layout for search response
-      def self.layout(data, channel)
-	html = ""
-	start = "<div class='channel-search-result-element'>"
-	user = "<span class='message-user'>"
-	time = "<span class='message-time'>"
+	# search result template file
+	template = File.read(File.join(File.dirname(__FILE__), '../app/views/search_result.haml'))
 
-	data.each do |message|
-	  html += (start + user)
-	  html += "<a href='/user/#{message['_source']['username']}'>"
-	  html += (message['_source']['username'] + "</a></span>")
-	  html += (time + "<a href='/message/#{channel + (message['_source']['msgid']).to_s}'>")
-	  html += (message['_source']['timestamp'] + "</a></span>")
-	  html += "<div>" + message['_source']['message'] + "</div></div>"
-	end
+	# variable to render in search result
+        options = {:data => result, :channel => channel}
 
-	html
+	# callback to generate and return HTML using Haml::Engine
+	Haml::Engine.new(template).render(Object.new, :locals => options)
       end
 
     end
