@@ -1,0 +1,8 @@
+team: YOUR_TEAM_NAME
+url: http://localhost:9200
+slacklens_url: URL_OF_YOUR_SLACKLENS_INSTANCE
+client_id: 'APPLICATION_CLIENT_ID'
+client_secret: APPLICATION_CLIENT_SECRET
+slack_team_id: SLACK_TEAM_ID
+scope: identity,read
+state: CUSTOM_SECRET_TEXT

@@ -1,0 +1,12 @@
+#
+# - 
+#   channel: <channel-A>
+# - 
+#   channel: <channel-B>
+#
+
+-
+  channel: channel1
+
+-
+  channel: channel2
