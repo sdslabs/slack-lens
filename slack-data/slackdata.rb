@@ -28,7 +28,7 @@ module Slacklens
     # checks for a username availability in Slackdata
     def have_username(name)
       User_data.each do |user|
-        if user['user']['name'] == name
+        if user['name'] == name
 	  return true
         end
       end
@@ -39,7 +39,7 @@ module Slacklens
     # checks for a userid availability in slackdata
     def have_userid(uid)
       User_data.each do |user|
-	if user['user']['id'] == uid
+	if user['id'] == uid
 	  return true
 	end
       end
@@ -58,7 +58,7 @@ module Slacklens
       i, j  = 0, nil
 
       User_data.each do |user|
-        if user['user']['id'] == uid
+        if user['id'] == uid
 	  # remove this object
 	  j = i
         end
@@ -72,15 +72,21 @@ module Slacklens
 
     # argument => user : array object
     def add_user(arg)
-      user = {"user" => {"id" => arg[0], "name" => arg[1]}}
-      user_data = User_data.push(user)
+      user = {"id" => arg[0], "name" => arg[1]}
+
+      temp = (User_data == nil ? [] : User_data)
+      user_data = {"users" => temp.push(user)}
+
       File.open(User_file, 'w'){ |f| f.write user_data.to_yaml }
     end
 
     # argument => channel : array object
     def add_channel(arg)
-      channel = {"channel" => arg[0]}
-      channel_data = Channel_data.push(channel)
+      channel = arg[0]
+
+      temp = (Channel_data == nil ? [] : Channel_data)
+      channel_data = {"channels" => temp.push(channel)}
+
       File.open(Channel_file, 'w'){ |f| f.write channel_data.to_yaml }
     end
 
@@ -88,7 +94,7 @@ module Slacklens
     def channels
       result = []
       Channel_data.each do |channel|
-        result.push(channel['channel'])
+        result.push(channel)
       end
       result
     end
@@ -97,7 +103,7 @@ module Slacklens
     def users
       result = []
       User_data.each do |user|
-        result.push(user['user']['name'])
+        result.push(user['name'])
       end
       result
     end

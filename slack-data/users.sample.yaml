@@ -1,19 +1,10 @@
 #
-# - user
-#     id: 
-#       <uid>
-#     name:
-#       <username>
+# ---
+# users:
+#   - id: uid-A
+#     name: nemo
+#   - id: uid-B
+#     name: sm
 #
-
-- user:
-    id:
-      U1
-    name:
-      nemo
-
-- user:
-    id:
-      U2
-    name:
-      sm
+---
+users:
