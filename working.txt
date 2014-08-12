@@ -9,6 +9,4 @@
 
 # `hubot-script/` will contain hubot scripts to listen in slack and to power slack-lens API that will help user to use it, right there in slack
 
-# there is a hard-coded variable in (slack-lens|app)/helpers/authenticator.rb : kill him when things are done : link it to config.yaml
-
 # rethink : login flow

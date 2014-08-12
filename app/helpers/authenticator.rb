@@ -13,7 +13,7 @@ module Slacklens
 
         client_id = config.value('client_id')
         client_secret = config.value('client_secret')
-        redirect_uri = 'https://pravj.ngrok.com/login'
+        redirect_uri = "#{config.value('slacklens_url')}/login"
   
         # Slack API method endpoint that exchange code with OAuth token
         exchange_endpoint = "https://slack.com/api/oauth.access"
