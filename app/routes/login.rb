@@ -14,7 +14,7 @@ module Slacklens
 	if params[:code] and params[:state] and !loggedin()
 	  address = authenticator.address(params[:code], params[:state])
 
-	  if authenticator.token(address)
+	  begin
 	    token = authenticator.token(address)
 	    udata = userdata.data(token)
 
@@ -27,8 +27,8 @@ module Slacklens
 
 	    redirect to('/home')
 
-	  else
-	    'things wrong'
+	  rescue
+	    'something went wrong in login process'
 	  end
 
 	else

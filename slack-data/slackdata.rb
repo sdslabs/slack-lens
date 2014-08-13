@@ -27,7 +27,9 @@ module Slacklens
 
     # checks for a username availability in Slackdata
     def have_username(name)
-      User_data.each do |user|
+      return false if User_data['users'] == nil
+
+      User_data['users'].each do |user|
         if user['name'] == name
 	  return true
         end
@@ -38,7 +40,9 @@ module Slacklens
 
     # checks for a userid availability in slackdata
     def have_userid(uid)
-      User_data.each do |user|
+      return false if User_data['users'] == nil
+
+      User_data['users'].each do |user|
 	if user['id'] == uid
 	  return true
 	end
@@ -49,7 +53,7 @@ module Slacklens
 
     # remove user object
     def remove_user(index)
-      User_data.delete_at(index)
+      User_data['users'].delete_at(index)
       File.open(User_file, 'w'){ |f| f.write User_data.to_yaml }
     end
 
@@ -57,7 +61,7 @@ module Slacklens
     def change_username(uid, name)
       i, j  = 0, nil
 
-      User_data.each do |user|
+      User_data['users'].each do |user|
         if user['id'] == uid
 	  # remove this object
 	  j = i
@@ -74,7 +78,7 @@ module Slacklens
     def add_user(arg)
       user = {"id" => arg[0], "name" => arg[1]}
 
-      temp = (User_data == nil ? [] : User_data)
+      temp = (User_data['users'] == nil ? [] : User_data['users'])
       user_data = {"users" => temp.push(user)}
 
       File.open(User_file, 'w'){ |f| f.write user_data.to_yaml }
@@ -84,7 +88,7 @@ module Slacklens
     def add_channel(arg)
       channel = arg[0]
 
-      temp = (Channel_data == nil ? [] : Channel_data)
+      temp = (Channel_data['channels'] == nil ? [] : Channel_data['channels'])
       channel_data = {"channels" => temp.push(channel)}
 
       File.open(Channel_file, 'w'){ |f| f.write channel_data.to_yaml }
@@ -93,7 +97,7 @@ module Slacklens
     # returns array of all channels
     def channels
       result = []
-      Channel_data.each do |channel|
+      Channel_data['channels'].each do |channel|
         result.push(channel)
       end
       result
@@ -102,7 +106,7 @@ module Slacklens
     # returns array of all users
     def users
       result = []
-      User_data.each do |user|
+      User_data['users'].each do |user|
         result.push(user['name'])
       end
       result
