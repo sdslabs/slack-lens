@@ -1,6 +1,8 @@
 require 'rubygems'
 
 require 'bundler'
+require 'bundler/setup'
+Bundler.setup
 Bundler.require
 
 # adds path '../' to $LOAD_PATH ($:)
