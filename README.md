@@ -1,4 +1,19 @@
-slack-lens
-==========
+# slack-lens
 
-A search backend for slack using elasticsearch and mongodb for indexing and storage. Allows you to break the 10k free search limit on slack.
+TODO: Write description
+
+## Running
+
+To start a web server for slack-lens on localhost, run:
+
+    lein2 ring server-headless [port]
+
+By default, the server uses port 40000.  To query the service, run:
+
+    curl -X GET http://localhost:40000
+
+## API Documentation
+
+Swagger spec and documentation is available at http//localhost:40000 that describes the endpoints.
+
+## License
