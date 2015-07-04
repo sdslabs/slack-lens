@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # Install Java
-sudo apt-get install -y --force-yes oracle-java8-* mysql-client haproxy
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get -y -q update
+echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get -y -q install oracle-java7-installer
+sudo apt-get install -y --force-yes oracle-java8-*
 sudo update-alternatives --set java /usr/lib/jvm/java-8-oracle/jre/bin/java
 
 # Install elasticsearch

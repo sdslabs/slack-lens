@@ -7,8 +7,8 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--nictype1", "virtio", "--memory", 1024]
   end
 
-  config.vm.network "forwarded_port", host: 9300, guest: 9300 # ES port
-  config.vm.network "forwarded_port", host: 9200, guest: 9200 # ES port
+  #config.vm.network "forwarded_port", host: 9300, guest: 9300 # ES port
+  #config.vm.network "forwarded_port", host: 9200, guest: 9200 # ES port
 
   dotfiles = %w{  gitconfig gitignore
           profile login logout
@@ -30,7 +30,6 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.provision :shell, inline: "apt-get -y install python-setuptools oracle-java7-jdk"
   config.vm.synced_folder "../slack-lens", "/home/vagrant/dev/slack-lens"
   config.vm.provision :shell, privileged: false, path: "scripts/vagrant-bootstrap.sh"
 end
