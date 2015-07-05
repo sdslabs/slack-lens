@@ -14,7 +14,12 @@
      [org.slf4j/slf4j-api "1.7.12"]
      [org.slf4j/slf4j-log4j12 "1.7.12"]
      [log4j/apache-log4j-extras "1.2.17"]
-     [ring.middleware.logger "0.5.0"]]
+     [ring.middleware.logger "0.5.0"]
+
+     [org.julienxx/clj-slack "0.4.3"]
+     [aleph "0.4.0"]
+     [manifold "0.1.0"]
+     [cheshire "5.5.0"]]
 
   :profiles {:doc {:plugins [[lein-marginalia "0.8.0"]]}
              ;; uncomment the following line to prevent service logs from cluttering test output
