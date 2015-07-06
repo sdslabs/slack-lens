@@ -7,5 +7,6 @@
 
 (defn start
   [options]
-  (let [rtm-conn (rtm/connect (:url options) (:token options))]
+  (let [rtm-conn (rtm/start options)]
+    (rtm/subscribe "message" #(println %))
     rtm-conn))
