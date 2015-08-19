@@ -1,4 +1,4 @@
-(ns in.co.sdslabs.slack_lens.lib.es
+(ns in.co.sdslabs.slack-lens.lib.es
   (:require [clojurewerkz.elastisch.native :as es]
             [clojurewerkz.elastisch.native.index :as esi]
             [clojurewerkz.elastisch.native.document :as esd]
