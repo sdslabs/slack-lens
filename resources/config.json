@@ -1,0 +1,5 @@
+{
+	"index_name": "slack_lens_20160820",
+	"url": "http://127.0.0.1:9200",
+	"mapping": "message"
+}
