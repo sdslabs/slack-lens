@@ -4,7 +4,8 @@
             [cheshire.core :as json]
             [manifold.stream :as s]
             [manifold.time :as t]
-            [manifold.bus :as bus]))
+            [manifold.bus :as bus]
+            [clojure.core.async :refer [timeout <! go]]))
 
 (def event-bus (bus/event-bus))
 
@@ -42,19 +43,20 @@
   (-> (get-rtm-ws-url url token)
        get-rtm-ws-connection))
 
-(defn- reset-conn
-  [options]
-  (reset! rtm-conn (connect (:url options) (:token options))))
 
 (defn subscribe
   [type func]
   (let [message-stream (bus/subscribe event-bus type)]
     (future (s/consume func message-stream))))
 
+(defn- reset-conn
+  [options]
+  (let [conn (connect (:url options) (:token options))]
+    (s/consume publish-events (->> conn (s/buffer 100)))
+    (go 
+      (<! (timeout conn-reset-delay))
+      (s/close! conn))))
+
 (defn start
   [options]
-  (let [conn (connect (:url options) (:token options))
-        _ (reset! rtm-conn conn)]
-    (t/every conn-reset-delay #(reset-conn options))
-    (future (s/consume publish-events (->> @rtm-conn (s/buffer 100))))
-    @rtm-conn))
+  (t/every conn-reset-delay #(reset-conn options)))
