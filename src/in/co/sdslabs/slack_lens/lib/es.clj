@@ -1,7 +1,7 @@
 (ns in.co.sdslabs.slack-lens.lib.es
-  (:require [clojurewerkz.elastisch.native :as es]
-            [clojurewerkz.elastisch.native.index :as esi]
-            [clojurewerkz.elastisch.native.document :as esd]
+  (:require [clojurewerkz.elastisch.rest :as es]
+            [clojurewerkz.elastisch.rest.index :as esi]
+            [clojurewerkz.elastisch.rest.document :as esd]
             [clojure.tools.logging :as log]))
 
 (defn ensure-index!
@@ -27,17 +27,12 @@
         )))
 
 (defn connect-es
-  "Takes options map as parameter and tries to establish connection to the es node
-   Options is a map with the following keys
-    :port Port number where the updator should connect for es [Since this is the
-          native client so in usual cases this will be 9300
-    :url Url of elasticsearch [Locally 127.0.0.1]
-    :clustername Name of the elasticsearch cluster [Usually 'elasticsearch']"
+  "Takes url to connect as parameter and tries to connect to it through
+   rest api"
   [options]
-  (let [{:keys [port url clustername]} options]
-    (try
-      (es/connect [[url port]] {"cluster.name" clustername})
-      (catch Exception e (log/info e)))))
+  (try
+    (es/connect (:url options))
+    (catch Exception e (log/info e))))
 
 (defn elastic-feed
   "Creates document with options passed as param and sets it's
