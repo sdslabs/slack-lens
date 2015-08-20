@@ -10,7 +10,7 @@
 
       :_id { :path "id" }
 
-      :_timestamp { :enabled true :path "ts" }
+      :_timestamp { :enabled true :path "timestamp" }
 
       :properties {
         :id { :type "integer" }
@@ -18,5 +18,5 @@
         :channel { :type "string" }
         :user { :type "string" }
         :text { :type "string" }
-        :ts { :type "string" }
+        :timstamp { :type "long" }
         :team { :type "string" }}}})
