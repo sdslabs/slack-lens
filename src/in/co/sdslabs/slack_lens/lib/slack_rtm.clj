@@ -3,9 +3,14 @@
             [aleph.http :as http]
             [cheshire.core :as json]
             [manifold.stream :as s]
+            [manifold.time :as t]
             [manifold.bus :as bus]))
 
 (def event-bus (bus/event-bus))
+
+(def conn-reset-delay 30000)
+
+(def rtm-conn (atom nil))
 
 (defn- get-connection-map
   [url token]
@@ -34,9 +39,12 @@
 
 (defn connect
   [url token]
-  (let [ws-url (get-rtm-ws-url url token)
-        conn (get-rtm-ws-connection ws-url)]
-    conn))
+  (-> (get-rtm-ws-url url token)
+       get-rtm-ws-connection))
+
+(defn- reset-conn
+  [options]
+  (reset! rtm-conn (connect (:url options) (:token options))))
 
 (defn subscribe
   [type func]
@@ -45,5 +53,8 @@
 
 (defn start
   [options]
-  (let [conn (connect (:url options) (:token options))]
-    (future (s/consume publish-events (->> conn (s/buffer 100))))))
+  (let [conn (connect (:url options) (:token options))
+        _ (reset! rtm-conn conn)]
+    (t/every conn-reset-delay #(reset-conn options))
+    (future (s/consume publish-events (->> @rtm-conn (s/buffer 100))))
+    @rtm-conn))
