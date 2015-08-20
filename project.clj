@@ -19,7 +19,8 @@
      [org.julienxx/clj-slack "0.4.3"]
      [aleph "0.4.0"]
      [manifold "0.1.0"]
-     [cheshire "5.5.0"]]
+     [cheshire "5.5.0"]
+     [clojurewerkz/elastisch "2.1.0"]]
 
   :profiles {:doc {:plugins [[lein-marginalia "0.8.0"]]}
              ;; uncomment the following line to prevent service logs from cluttering test output
