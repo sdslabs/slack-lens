@@ -17,7 +17,7 @@
      [org.slf4j/slf4j-log4j12 "1.7.12"]
      [log4j/apache-log4j-extras "1.2.17"]
      [ring.middleware.logger "0.5.0"]
-
+     [de.ubercode.clostache/clostache "1.3.1"]
      [org.julienxx/clj-slack "0.4.3"]
      [aleph "0.4.0"]
      [manifold "0.1.0"]

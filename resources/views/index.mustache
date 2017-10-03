@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Hello World</title>
+</head>
+<body>
+    <table >
+        {{#message}}
+        {{#_source}}
+        <tr>
+            <td>{{type}}</td>
+            <td>{{channel}}</td>
+            <td>{{user}}</td>
+            <td>{{text}}</td>
+            <td>{{source_team}}</td>
+            <td>{{team}}</td>
+            <td>{{timestamp}}</td>
+        </tr>
+        {{/_source}}
+        {{/message}}
+    </table>
+</body>
+</html>

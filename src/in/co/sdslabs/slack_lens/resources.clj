@@ -2,7 +2,8 @@
   (:require
     [ring.util.http-response :as http]
     [compojure.api.sweet :refer [defroutes* GET*]]
-    [compojure.api.meta]))
+    [compojure.api.meta]
+    [in.co.sdslabs.slack-lens.controllers.render :as render]))
 
 (defroutes* v1_routes
   (GET*
@@ -11,4 +12,4 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (http/ok "OK")))
+    (render/index "index")))

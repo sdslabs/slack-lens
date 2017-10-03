@@ -39,6 +39,7 @@
   [options]
   (let [rtm-conn (rtm/start options)
         options (setup-elastic)]
-    (rtm/subscribe "message" 
-        #(es/elastic-feed (assoc options :response (get-proper-response %))))
+       (rtm/subscribe "message" 
+         #(es/elastic-feed (assoc options :response (get-proper-response %))))
+       (time (Thread/sleep 600000))
     rtm-conn))
