@@ -12,7 +12,8 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (render/index "slack.mustache"))
+    :query-params [channel :- String]
+    (render/mustache "slack.mustache" channel))
   
   (GET*
     "/slack.css"
@@ -20,4 +21,4 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (render/index "slack.css")))
+    (render/css "slack.css")))

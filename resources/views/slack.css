@@ -227,8 +227,9 @@ main {
   color: #ffffff;
   padding-left: 1rem;
 }
-.channel.active {
-  background: #4c9689;
+ul>li:hover{
+  background: rgba(34, 5, 0,.3);
+   cursor: hand;
 }
 
 .unread {

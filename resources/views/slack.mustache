@@ -9,18 +9,18 @@
 
   </head>
   <body>
+    {{#data}}
     <div class="header">
       <div class="team-menu">Slack-lens</div>
       <div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>admin</span></div>
     </div>
     <div class="main">
-    {{#data}}
       <div class="listings">
         <div class="listings_channels">
           <h2 class="listings_header">Channels</h2>
           <ul class="channel_list">
           {{#channels}}
-            <li class="channel"><a class="channel_name"><span><span class="prefix">#</span>{{channel}}</span></a></li>
+            <li class="channel" id="{{channel}}" onclick="location='slack-lens?channel={{channel}}'"><a class="channel_name"><span><span class="prefix"># </span> {{channel}}</span></a></li>
             {{/channels}}
           </ul>
         </div>
@@ -33,7 +33,7 @@
         {{/_source}}
         {{/messages}}
       </div>
-       {{/data}}
+       
     </div>
     <div class="footer">
       <div class="user-menu"><span class="user-menu_profile-pic"></span><span class="user-menu_username">Bot</span><img class="connection_icon" src="data:image/png;base64,iVBORw0KGgoAAAAN..."/><span class="connection_status">online</span></div>
@@ -41,5 +41,12 @@
         <input class="input-box_text" type="text"/>
       </div>
     </div>
+    <script>
+    function check(){
+     document.getElementById("{{active}}").style.backgroundColor = "#4c9689";
+    }  
+    check();
+    </script>
+    {{/data}}
   </body>
 </html>

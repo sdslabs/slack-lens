@@ -12,5 +12,11 @@
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
-(defn index [filename]
-  (render-template  filename {:data {:messages (query/search (str/lower-case "C025W23AN")) :channels [{:channel "ch1" }{:channel "ch2"}]}}))
+(defn mustache [filename active]
+  (render-template  filename {:data {:active active 
+                                     :messages (query/search (str/lower-case "C025W23AN")) 
+                                     :channels [{:channel "ch1"}
+                                                {:channel "ch2"}]}}))
+
+(defn css [filename]
+    (render-template filename {}))
