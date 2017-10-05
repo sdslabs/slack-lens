@@ -38,7 +38,7 @@
 
 (defn- publish-events
   [data]
-  (let [data-map (json/parse-string data true)]
+  (let [data-map (dissoc (json/parse-string data true) :source_team)]
     (bus/publish! event-bus (:type data-map) data)))
 
 (defn connect
