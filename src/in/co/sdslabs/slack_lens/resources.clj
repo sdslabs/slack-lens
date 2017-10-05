@@ -12,4 +12,12 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (render/index "index")))
+    (render/index "slack.mustache"))
+  
+  (GET*
+    "/slack.css"
+    []
+    :summary "Dummy Route to index"
+    :description
+    "<p>Add a description here</p>"
+    (render/index "slack.css")))

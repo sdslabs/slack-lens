@@ -1,0 +1,45 @@
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>
+    <link href="slack.css" rel="stylesheet" type="text/css"/>
+
+  </head>
+  <body>
+    <div class="header">
+      <div class="team-menu">Slack-lens</div>
+      <div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>admin</span></div>
+    </div>
+    <div class="main">
+    {{#data}}
+      <div class="listings">
+        <div class="listings_channels">
+          <h2 class="listings_header">Channels</h2>
+          <ul class="channel_list">
+          {{#channels}}
+            <li class="channel"><a class="channel_name"><span><span class="prefix">#</span>{{channel}}</span></a></li>
+            {{/channels}}
+          </ul>
+        </div>
+      </div>
+      <div class="message-history">
+        {{#messages}}
+        {{#_source}}
+
+        <div class="message"><a class="message_profile-pic" href=""></a><a class="message_username" href="">{{user}}</a><span class="message_timestamp">{{timestamp}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
+        {{/_source}}
+        {{/messages}}
+      </div>
+       {{/data}}
+    </div>
+    <div class="footer">
+      <div class="user-menu"><span class="user-menu_profile-pic"></span><span class="user-menu_username">Bot</span><img class="connection_icon" src="data:image/png;base64,iVBORw0KGgoAAAAN..."/><span class="connection_status">online</span></div>
+      <div class="input-box">
+        <input class="input-box_text" type="text"/>
+      </div>
+    </div>
+  </body>
+</html>
