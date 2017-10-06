@@ -2,6 +2,8 @@
   (:require [clojurewerkz.elastisch.rest :as es]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.rest.document :as esd]
+            [clojurewerkz.elastisch.query :as q]
+            [clojure.string :as str]
             [clojure.tools.logging :as log]))
 
 (defn ensure-index!
@@ -47,3 +49,19 @@
    These all are required keys in the options params"
   [{:keys [conn index-name response id mapping]}]
   (esd/delete conn index-name mapping id))
+
+(defn search-user
+    "search the user"
+    [id conn map1]
+    (:_source (nth (:hits (:hits (esd/search conn
+                (:index_name map1)  
+                (:mapping2 map1) 
+                :query (q/term :id (str/lower-case id))))) 0)))
+
+(defn search-channel
+    "search the channel"
+    [id conn map2]
+    (:_source (nth (:hits (:hits (esd/search conn
+                (:index_name map2)  
+                (:mapping3 map2) 
+                :query (q/term :id (str/lower-case id))))) 0)))
