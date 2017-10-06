@@ -3,21 +3,27 @@
               [clojurewerkz.elastisch.query :as q]
               [in.co.sdslabs.slack-lens.lib.es :as es]
               [in.co.sdslabs.slack-lens.listener.main :as main]))
+
 (def config (main/get-config))
 (def es-conn (es/connect-es config))
-(def options {:conn es-conn
-              :index-name (:index_name config)
-              :mapping (:mapping config)})  
+ 
     
 (defn search
     "search the channels"
-    [channel]
-    (:hits (:hits (esd/search (:conn options) 
-                (:index-name options)  
-                (:mapping options) 
-                :query (q/term :channel "c025w23an")))))
+    [channel from size]
+    (:hits (:hits (esd/search es-conn 
+                (:index_name config)  
+                (:mapping1 config) 
+                :query (q/term :channel channel)
+                :from from :size size))))
         
 
     
-    
-    
+(defn ch-search
+    "search the channels"
+    [from size]
+    (:hits (:hits (esd/search es-conn 
+                (:index_name config)  
+                (:mapping3 config) 
+                :query (q/match-all)
+                :from from :size size))))

@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title></title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>
+    <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>-->
     <link href="slack.css" rel="stylesheet" type="text/css"/>
 
   </head>
@@ -20,7 +20,9 @@
           <h2 class="listings_header">Channels</h2>
           <ul class="channel_list">
           {{#channels}}
-            <li class="channel" id="{{channel}}" onclick="location='slack-lens?channel={{channel}}'"><a class="channel_name"><span><span class="prefix"># </span> {{channel}}</span></a></li>
+          {{#_source}}
+            <li class="channel" id="{{name}}" onclick="location='slack-lens?channel={{name}}'"><a class="channel_name"><span><span class="prefix"># </span> {{name}}</span></a></li>
+            {{/_source}}
             {{/channels}}
           </ul>
         </div>
@@ -29,7 +31,7 @@
         {{#messages}}
         {{#_source}}
 
-        <div class="message"><a class="message_profile-pic" href=""></a><a class="message_username" href="">{{user}}</a><span class="message_timestamp">{{timestamp}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
+        <div class="message"><img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{timestamp}}" onload="time_stamp({{timestamp}})">{{timestamp}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
         {{/_source}}
         {{/messages}}
       </div>
@@ -42,7 +44,12 @@
       </div>
     </div>
     <script>
-    function check(){
+
+    function time_stamp(stamp){
+      console.log((new Date(stamp)).toString().split("G")[0]);
+       document.getElementById(stamp.toString()).innerHTML=(new Date(stamp)).toString().split("G")[0];
+    }
+        function check(){
      document.getElementById("{{active}}").style.backgroundColor = "#4c9689";
     }  
     check();
