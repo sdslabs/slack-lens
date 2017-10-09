@@ -18,11 +18,14 @@
   {:api-url url
    :token token})
 
+(defn- test-check
+  [options] 
+  (if (options :token) (:url (rtm/start options)) (:api-url options)))
+
 (defn- get-rtm-ws-url
   [url token]
   (-> (get-connection-map url token)
-      rtm/start
-      :url))
+      test-check))
 
 (defn- get-rtm-ws-connection
   [url]

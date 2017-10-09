@@ -4,7 +4,8 @@
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
 (def ^:private cli-options
-  [["-t" "--token TOKEN" "Slack Bot Token"]
+  [["-t" "--token TOKEN" "Slack Bot Token"
+    :default nil]
    ["-u" "--url URL" "URL for connection to Slack API"
     :default "https://slack.com/api"]
    ["-h" "--help HELP" "Help"]])
@@ -45,6 +46,7 @@
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
     (cond
         (:help options) (exit 0 (usage summary))
-        (not (contains? options :token)) (exit 1 (str "You must pass bot token\n" (usage summary)))
+        (not (or (contains? options :token) (contains? options :url))) 
+          (exit 1 (str "You must pass bot token\n" (usage summary)))
         errors (exit 1 (error-msg errors)))
     (main/start options)))
