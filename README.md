@@ -33,6 +33,16 @@ By default, the server uses port 40000.  To query the service, run:
 
     curl -X GET http://localhost:40000
 
+## Testing
+
+For starting the local web-scoket server, and transmitting the messages for testing purposes
+
+    lein run -m in.co.sdslabs.slack-lens.test.message
+
+For  running slack-lens against the local web-socket server for testing
+
+    lein run -m in.co.sdslabs.slack-lens.listener.run -u 'ws://localhost:8080'
+
 ## API Documentation
 
 Swagger spec and documentation is available at [http//localhost:40000](http//localhost:40000) that describes the endpoints.

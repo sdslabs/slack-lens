@@ -1,0 +1,7 @@
+{"type":"hello"}
+{"type":"message","message":{"type":"message","user":"U3T93SKTQ","text":"<@U3T2K69EJ> what's the plan for gs-quantify..","thread_ts":"1507392676.000071","reply_count":2,"replies":[{"user":"U3T93SKTQ","ts":"1507392757.000080"},{"user":"U3T93SKTQ","ts":"1507394070.000070"}],"unread_count":2,"ts":"1507392676.000071"},"subtype":"message_replied","hidden":true,"channel":"C02E2L0V8","event_ts":"1507394070.000076","ts":"1507394070.000076"}
+{"type":"reconnect_url","url":"wss://lbmulti-y5i7.lb.slack-msgs.com/websocket/dYU-W5DVwDSKLHerxbiSz359ZeGlLju12YaZGhtPWrHZiAKLoCcEuCfYEK3luOUmxM7GG_qVJkBWFXiGgAoNpaaMapT4uBunrJ2WiwXGbf5_qAIo017CYbIxjwTNI9A7N8qq1BvbqcFof_40AALbp_axd3UYpAnOzY-4VSEDC2w="}
+{"type":"reconnect_url","url":"wss://lbmulti-94ek.lb.slack-msgs.com/websocket/5g3NIqtpZIzCHlbQOc-6Kx8uDXKLDhNriIaKORAvGtbdJ9rY1lkXJLdU0K8r5LvPyeJm_7GbCtoAkKOWTx1eTYCPg2o031Q2FPANZUeewMiGEI039MrsvEhqhbJ2LVPROpLBHhWmQnaQ3UA2v3k7PuiDHYOHjbCrjFiERgCrB68="}
+{"type":"presence_change","presence":"away","user":"U3SDXRH45"}
+{"type":"presence_change","presence":"active","user":"U3SDXRH45"}
+{"type":"message","channel":"C025W23AN","user":"U3T93SKTQ","text":"bot who all in labs","ts":"1507563019.000535","source_team":"T025QJXB7","team":"T025QJXB7"}
