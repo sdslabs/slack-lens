@@ -3,6 +3,7 @@
                                    [slack-rtm :as rtm]
                                    [es :as es]]
             [in.co.sdslabs.slack-lens.config.es :as es-config]
+            [in.co.sdslabs.slack-lens.map-db :as map-db]
             [cheshire.core :as json]
             [clojure.java.io :as jio]))
 
@@ -36,7 +37,7 @@
                    (get response :channel) conn map2) :name)}
         (dissoc response :channel)))
 
-(defn get-proper-response
+(defn- get-proper-response
   [response]
   (-> (json/parse-string response true)
       (dissoc :ts)
@@ -47,19 +48,24 @@
 (defn setup-elastic
   []
   (let [config (get-config)
-        es-conn conn]
+        es-conn (es/connect-es config)]
+    (def iexist (es/index_exist! es-conn (:index_name config)))
     (if 
       (es/ensure-index! 
         es-conn (:index_name config) es-config/settings es-config/mapping1)
       {:conn es-conn 
        :index-name (:index_name config)
-       :mapping (:mapping1 config)}
+       :mapping (:mapping config) 
+       :index_exist iexist}
       nil)))
 
 (defn start
   [options]
   (let [rtm-conn (rtm/start options)
-        options (setup-elastic)]
+        conn-options (setup-elastic)]
+       (if (:index_exist conn-options)
+         nil
+         (map-db/main options (:conn conn-options) (get-config)))
        (rtm/subscribe "message" 
          (fn [x]
              (prn x)
