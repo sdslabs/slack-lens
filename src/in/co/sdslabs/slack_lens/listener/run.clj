@@ -1,7 +1,6 @@
 (ns in.co.sdslabs.slack-lens.listener.run
   (:require [clojure.tools.cli :refer [parse-opts]]
             [clojure.string :as string]
-            [in.co.sdslabs.slack-lens.map-db :as map-db]
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
 (def ^:private cli-options
@@ -50,5 +49,4 @@
         (not (or (contains? options :token) (contains? options :url))) 
           (exit 1 (str "You must pass bot token\n" (usage summary)))
         errors (exit 1 (error-msg errors)))
-    (map-db/main options)
     (main/start options)))

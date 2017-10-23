@@ -28,6 +28,10 @@
             false))
         )))
 
+(defn index_exist! 
+  [conn index-name]
+  (esi/exists? conn index-name))
+
 (defn connect-es
   "Takes url to connect as parameter and tries to connect to it through
    rest api"
