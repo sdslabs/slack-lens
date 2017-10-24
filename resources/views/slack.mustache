@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title></title>
     <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="slack.css" rel="stylesheet" type="text/css"/>
 
   </head>
@@ -12,7 +13,35 @@
     {{#data}}
     <div class="header">
       <div class="team-menu">Slack-lens</div>
-      <div class="channel-menu"><span class="channel-menu_name"><span class="channel-menu_prefix">#</span>admin</span></div>
+      <div class="animated bounceInDown" id="header_">  
+        <h2 id="channel-title">
+        #{{active}}
+        </h2>
+        <div id="icons">
+          <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
+          <h3 id="line"> | </h3>
+          <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
+          <h3 id="line2"> | </h3>
+          <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
+        </div>
+        <div id="rightIcons">
+          <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
+          <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
+          <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
+          <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
+          <input id="search" placeholder="Search" type="text">
+
+
+          <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
+
+          <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
+          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+
+        <hr class="bottom-header-line">
+        </div>
+      </div>
+
+
     </div>
     <div class="main">
       <div class="listings">
@@ -31,7 +60,11 @@
         {{#messages}}
         {{#_source}}
 
-        <div class="message"><img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{timestamp}}" onload="time_stamp({{timestamp}})">{{timestamp}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
+        <div class="message">
+        {{#thread_ts}}
+        <a style="position:absolute;right:5%" href="/v1/thread?thread_ts={{thread_ts}}">thread</a>
+        {{/thread_ts}}
+        <img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{timestamp}}" onload="time_stamp({{timestamp}})">{{timestamp}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
         {{/_source}}
         {{/messages}}
       </div>
@@ -53,6 +86,30 @@
      document.getElementById("{{active}}").style.backgroundColor = "#4c9689";
     }  
     check();
+
+var input = document.getElementById('search');
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         alert(this.responseText);
+       }
+     };
+     xhttp.open("GET", "data?date="++"&from=", true);
+     xhttp.send();
+    }
+
+input.addEventListener('blur', function(e) {
+    updateCart('product1', this);
+});
+
+input.addEventListener('keypress', function(e) {
+    if ((e.which || e.keyCode) == 13) {
+        input.blur();
+        loadDoc(input.value);
+    }
+});
+
     </script>
     {{/data}}
   </body>

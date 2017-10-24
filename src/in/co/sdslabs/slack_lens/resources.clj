@@ -21,4 +21,14 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (render/css "slack.css")))
+    (render/css "slack.css"))
+
+  (GET*
+    "/thread"
+    []
+    :summary "Dummy Route to index"
+    :description
+    "<p>Add a description here</p>"
+    :query-params [thread_ts :- String]
+    (println "asdf")
+    (render/thread "thread.mustache" thread_ts)))
