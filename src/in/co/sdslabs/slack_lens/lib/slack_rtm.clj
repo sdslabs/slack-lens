@@ -39,7 +39,10 @@
 (defn- publish-events
   [data]
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
-    (bus/publish! event-bus (:type data-map) data)))
+    (println (data-map :subtype))
+    (if (data-map :subtype)
+      nil
+      (bus/publish! event-bus (:type data-map) data))))
 
 (defn connect
   [url token]
