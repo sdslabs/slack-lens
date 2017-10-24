@@ -1,3 +1,5 @@
+
+
 .reset, html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -13,12 +15,205 @@
   vertical-align: middle;
 }
 
+/////////////////////// channel-header
+
+ #header_ {
+  width: 75%;
+  display: block;
+  margin:  auto;
+  height: 15%;
+
+  background:none;
+  background-size: cover;
+  border-radius: 0%;
+  z-index: 1;
+}
+    
+    .search-bottom{
+  position: absolute;
+  display: block;
+  margin: auto;
+  left: 28%;
+  bottom: 3%;
+  height: 5%;
+  width: 70%;
+  font-weight: 100;
+  padding-left: 28px;
+  font-family:"lato";
+  font-size: 12px;
+  opacity: 0.6;
+  color: #2C2D30;
+}
+
+#icons{
+  
+  padding-bottom: 5px;
+  
+}
+
+
+.star{
+  padding-left: 3%;
+  opacity: 0.6;
+  z-index: 3;
+  display:inline-block;
+  
+  
+}
+.user{
+  padding-left: 3%;
+  opacity: 0.6;
+  z-index: 3;
+  
+}
+.pin{
+  padding-left: 3%;
+  opacity: 0.4;
+  z-index: 3;
+  
+}
+.phone{
+  position: absolute;
+  top: 45%;
+  right: 36%;
+  opacity: 0.6;
+  z-index: 3;
+}
+  
+.cog{
+  position: absolute;
+  top: 45%;
+  right: 33%;
+  opacity: 0.6;
+  z-index: 3;
+  
+}
+
+.details{
+  position: absolute;
+  top: 45%;
+  right: 30%;
+  opacity: 0.6;
+  z-index: 3;
+  
+}
+#line3{
+  
+  position: absolute;
+  right: 33%;
+  top: 8.5%;
+  font-family:"lato";
+  font-size: 18px;
+  opacity: 0.5;
+  font-weight: 100;
+  color: #2C2D30;
+  
+}
+
+.search-glass{
+   position: absolute;
+  top: 35%;
+  right: 24%;
+  opacity: 0.5;
+  z-index: 3;
+  
+}
+
+.at{
+  
+  position: absolute;
+  top: 45%;
+  right: 9%;
+  opacity: 0.6;
+  z-index: 3;
+}
+
+.star-o{
+  
+   position: absolute;
+  top: 45%;
+  right: 6%;
+  opacity: 0.6;
+  z-index: 3;
+  
+}
+.box_{
+  display:inline-block;
+  width:1px;
+  height:1px;
+}
+.menu{
+  
+     position: absolute;
+  top: 45%;
+  right: 3%;
+  opacity: 0.6;
+  z-index: 3;
+}
+
+#search{
+  color:black;
+  text-align:right;
+  position: absolute;
+  right: 12%;
+  top: 30%;
+  height: 50%;
+  width: 14%;
+  font-weight: 100;
+  padding-right: 10px;
+  font-family:"lato";
+  font-size: 12px;
+  opacity: 0.6;
+  color: #2C2D30;
+  box-sizing: border-box;
+}
+
+#line{
+  
+  position: absolute;
+  left: 7%;
+  top: 46.5%;
+  font-family:"lato";
+  font-size: 13px;
+  opacity: 0.5;
+  font-weight: 100;
+  color: #2C2D30;
+  
+}
+#line2{
+  
+  position: absolute;
+  left: 14%;
+  top: 46.5%;
+  font-family:"lato";
+  font-size: 13px;
+  opacity: 0.5;
+  font-weight: 100;
+  color: #2C2D30;
+  
+}
+.bottom-header-line{
+  margin-left: 8px;
+  width: 98%;
+  margin-top: 0;
+  
+}
+#channel-title{
+  color: #2C2D30;
+  font-family:"lato";
+  font-size: 18px;
+  font-weight: 800;
+  padding-left: 20px;
+  z-index: 3;
+}
+//////////////////////////////////////
+
 html {
   line-height: 1;
   position: relative;
   height: 100%;
   font-size: 16px;
-  font-family: Lato, sans-serif;
+//  font-family: Lato, sans-serif;
 }
 
 body {

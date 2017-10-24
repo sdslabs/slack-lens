@@ -13,10 +13,14 @@
   (clostache/render (read-template template-file) params))
 
 (defn mustache [filename active]
-    
   (render-template  filename {:data {:active active
-                                     :messages (query/search (str/lower-case active) 0 100) 
+                                     :messages (query/search-miss (str/lower-case active) 0 100 :channel) 
                                      :channels (query/ch-search 0 100)}}))
 
 (defn css [filename]
     (render-template filename {}))
+
+(defn thread [filename thread_ts]
+    (println thread_ts)
+    (render-template  filename {:data {:active thread_ts
+                                     :messages (query/search (str/lower-case thread_ts) 0 100 :thread_ts)}}))

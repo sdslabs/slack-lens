@@ -10,13 +10,22 @@
     
 (defn search
     "search the channels"
-    [channel from size]
+    [channel from size keymap]
     (:hits (:hits (esd/search es-conn 
                 (:index_name config)  
                 (:mapping1 config) 
-                :query (q/term :channel channel)
+                :query (q/term keymap channel)
                 :from from :size size))))
-        
+
+(defn search-miss
+    "search the channels"
+    [channel from size keymap]
+    (:hits (:hits (esd/search es-conn 
+                (:index_name config)  
+                (:mapping1 config) 
+                :query (q/term keymap channel)
+                :from from :size size))))
+
 
     
 (defn ch-search
