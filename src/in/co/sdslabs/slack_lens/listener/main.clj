@@ -37,11 +37,19 @@
                    (get response :channel) conn map2) :name)}
         (dissoc response :channel)))
 
+(defn- ts
+  [data]
+    (if (:thread_ts data)
+    (assoc (dissoc data :thread_ts) 
+           :thread_ts (Double/valueOf (:thread_ts data))))
+    data)
+
 (defn- get-proper-response
   [response]
   (-> (json/parse-string response true)
       (dissoc :ts)
       (assoc :timestamp (System/currentTimeMillis))
+      (ts)
       (user-map)
       (channel-map)))
 
@@ -55,7 +63,7 @@
         es-conn (:index_name config) es-config/settings es-config/mapping1)
       {:conn es-conn 
        :index-name (:index_name config)
-       :mapping (:mapping config) 
+       :mapping (:mapping1 config) 
        :index_exist iexist}
       nil)))
 
@@ -69,6 +77,6 @@
        (rtm/subscribe "message" 
          (fn [x]
              (prn x)
-             (es/elastic-feed (assoc options :response (get-proper-response x)
+             (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
     rtm-conn))

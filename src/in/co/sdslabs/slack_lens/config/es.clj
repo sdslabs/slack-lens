@@ -19,7 +19,8 @@
         :user { :type "string" }
         :text { :type "string" }
         :timstamp { :type "long" }
-        :team { :type "string" }}}})
+        :team { :type "string" }
+        :thread_ts { :type "double" }}}})
 
 (def mapping2 {
     "pehchankaun" {
