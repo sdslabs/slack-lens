@@ -36,12 +36,21 @@
     socket
     nil))
 
+(defn- thread-check
+  [data func]
+  (prn data)
+  (if (= (:subtype data) "message_replied") 
+    (func {:replies (get-in data [:message :reply_count])
+           :thread_ts  
+                            (get-in data [:message :thread_ts])})
+    nil))
+
 (defn- publish-events
-  [data]
+  [data func]
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
     (println (data-map :subtype))
     (if (data-map :subtype)
-      nil
+      (thread-check data-map func)
       (bus/publish! event-bus (:type data-map) data))))
 
 (defn connect
@@ -56,13 +65,13 @@
     (future (s/consume func message-stream))))
 
 (defn- reset-conn
-  [options]
+  [options func]
   (let [conn (connect (:url options) (:token options))]
-    (s/consume publish-events (->> conn (s/buffer 100)))
+    (s/consume #(publish-events % func) (->> conn (s/buffer 100)))
     (go 
       (<! (timeout conn-reset-delay))
       (s/close! conn))))
 
 (defn start
-  [options]
-  (t/every conn-reset-delay #(reset-conn options)))
+  [options func]
+  (t/every conn-reset-delay #(reset-conn options func)))

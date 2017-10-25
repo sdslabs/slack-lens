@@ -18,8 +18,10 @@
         :channel { :type "string" }
         :user { :type "string" }
         :text { :type "string" }
-        :timstamp { :type "long" }
+        :timestamp { :type "double" }
         :team { :type "string" }
+        :replies {:type "integer" 
+                  :null_value 0 }
         :thread_ts { :type "double" }}}})
 
 (def mapping2 {

@@ -1,0 +1,72 @@
+<head>
+<style>
+.message_profile-pic {
+  position: absolute;
+  left: 0;
+  display: block;
+  border-radius: 0.2rem;
+  width: 36px;
+  height: 36px;
+  
+  background-size: cover;
+}
+.message-history {
+  margin-left: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding: 0 18px 1rem 1.5rem;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.message {
+  position: relative;
+  margin-top: 0.5rem;
+  padding: 0.25rem 2rem 0.1rem 3rem;
+  min-height: 36px;
+}
+.message_username {
+  font-weight: 900;
+  padding-right: 0.25rem;
+  color: #3d3c40 !important;
+  margin-left: 0;
+  font-style: normal;
+  text-decoration: none;
+}
+.message_timestamp {
+  text-align: left;
+  display: inline;
+  position: relative;
+  top: 0;
+  left: 0;
+  color: #babbbf;
+  font-size: 12px;
+  line-height: 1.2rem;
+  width: 36px;
+  margin-right: 0;
+  margin-left: 0;
+}
+.message_content {
+  color: #8b898f;
+  font-style: italic;
+  display: block;
+  min-height: 1rem;
+}
+</style>
+</head>
+<body>
+{{#data}}
+<div>{{thread_ts}}</div>
+      <div class="message-history">
+        {{#messages}}
+        {{#_source}}
+
+        <div class="message">
+        {{#replies}}
+        <a style="position:absolute;right:5%" href="/v1/thread?thread_ts={{ts}}">thread</a>
+        {{/replies}}
+        <img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{ts}}" onload="time_stamp({{ts}})">{{ts}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
+        {{/_source}}
+        {{/messages}}
+{{/data}}
+</body>
