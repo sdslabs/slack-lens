@@ -38,18 +38,17 @@
         (dissoc response :channel)))
 
 (defn- ts
-  [data]
-    (if (:thread_ts data)
-    (assoc (dissoc data :thread_ts) 
-           :thread_ts (Double/valueOf (:thread_ts data))))
+  [data keymap]
+    (if (keymap data)
+    (assoc (dissoc data keymap) 
+           keymap (Double/valueOf (keymap data))))
     data)
 
 (defn- get-proper-response
   [response]
   (-> (json/parse-string response true)
-      (dissoc :ts)
-      (assoc :timestamp (System/currentTimeMillis))
-      (ts)
+      (ts :ts)
+      (ts :thread_ts)
       (user-map)
       (channel-map)))
 
@@ -67,10 +66,12 @@
        :index_exist iexist}
       nil)))
 
+
+
 (defn start
   [options]
-  (let [rtm-conn (rtm/start options)
-        conn-options (setup-elastic)]
+  (let [conn-options (setup-elastic)
+        rtm-conn (rtm/start options #(es/elastic-update (assoc conn-options :response % )))]
        (if (:index_exist conn-options)
          nil
          (map-db/main options (:conn conn-options) (get-config)))
@@ -79,4 +80,5 @@
              (prn x)
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
+       (time (Thread/sleep 1000000))
     rtm-conn))

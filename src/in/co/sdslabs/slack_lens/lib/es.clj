@@ -47,6 +47,20 @@
   [{:keys [conn index-name response mapping]}]
   (esd/create conn index-name mapping response))
 
+
+
+(defn elastic-update 
+  [{:keys [conn index-name response mapping]}]
+(prn mapping)
+(time (Thread/sleep 2000))
+  (esd/update-with-script conn index-name mapping 
+     (:_id (nth (:hits (:hits (esd/search conn index-name mapping 
+                                 :query (q/term 
+                                            :ts (str/lower-case (
+                                            :thread_ts response))))))
+             0)) 
+     (str "ctx._source.replies = " (:replies response))))
+
 (defn elastic-delete
   "Creates document with options passed as param and sets it's
    value as 'response' on an es 'conn' and index 'index-name'

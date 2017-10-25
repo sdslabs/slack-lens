@@ -24,6 +24,7 @@
                 (:index_name config)  
                 (:mapping1 config) 
                 :query (q/term keymap channel)
+                :filter {:missing {:field :thread_ts}}
                 :from from :size size))))
 
 
