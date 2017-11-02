@@ -1,6 +1,6 @@
 (ns in.co.sdslabs.slack-lens.lib.slack-api
-	(:require [clj-slack
-              [channels :as channels]]))
+  (:require [clj-slack
+             [channels :as channels]]))
 
 (defn- join-channel
   [{:keys [is_channel is_member id name]} options]

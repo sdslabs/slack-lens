@@ -19,7 +19,7 @@
    :token token})
 
 (defn- test-check
-  [options] 
+  [options]
   (if (options :token) (:url (rtm/start options)) (:api-url options)))
 
 (defn- get-rtm-ws-url
@@ -39,10 +39,10 @@
 (defn- thread-check
   [data func]
   (prn data)
-  (if (= (:subtype data) "message_replied") 
+  (if (= (:subtype data) "message_replied")
     (func {:replies (get-in data [:message :reply_count])
-           :thread_ts  
-                            (get-in data [:message :thread_ts])})
+           :thread_ts
+           (get-in data [:message :thread_ts])})
     nil))
 
 (defn- publish-events
@@ -56,8 +56,7 @@
 (defn connect
   [url token]
   (-> (get-rtm-ws-url url token)
-       get-rtm-ws-connection))
-
+      get-rtm-ws-connection))
 
 (defn subscribe
   [type func]
@@ -68,7 +67,7 @@
   [options func]
   (let [conn (connect (:url options) (:token options))]
     (s/consume #(publish-events % func) (->> conn (s/buffer 100)))
-    (go 
+    (go
       (<! (timeout conn-reset-delay))
       (s/close! conn))))
 
