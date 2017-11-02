@@ -21,7 +21,15 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    (render/css "slack.css"))
+    (render/static "slack.css"))
+
+  (GET*
+    "/jquery.min.js"
+    []
+    :summary "Dummy Route to index"
+    :description
+    "<p>Add a description here</p>"
+    (render/static "jquery.min.js"))
 
   (GET*
     "/thread"
@@ -29,6 +37,14 @@
     :summary "Dummy Route to index"
     :description
     "<p>Add a description here</p>"
-    :query-params [thread_ts :- String]
-    (println "asdf")
-    (render/thread "thread.mustache" thread_ts)))
+    :query-params [thread_ts :- Double]
+    (render/thread "thread.mustache" thread_ts))
+
+  (GET*
+    "/data"
+    []
+    :summary "Dummy Route to index"
+    :description
+    "<p>Add a description here</p>"
+    :query-params [date :- String, channel :- String]
+    (render/date-range "empty-file" date channel)))

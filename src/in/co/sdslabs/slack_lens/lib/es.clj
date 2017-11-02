@@ -45,14 +45,19 @@
    value as 'response' on an es 'conn', mapping 'mapping' and index 'index-name'
    These all are required keys in the options params"
   [{:keys [conn index-name response mapping]}]
+  (prn response)
   (esd/create conn index-name mapping response))
 
 
 
 (defn elastic-update 
   [{:keys [conn index-name response mapping]}]
-(prn mapping)
+(prn response)
 (time (Thread/sleep 2000))
+(prn   (esd/search conn index-name mapping 
+                                 :query (q/term 
+                                            :ts (str/lower-case 
+                                              (:thread_ts response)))))
   (esd/update-with-script conn index-name mapping 
      (:_id (nth (:hits (:hits (esd/search conn index-name mapping 
                                  :query (q/term 

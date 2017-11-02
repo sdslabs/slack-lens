@@ -27,13 +27,11 @@
   (str "The following errors occurred while parsing your command:\n\n"
        (string/join \newline errors)))
 
-
 (defn- exit
   "Exit the script with given status and message"
   [status msg]
   (println msg)
   (System/exit status))
-
 
 (defn -main
   "Main entry function for listener, takes -t as option for
@@ -45,8 +43,8 @@
   [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
     (cond
-        (:help options) (exit 0 (usage summary))
-        (not (or (contains? options :token) (contains? options :url))) 
-          (exit 1 (str "You must pass bot token\n" (usage summary)))
-        errors (exit 1 (error-msg errors)))
+      (:help options) (exit 0 (usage summary))
+      (not (or (contains? options :token) (contains? options :url)))
+      (exit 1 (str "You must pass bot token\n" (usage summary)))
+      errors (exit 1 (error-msg errors)))
     (main/start options)))

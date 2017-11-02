@@ -39,10 +39,10 @@
 
 (defn- ts
   [data keymap]
-    (if (keymap data)
+    (if (contains? data keymap)
     (assoc (dissoc data keymap) 
-           keymap (Double/valueOf (keymap data))))
-    data)
+           keymap (Double/valueOf (keymap data)))
+    data))
 
 (defn- get-proper-response
   [response]
@@ -80,5 +80,4 @@
              (prn x)
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
-       (time (Thread/sleep 1000000))
     rtm-conn))
