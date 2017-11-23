@@ -17,30 +17,29 @@
 
 (defn mustache [filename active]
   (render-template  filename {:data {:active active
-                                     :messages (query/search-miss (str/lower-case active) 0 100 :channel)
+                                     :slack-name (:slack-name query/config)
                                      :channels (query/ch-search 0 100)}}))
+(defn message [filename channel]
+   (render-template filename {:data (json/generate-string 
+                     {:messages (query/search-miss (str/lower-case channel) 0 100 :channel)})}))
 
 (defn static [filename]
   (render-template filename {}))
 
 (defn thread [filename thread_ts]
   (println thread_ts)
-  (render-template  filename {:data {:active thread_ts
-                                     :messages (query/search thread_ts 0 100 :thread_ts)}}))
+  (render-template  filename {:data (json/generate-string {
+                                      :messages (query/search thread_ts 0 100 :thread_ts)})}))
 
 (defn date-range [filename date channel]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
-    (prn {:data (json/generate-string
-                 {:messages (query/date-search
-                             (/ (c/to-long
-                                 (f/unparse multi-parser (f/parse multi-parser date)))
-                                1000.0)
-                             channel
-                             0 100
-                             :ts)})})
     (render-template  filename {:data (json/generate-string
                                        {:messages (query/date-search
                                                    (/ (c/to-long
                                                        (f/unparse multi-parser (f/parse multi-parser date)))
                                                       1000.0)
                                                    channel 0 100 :ts)})})))
+
+(defn userMes
+  [filename person channel]
+  (render-template filename {:data (json/generate-string {:messages (query/user-message person channel 0 100)})}))
