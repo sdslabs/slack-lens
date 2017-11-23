@@ -5,6 +5,7 @@
             [in.co.sdslabs.slack-lens.config.es :as es-config]
             [in.co.sdslabs.slack-lens.map-db :as map-db]
             [cheshire.core :as json]
+            [clojure.string :as str]
             [clojure.java.io :as jio]))
 
 
@@ -44,9 +45,25 @@
            keymap (Double/valueOf (keymap data)))
     data))
 
+(defn- ping-name
+  [refname]
+  (if refname 
+    (:name (es/search-user refname conn map1))
+    refname))
+
+(defn parser
+  [data]
+  (assoc (dissoc data :text) :text (str/replace 
+                                     (:text data) 
+                                     #"<@(\d+|\w+)>" 
+                                     (str "@" (ping-name 
+                                                (nth (re-find #"<@(\d+|\w+)>" 
+                                                (:text data)) 1))))))
+
 (defn- get-proper-response
   [response]
   (-> (json/parse-string response true)
+      (parser)
       (ts :ts)
       (ts :thread_ts)
       (user-map)
@@ -77,7 +94,6 @@
          (map-db/main options (:conn conn-options) (get-config)))
        (rtm/subscribe "message" 
          (fn [x]
-             (prn x)
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
     rtm-conn))
