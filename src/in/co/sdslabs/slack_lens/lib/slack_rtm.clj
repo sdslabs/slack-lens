@@ -38,7 +38,6 @@
 
 (defn- thread-check
   [data func]
-  (prn data)
   (if (= (:subtype data) "message_replied")
     (func {:replies (get-in data [:message :reply_count])
            :thread_ts
@@ -50,7 +49,7 @@
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
     (println (data-map :subtype))
     (if (data-map :subtype)
-      (thread-check data-map func)
+      (thread-check data-map func)                ;; for updating the reply_count for a thread
       (bus/publish! event-bus (:type data-map) data))))
 
 (defn connect
