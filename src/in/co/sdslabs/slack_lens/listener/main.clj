@@ -28,9 +28,11 @@
 
 (defn- user-map
   [response ]
-  (conj (dissoc (es/search-user 
+  (if (= (response :subtype) "bot_message")
+    response
+    (conj (dissoc (es/search-user 
                     (get response :user) conn map1) :id)
-        (dissoc response :user)))
+          (dissoc response :user))))
 
 (defn- channel-map
   [response]
@@ -51,14 +53,21 @@
     (:name (es/search-user refname conn map1))
     refname))
 
+
+
+(defn- tests[data](prn data) data)
+
+(defn username-parse[data]
+  (let [message (atom data)]
+    (doseq [array (re-seq #"<([\d|\w|\:|/|\_|\.|\_|\-]+)>" data)]
+      (swap! message #(str/replace % (nth array 0) (str "<a target='_blank' href='" (nth array 1) "'>" (nth array 1) "</a>"))))
+    (doseq [array (re-seq #"<@(\d+|\w+)>" data)]
+      (swap! message #(str/replace % (nth array 0) (str "<a class='ref' href='#'>@" (ping-name (nth array 1)) "</a>"))))
+    @message))
+
 (defn parser
   [data]
-  (assoc (dissoc data :text) :text (str/replace 
-                                     (:text data) 
-                                     #"<@(\d+|\w+)>" 
-                                     (str "@" (ping-name 
-                                                (nth (re-find #"<@(\d+|\w+)>" 
-                                                (:text data)) 1))))))
+    (assoc (dissoc data :text) :text (username-parse (:text data))))
 
 (defn- get-proper-response
   [response]
