@@ -9,42 +9,48 @@
   (GET*
     "/slack-lens"
     []
-    :summary "Dummy Route to index"
-    :description
-    "<p>Add a description here</p>"
+    :summary "the html structure fof the web-interface"
     :query-params [channel :- String]
     (render/mustache "slack.mustache" channel))
   
   (GET*
     "/slack.css"
     []
-    :summary "Dummy Route to index"
-    :description
-    "<p>Add a description here</p>"
+    :summary "the slack-lens front end css"
     (render/static "slack.css"))
 
   (GET*
-    "/jquery.min.js"
+    "/slack.js"
     []
-    :summary "Dummy Route to index"
     :description
-    "<p>Add a description here</p>"
-    (render/static "jquery.min.js"))
+    "the javascript code for the dynamic functionality in web-interface"
+    (render/static "slack.js"))
 
   (GET*
     "/thread"
     []
-    :summary "Dummy Route to index"
-    :description
-    "<p>Add a description here</p>"
+    :summary "data for the thread related messages"
     :query-params [thread_ts :- Double]
-    (render/thread "thread.mustache" thread_ts))
+    (render/thread "empty-file" thread_ts))
+  
+
+  (GET*
+    "/channel"
+    []
+    :summary "passing channel's name list"
+    :query-params [channel :- String]
+    (render/message "empty-file" channel))
+
+    (GET*
+    "/usermes"
+    []
+    :summary "ajax request for getting messages is handled here"
+    :query-params [person :- String, channel :- String]
+    (render/userMes "empty-file" person channel))
 
   (GET*
     "/data"
     []
-    :summary "Dummy Route to index"
-    :description
-    "<p>Add a description here</p>"
+    :summary "filtering the messages by date"
     :query-params [date :- String, channel :- String]
     (render/date-range "empty-file" date channel)))
