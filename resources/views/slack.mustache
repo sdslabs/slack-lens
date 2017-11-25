@@ -1,115 +1,78 @@
 
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title></title>
-    <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="slack.css" rel="stylesheet" type="text/css"/>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title></title>
+  <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="slack.css" rel="stylesheet" type="text/css"/>
 
-  </head>
-  <body>
-    {{#data}}
-    <div class="header">
-      <div class="team-menu">Slack-lens</div>
-      <div class="animated bounceInDown" id="header_">  
-        <h2 id="channel-title">
+</head>
+<body style="overflow:hidden;">
+  <div   id="mySidebar" style="overflow:scroll;">
+    <button onclick="w3_close()">Close &times;</button>
+    <div id="sidebar" style="padding-left:20px;"></div>
+  </div>
+
+  {{#data}}
+  <div class="header">
+    <div class="team-menu">{{slack-name}}</div>
+    <div class="animated bounceInDown" id="header_">  
+      <h2 id="channel-title">
         #{{active}}
-        </h2>
-        <div id="icons">
-          <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
-          <h3 id="line"> | </h3>
-          <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
-          <h3 id="line2"> | </h3>
-          <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
-        </div>
-        <div id="rightIcons">
-          <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
-          <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
-          <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
-          <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
-          <input id="search" placeholder="Search" type="text">
+      </h2>
+      <div id="icons">
+        <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
+        <h3 id="line"> | </h3>
+        <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
+        <h3 id="line2"> | </h3>
+        <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
+      </div>
+      <div id="rightIcons">
+        <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
+        <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
+        <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
+        <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
+        <input id="search" placeholder="dd/mm/yyyy" type="text">
 
 
-          <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
+        <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
 
-          <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
-          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+        <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
+        <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 
         <hr class="bottom-header-line">
-        </div>
       </div>
-
-
     </div>
-    <div class="main">
-      <div class="listings">
-        <div class="listings_channels">
-          <h2 class="listings_header">Channels</h2>
-          <ul class="channel_list">
+  </div>
+  <div class="main">
+    <div class="listings">
+      <div class="listings_channels">
+        <h2 class="listings_header">Channels</h2>
+        <ul class="channel_list">
           {{#channels}}
           {{#_source}}
-            <li class="channel" id="{{name}}" onclick="location='slack-lens?channel={{name}}'"><a class="channel_name"><span><span class="prefix"># </span> {{name}}</span></a></li>
-            {{/_source}}
-            {{/channels}}
-          </ul>
-        </div>
+          <li class="channel" id="{{name}}" onclick="location='slack-lens?channel={{name}}'"><a class="channel_name"><span><span class="prefix"># </span> {{name}}</span></a></li>
+          {{/_source}}
+          {{/channels}}
+        </ul>
       </div>
-      <div class="message-history">
-        {{#messages}}
-        {{#_source}}
-
-        <div class="message">
-        {{#replies}}
-        <a style="position:absolute;right:5%" href="/v1/thread?thread_ts={{ts}}">thread</a>
-        {{/replies}}
-        <img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{ts}}" onload="time_stamp({{ts}})">{{ts}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>        {{/_source}}
-        {{/messages}}
-      </div>
-       
+    </div>
+    <div class="message-history">
     </div>
     <div class="footer">
-      <div class="user-menu"><span class="user-menu_profile-pic"></span><span class="user-menu_username">Bot</span><img class="connection_icon" src="data:image/png;base64,iVBORw0KGgoAAAAN..."/><span class="connection_status">online</span></div>
+      <div class="user-menu"><span class="user-menu_profile-pic"></span><span class="user-menu_username">Bot</span><img class="connection_icon" src=""/><span class="connection_status">online</span></div>
       <div class="input-box">
         <input class="input-box_text" type="text"/>
       </div>
     </div>
     <script>
-
-    function time_stamp(stamp){
-      console.log((new Date(stamp)).toString().split("G")[0]);
-       document.getElementById(stamp.toString()).innerHTML=(new Date(stamp)).toString().split("G")[0];
-    }
-        function check(){
-     document.getElementById("{{active}}").style.backgroundColor = "#4c9689";
-    }  
-    check();
-
-var input = document.getElementById('search');
-    function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-         alert(this.responseText);
-       }
-     };
-     xhttp.open("GET", "data?date="++"&from=", true);
-     xhttp.send();
-    }
-
-input.addEventListener('blur', function(e) {
-    updateCart('product1', this);
-});
-
-input.addEventListener('keypress', function(e) {
-    if ((e.which || e.keyCode) == 13) {
-        input.blur();
-        loadDoc(input.value);
-    }
-});
-
+      var active="{{active}}";
+    </script>
+    <script src="/v1/slack.js">
     </script>
     {{/data}}
   </body>
-</html>
+  </html>
