@@ -39,6 +39,17 @@
                                                                       {:missing {:field :thread_ts}}]}}}}
                             :from from :size size))))
 
+(defn user-message
+  "search the channels"
+  [person channel from size]
+  (:hits (:hits (esd/search es-conn
+                            (:index_name config)
+                            (:mapping1 config)
+                            :query {:filtered {:filter {:bool {:must [(q/term :channel channel)
+                                                                      (q/term :name person)
+                                                                      {:missing {:field :thread_ts}}]}}}}
+                            :from from :size size))))
+
 (defn ch-search
   "search the channels"
   [from size]

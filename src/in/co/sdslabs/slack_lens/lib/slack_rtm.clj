@@ -38,18 +38,18 @@
 
 (defn- thread-check
   [data func]
-  (if (= (:subtype data) "message_replied")
     (func {:replies (get-in data [:message :reply_count])
            :thread_ts
-           (get-in data [:message :thread_ts])})
-    nil))
+           (get-in data [:message :thread_ts])}))
 
 (defn- publish-events
   [data func]
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
     (println (data-map :subtype))
-    (if (data-map :subtype)
-      (thread-check data-map func)                ;; for updating the reply_count for a thread
+    (cond
+          (= (:subtype data-map) "message_replied") (thread-check data-map func)                ;; for updating the reply_count for a thread
+          (or (some (partial = (:subtype data-map)) ["file_share" "bot_message"])
+               (not (data-map :subtype)))
       (bus/publish! event-bus (:type data-map) data))))
 
 (defn connect
@@ -59,7 +59,7 @@
 
 (defn subscribe
   [type func]
-  (let [message-stream (bus/subscribe event-bus type)]
+  (let [message-stream (bus/subscribe event-bus type)]  
     (future (s/consume func message-stream))))
 
 (defn- reset-conn
