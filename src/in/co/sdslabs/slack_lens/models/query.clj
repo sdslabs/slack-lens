@@ -28,13 +28,14 @@
 
 (defn date-search
   "search the channels"
-  [ts channel from size keymap]
+  [ts length channel from size keymap]
   (prn ts)
   (prn keymap)
   (:hits (:hits (esd/search es-conn
                             (:index_name config)
                             (:mapping1 config)
                             :query {:filtered {:filter {:bool {:must [(q/range keymap {:gte ts})
+                                                                      (if (= 0 length) nil (q/range keymap {:lte (+ ts length)}))
                                                                       (q/term :channel channel)
                                                                       {:missing {:field :thread_ts}}]}}}}
                             :from from :size size))))

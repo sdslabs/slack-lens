@@ -52,5 +52,5 @@
     "/data"
     []
     :summary "filtering the messages by date"
-    :query-params [date :- String, channel :- String]
-    (render/date-range "empty-file" date channel)))
+    :query-params [date :- String, channel :- String, length :- Long]
+    (render/date-range "empty-file" date channel length)))

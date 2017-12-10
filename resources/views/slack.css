@@ -15,21 +15,27 @@
   vertical-align: middle;
 }
 
-/////////////////////// channel-header
+.message-history a, #sidebar a{
+  color: blue;
+  text-decoration: none;
+  font:italic bold inherit Georgia, serif;
+}
 
- #header_ {
-  width: 75%;
-  display: block;
-  margin:  auto;
-  height: 15%;
+.message-history a:hover , #sidebar a:hover{
+  font-size:1.01em;
+}
 
+#header_ {
+  width: calc(100% - 220px);
+  float: right;
+  height: 53px;
   background:none;
   background-size: cover;
   border-radius: 0%;
+  border-bottom:1px solid rgba(0,0,0,.2);
   z-index: 1;
 }
-    
-    .search-bottom{
+.search-bottom{
   position: absolute;
   display: block;
   margin: auto;
@@ -46,7 +52,7 @@
 }
 
 #icons{
-  
+
   padding-bottom: 5px;
   
 }
@@ -72,33 +78,34 @@
   z-index: 3;
   
 }
-.phone{
-  position: absolute;
-  top: 45%;
-  right: 36%;
-  opacity: 0.6;
-  z-index: 3;
+#rightIcons{
+  height:15px;
 }
-  
-.cog{
+#wrapper1{
   position: absolute;
   top: 45%;
-  right: 33%;
-  opacity: 0.6;
-  z-index: 3;
-  
+  right: 350px;
+  width: 100px;
+  height: 20px;
+}
+.phone, .cog, .details{
+ position: relative;
+ color: #2C2D30;
+ opacity: 0.7;
+}
+
+
+.phone{
+ left:10%;
+}
+.cog{
+ left:40%;
 }
 
 .details{
-  position: absolute;
-  top: 45%;
-  right: 30%;
-  opacity: 0.6;
-  z-index: 3;
-  
+ left:70%;
 }
 #line3{
-  
   position: absolute;
   right: 33%;
   top: 8.5%;
@@ -110,32 +117,25 @@
   
 }
 
-.search-glass{
-   position: absolute;
-  top: 35%;
-  right: 24%;
-  opacity: 0.5;
-  z-index: 3;
-  
-}
-
-.at{
-  
+#wrapper3{
   position: absolute;
   top: 45%;
-  right: 9%;
-  opacity: 0.6;
-  z-index: 3;
+  right: 20px;
+  width: 100px;
+  height: 20px;
+}
+
+.at, .star-o, .menu{
+  position: relative;
+  color: #2C2D30;
+  opacity: 0.7;
+}
+.at{
+  left:10%;
 }
 
 .star-o{
-  
-   position: absolute;
-  top: 45%;
-  right: 6%;
-  opacity: 0.6;
-  z-index: 3;
-  
+  left:40%;
 }
 .box_{
   display:inline-block;
@@ -143,33 +143,58 @@
   height:1px;
 }
 .menu{
-  
-     position: absolute;
-  top: 45%;
-  right: 3%;
-  opacity: 0.6;
-  z-index: 3;
+  left:70%;
+}
+
+
+#wrapper2{
+  position: absolute;
+  top: 33%;
+  right: 150px;
+  width: 180px;
+  height: 25px;
+}
+.search-glass{
+ position: relative;
+ left:5%;
+ top:20%;
+ opacity: 0.5;
+ z-index: 3;
 }
 
 #search{
-  color:black;
+  border-radius: 0;
   text-align:right;
   position: absolute;
-  right: 12%;
-  top: 30%;
-  height: 50%;
-  width: 14%;
+  left: 0%;
+  height: 100%;
+  width: 130px;
   font-weight: 100;
   padding-right: 10px;
   font-family:"lato";
   font-size: 12px;
+  
+  box-sizing: border-box;
+}
+
+
+#number{
+  text-align:right;
+  position: absolute;
+  right:0;
+  height: 100%;
+  width: 35px;
+  font-weight: 100;
+  padding-left: 1px;
+  font-family:"lato";
+  font-size: 12px;
   opacity: 0.6;
-  color: #2C2D30;
+  border-radius: 0;
   box-sizing: border-box;
 }
 
 #line{
-  
+
   position: absolute;
   left: 7%;
   top: 46.5%;
@@ -181,7 +206,7 @@
   
 }
 #line2{
-  
+
   position: absolute;
   left: 14%;
   top: 46.5%;
@@ -206,14 +231,18 @@
   padding-left: 20px;
   z-index: 3;
 }
-//////////////////////////////////////
+
+
+#mySidebar{background-color:#fff;position:absolute ;right:-30% ;top:53px;width:30%;height:calc(100% - 53px);z-index:20;box-shadow: -2px 2px 7px black;}
 
 html {
+  margin-left:auto;
+  margin-right:auto;
   line-height: 1;
   position: relative;
   height: 100%;
   font-size: 16px;
-//  font-family: Lato, sans-serif;
+  //  font-family: Lato, sans-serif;
 }
 
 body {
@@ -342,7 +371,6 @@ main {
 }
 
 .team-menu {
-  position: relative;
   width: 220px;
   height: 53px;
   line-height: 53px;
@@ -424,7 +452,7 @@ main {
 }
 ul>li:hover{
   background: rgba(34, 5, 0,.3);
-   cursor: hand;
+  cursor: hand;
 }
 
 .unread {
@@ -472,6 +500,7 @@ ul>li:hover{
 }
 
 .message_username {
+  cursor: hand;
   font-weight: 900;
   padding-right: 0.25rem;
   color: #3d3c40 !important;
@@ -495,8 +524,6 @@ ul>li:hover{
 }
 
 .message_content {
-  color: #8b898f;
-  font-style: italic;
   display: block;
   min-height: 1rem;
 }
@@ -521,9 +548,21 @@ ul>li:hover{
   border-radius: 0.2rem;
   width: 48px;
   height: 48px;
-  background-image: url(http://findicons.com/icon/download/102283/fh02/300/png);
   background-size: cover;
   margin-right: 8px;
+}
+
+::-webkit-scrollbar {
+  width: .4em;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 .user-menu_username {

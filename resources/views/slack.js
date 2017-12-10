@@ -114,7 +114,7 @@
       return;
     }
     input.blur();
-    loadDoc("data?date="+input.value+"&channel="+active,"mainview");
+    loadDoc("data?date="+input.value+"&length="+document.getElementById("number").value+"&channel="+active,"mainview");
     input.value="";
   }
 });
