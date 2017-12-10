@@ -1,4 +1,3 @@
-
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -19,10 +18,30 @@
   {{#data}}
   <div class="header">
     <div class="team-menu">{{slack-name}}</div>
-    <div class="animated bounceInDown" id="header_">  
+    <div id="header_">
+
       <h2 id="channel-title">
         #{{active}}
       </h2>
+
+      <div id="rightIcons">
+        <div id="wrapper1">
+          <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
+          <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
+          <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
+        </div>
+        <div id="wrapper2">
+          <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
+          <input id="search" placeholder="dd/mm/yyyy" type="text">
+          <input id="number" type="number" value="0">
+        </div>
+        <div id="wrapper3">
+          <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
+          <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
+          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+        </div>
+      </div>
+
       <div id="icons">
         <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
         <h3 id="line"> | </h3>
@@ -30,21 +49,7 @@
         <h3 id="line2"> | </h3>
         <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
       </div>
-      <div id="rightIcons">
-        <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
-        <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
-        <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
-        <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
-        <input id="search" placeholder="dd/mm/yyyy" type="text">
 
-
-        <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
-
-        <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
-        <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
-
-        <hr class="bottom-header-line">
-      </div>
     </div>
   </div>
   <div class="main">

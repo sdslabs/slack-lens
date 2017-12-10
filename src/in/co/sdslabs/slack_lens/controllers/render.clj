@@ -27,17 +27,17 @@
   (render-template filename {}))
 
 (defn thread [filename thread_ts]
-  (println thread_ts)
   (render-template  filename {:data (json/generate-string {
                                       :messages (query/search thread_ts 0 100 :thread_ts)})}))
 
-(defn date-range [filename date channel]
+(defn date-range [filename date channel length]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
     (render-template  filename {:data (json/generate-string
                                        {:messages (query/date-search
                                                    (/ (c/to-long
                                                        (f/unparse multi-parser (f/parse multi-parser date)))
                                                       1000.0)
+                                                   (* 86400 length)
                                                    channel 0 100 :ts)})})))
 
 (defn userMes
