@@ -548,6 +548,7 @@ ul>li:hover{
   border-radius: 0.2rem;
   width: 48px;
   height: 48px;
+  margin-left:30px;
   background-size: cover;
   margin-right: 8px;
 }
