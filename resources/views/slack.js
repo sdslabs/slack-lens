@@ -1,3 +1,4 @@
+const botImg = "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2015-10-09/12167763254_75a2d1841d07a114dcc3_36.jpg";
     function w3_open() {
       document.getElementById("mySidebar").style.right = "0";
     }
@@ -64,13 +65,13 @@
 
          var userImage = document.createElement("img");
          userImage.setAttribute("class", "message_profile-pic");
-         userImage.setAttribute("src", tmp[x]._source.image_48);
+         userImage.setAttribute("src", tmp[x]._source.image_48 || botImg);
          messageDiv.appendChild(userImage);
 
          var username =document.createElement("a");
          username.setAttribute("href", "#");
          username.setAttribute("class", "message_username ref");
-         username.textContent = tmp[x]._source.name;
+         username.textContent = tmp[x]._source.name || "Bot";
          messageDiv.appendChild(username);
 
          var tsElement =document.createElement("span");
