@@ -32,6 +32,7 @@
 
   :plugins
     [[lein-ring "0.9.6"]
+     [lein-scss "0.3.0"]
      [lein-ancient "0.5.5"]
      [lein-cloverage "1.0.6"]]
 
@@ -53,6 +54,16 @@
   :aliases
     {"package" ["do" "clean," "javac," ["ring" "uberwar"]]
      "docs" ["marg" "-d" "target"]}
+
+  :scss {:builds
+         {:develop    {:source-dir "resources/scss/"
+                       :dest-dir   "resources/css/"
+                       :executable "sassc"
+                       :args       ["-m" "-I" "resources/scss/" "-t" "nested"]}
+          :production {:source-dir "resources/scss/"
+                       :dest-dir   "resources/css/"
+                       :executable "sassc"
+                       :args       ["-I" "resources/scss/" "-t" "compressed"]}}}
 
   :publish {:local-prefix "target/coverage"
             :entry-file "index.html"

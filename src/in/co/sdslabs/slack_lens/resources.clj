@@ -17,14 +17,14 @@
     "/slack.css"
     []
     :summary "the slack-lens front end css"
-    (render/static "slack.css"))
+    (render/css "slack.css"))
 
   (GET*
     "/slack.js"
     []
     :description
     "the javascript code for the dynamic functionality in web-interface"
-    (render/static "slack.js"))
+    (render/js "slack.js"))
 
   (GET*
     "/thread"

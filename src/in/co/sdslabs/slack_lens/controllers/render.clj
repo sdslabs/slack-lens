@@ -12,6 +12,16 @@
   (slurp (clojure.java.io/resource
           (str "views/" template-name))))
 
+(defn render_css [css-file]
+  (clostache/render
+    (slurp (clojure.java.io/resource
+          (str "css/" css-file))) {}))
+
+(defn render_js [js-file]
+  (clostache/render
+    (slurp (clojure.java.io/resource
+            (str "js/" js-file))) {}))
+
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
@@ -23,8 +33,11 @@
    (render-template filename {:data (json/generate-string 
                      {:messages (query/search-miss (str/lower-case channel) 0 100 :channel)})}))
 
-(defn static [filename]
-  (render-template filename {}))
+(defn css [filename]
+  (render_css filename))
+
+(defn js [filename]
+  (render_js filename))
 
 (defn thread [filename thread_ts]
   (render-template  filename {:data (json/generate-string {
