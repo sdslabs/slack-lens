@@ -22,8 +22,8 @@
 
 (defn main
   [options es-conn config]
-  (let [user-type {:conn es-conn :index-name (:index_name config)  :mapping (:mapping2 config)}
-        channel-type {:conn es-conn :index-name (:index_name config)  :mapping (:mapping3 config)}]
+  (let [user-type {:conn es-conn :index-name (:index-name config)  :mapping (:mapping2 config)}
+        channel-type {:conn es-conn :index-name (:index-name config)  :mapping (:mapping3 config)}]
     (swap! conn conj {:api-url (:url options) :token (:token options)})
     (insert-users user-type)
     (insert-channels channel-type)))

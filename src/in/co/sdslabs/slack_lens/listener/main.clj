@@ -30,26 +30,26 @@
   [response ]
   (if (= (response :subtype) "bot_message")
     response
-    (conj (dissoc (es/search-user 
+    (conj (dissoc (es/search-user
                     (get response :user) conn map1) :id)
           (dissoc response :user))))
 
 (defn- channel-map
   [response]
-  (conj {:channel (get (es/search-channel 
+  (conj {:channel (get (es/search-channel
                    (get response :channel) conn map2) :name)}
         (dissoc response :channel)))
 
 (defn- ts
   [data keymap]
     (if (contains? data keymap)
-    (assoc (dissoc data keymap) 
+    (assoc (dissoc data keymap)
            keymap (Double/valueOf (keymap data)))
     data))
 
 (defn- ping-name
   [refname]
-  (if refname 
+  (if refname
     (:name (es/search-user refname conn map1))
     refname))
 
@@ -81,27 +81,26 @@
 (defn setup-elastic
   []
   (let [config (get-config)
-        es-conn (es/connect-es config)]
-    (def iexist (es/index_exist! es-conn (:index_name config)))
-    (if 
-      (es/ensure-index! 
-        es-conn (:index_name config) es-config/settings es-config/mapping1)
-      {:conn es-conn 
-       :index-name (:index_name config)
-       :mapping (:mapping1 config) 
+        es-conn (es/connect-es config)
+        iexist (es/index_exist! es-conn (:index-name config))]
+    (if (es/ensure-index!
+          es-conn (:index-name config) es-config/settings es-config/mapping1)
+      {:conn es-conn
+       :index-name (:index-name config)
+       :mapping (:mapping1 config)
        :index_exist iexist}
-      nil)))
+      {:index_exist iexist})))
 
 
 
 (defn start
   [options]
   (let [conn-options (setup-elastic)
-        rtm-conn (rtm/start options #(es/elastic-update (assoc conn-options :response % )))]
+        rtm-conn (rtm/start options #(es/elastic-update-message (assoc conn-options :response % )))]
        (if (:index_exist conn-options)
          nil
          (map-db/main options (:conn conn-options) (get-config)))
-       (rtm/subscribe "message" 
+       (rtm/subscribe "message"
          (fn [x]
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
