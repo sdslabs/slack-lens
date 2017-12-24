@@ -8,11 +8,15 @@
 (defroutes* v1_routes
   (GET*
     "/slack-lens"
-    []
+    request
     :summary "the html structure fof the web-interface"
-    :query-params [channel :- String]
-    (render/mustache "slack.mustache" channel))
-  
+   (let [ x (:query-params request)]
+        (cond
+          (contains? x "channel")
+              (render/mustache "slack.mustache" (get x "channel"))
+          (not (contains? x "channel"))
+              (render/mustache "slack.mustache" "general"))))
+
   (GET*
     "/slack.css"
     []
@@ -32,7 +36,7 @@
     :summary "data for the thread related messages"
     :query-params [thread_ts :- Double]
     (render/thread "empty-file" thread_ts))
-  
+
 
   (GET*
     "/channel"
@@ -48,7 +52,7 @@
     :query-params [person :- String, channel :- String]
     (render/userMes "empty-file" person channel))
 
-  (GET*
+      (GET*
     "/data"
     []
     :summary "filtering the messages by date"
