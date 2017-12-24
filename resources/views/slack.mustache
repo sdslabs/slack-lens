@@ -3,7 +3,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <title></title>
-  <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>-->
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link href="slack.css" rel="stylesheet" type="text/css"/>
@@ -56,6 +56,9 @@
     <div class="listings">
       <div class="listings_channels">
         <h2 class="listings_header">Channels</h2>
+        <button type="button" id="slackBUTTON_45">
+          <i class="color"></i>
+        </button>
         <ul class="channel_list">
           {{#channels}}
           {{#_source}}
@@ -69,9 +72,7 @@
     </div>
     <div class="footer">
       <div class="user-menu">
-        <img class="user-menu_profile-pic" src="https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2015-10-09/12167763254_75a2d1841d07a114dcc3_36.jpg">
-        <span class="user-menu_username">Bot</span>
-        <span class="connection_status">online</span>
+        <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.avatar&client_id=2194643381.291261153380"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
       </div>
       <div class="input-box">
         <input class="input-box_text" type="text"/>

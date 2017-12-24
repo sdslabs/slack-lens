@@ -3,7 +3,9 @@
     [ring.util.http-response :as http]
     [compojure.api.sweet :refer [defroutes* GET*]]
     [compojure.api.meta]
+    [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
+
 
 (defroutes* v1_routes
   (GET*
@@ -37,6 +39,15 @@
     :query-params [thread_ts :- Double]
     (render/thread "empty-file" thread_ts))
 
+  (GET*
+  "/slack/oauth"
+  request
+  :summary "authentization grant handling"
+   (let [ x (:query-params request)]
+        (cond
+    (contains? x "code") (oauth/codeHandle (get x "code"))
+    (contains? x "error") (oauth/errorHandle (get x "error"))
+    :else nil)))
 
   (GET*
     "/channel"
