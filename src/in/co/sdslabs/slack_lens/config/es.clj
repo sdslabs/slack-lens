@@ -20,6 +20,20 @@
                                        :replies {:type "integer"
                                                  :null_value 0}
                                        :thread_ts {:type "double"}}}})
+(def mapping4 {"login" {:_all {:enabled true}
+
+                           :_id {:path "id"}
+
+                           :_timestamp {:enabled true :path "timestamp"}
+
+                           :properties {:id {:type "string"}
+                                        :name {:type "string"}
+                                        :image_24 {:type "string"}
+                                        :token {:type "string"}
+                                        :email {:type "string"}
+                                        :access_token {:type "string"}
+                                        }
+                                        }})
 
 (def mapping2 {"pehchankaun" {:_all {:enabled true}
 
@@ -39,3 +53,4 @@
 
                            :properties {:id {:type "string"}
                                         :name {:type "string"}}}})
+
