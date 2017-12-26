@@ -1,13 +1,16 @@
 (ns in.co.sdslabs.slack-lens.service
   (:require
+
    [clojure.string :as string]
    [clojure.tools.logging :refer [info]]
-   [compojure.api.sweet :refer :all]
-   [compojure.route :as route]
-   [compojure.api.middleware :refer [api-middleware]]
+
    [ring.middleware.content-type :refer [wrap-content-type]]
    [ring.middleware.logger :refer [wrap-with-logger]]
+   [compojure.api.sweet :refer :all]
+   [compojure.route :as route]
    [compojure.api.meta]
+   [compojure.api.middleware :refer [api-middleware]]
+
    [in.co.sdslabs.slack-lens [resources :as resources]]))
 
 (defn initialize!
@@ -42,9 +45,12 @@
                          resources/v1_routes)
                (route/not-found "404 Not Found\n")))
 
+
+
+
 (def main-handler
-  (-> slack-lens-api
-      (wrap-with-logger)
-      (wrap-content-type)
-      ;Add external middlewares here, these are called after the request handler
+  (as-> slack-lens-api $
+      (wrap-with-logger $)
+      (wrap-content-type $)
+          ;Add external middlewares here, these are called after the request handler
 ))

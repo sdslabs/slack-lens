@@ -30,7 +30,7 @@
                                      :slack-name (:slack-name query/config)
                                      :channels (query/ch-search 0 100)}}))
 (defn message [filename channel]
-   (render-template filename {:data (json/generate-string 
+   (render-template filename {:data (json/generate-string
                      {:messages (query/search-miss (str/lower-case channel) 0 100 :channel)})}))
 
 (defn css [filename]
@@ -55,4 +55,7 @@
 
 (defn userMes
   [filename person channel]
-  (render-template filename {:data (json/generate-string {:messages (query/user-message person channel 0 100)})}))
+  (render-template filename {:data
+                                (json/generate-string
+                                  {:messages
+                                    (query/user-message person channel 0 100)})}))

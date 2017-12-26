@@ -2,6 +2,7 @@
   (:require [clojurewerkz.elastisch.rest.document :as esd]
             [clojurewerkz.elastisch.query :as q]
             [in.co.sdslabs.slack-lens.lib.es :as es]
+            [clojure.set :refer [rename-keys]]
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
 (def config (main/get-config))
@@ -11,7 +12,7 @@
   "search the channels"
   [channel from size keymap]
   (:hits (:hits (esd/search es-conn
-                            (:index_name config)
+                            (:index-name config)
                             (:mapping1 config)
                             :query (q/term keymap channel)
                             :from from :size size))))
@@ -20,7 +21,7 @@
   "search the channels"
   [channel from size keymap]
   (:hits (:hits (esd/search es-conn
-                            (:index_name config)
+                            (:index-name config)
                             (:mapping1 config)
                             :query (q/term keymap channel)
                             :filter {:missing {:field :thread_ts}}
@@ -32,7 +33,7 @@
   (prn ts)
   (prn keymap)
   (:hits (:hits (esd/search es-conn
-                            (:index_name config)
+                            (:index-name config)
                             (:mapping1 config)
                             :query {:filtered {:filter {:bool {:must [(q/range keymap {:gte ts})
                                                                       (if (= 0 length) nil (q/range keymap {:lte (+ ts length)}))
@@ -44,7 +45,7 @@
   "search the channels"
   [person channel from size]
   (:hits (:hits (esd/search es-conn
-                            (:index_name config)
+                            (:index-name config)
                             (:mapping1 config)
                             :query {:filtered {:filter {:bool {:must [(q/term :channel channel)
                                                                       (q/term :name person)
@@ -55,7 +56,14 @@
   "search the channels"
   [from size]
   (:hits (:hits (esd/search es-conn
-                            (:index_name config)
+                            (:index-name config)
                             (:mapping3 config)
                             :query (q/match-all)
                             :from from :size size))))
+
+
+(defn feed-user-data
+  "data of the user is feeded"
+  [data]
+  (es/elastic-update (rename-keys (assoc (select-keys config [:index-name :mapping4])
+                          :response data :conn es-conn) { :mapping4 :mapping })))

@@ -28,7 +28,7 @@
             false))
         )))
 
-(defn index_exist! 
+(defn index_exist!
   [conn index-name]
   (esi/exists? conn index-name))
 
@@ -49,16 +49,30 @@
 
 
 
-(defn elastic-update 
+(defn elastic-update-message
   [{:keys [conn index-name response mapping]}]
 (time (Thread/sleep 2000))
-  (esd/update-with-script conn index-name mapping 
-     (:_id (nth (:hits (:hits (esd/search conn index-name mapping 
-                                 :query (q/term 
-                                            :ts (str/lower-case (
-                                            :thread_ts response))))))
-             0)) 
+
+  (esd/update-with-script conn index-name mapping
+     (:_id (nth (:hits (:hits (esd/search conn index-name mapping
+                                 :query (q/term
+                                            :ts (str/lower-case ( :thread_ts response))))))
+             0))
      (str "ctx._source.replies = " (:replies response))))
+
+(defn elastic-update
+  [{:keys [conn index-name response mapping]}]
+  (if (:name response)
+  (let [present  (:hits (:hits (esd/search conn index-name mapping
+                                :query (q/term
+                                              :id (str/lower-case (:id response))))))]
+  (if (not (empty? present))
+  (esd/update-with-script conn index-name mapping (:_id (nth  present 0))
+                                              (str "ctx._source.token = \"" (:token response) "\""))
+  (esd/create conn index-name mapping response)
+                                              )))
+      nil)
+
 
 (defn elastic-delete
   "Creates document with options passed as param and sets it's
@@ -71,14 +85,16 @@
     "search the user"
     [id conn map1]
     (:_source (nth (:hits (:hits (esd/search conn
-                (:index_name map1)  
-                (:mapping2 map1) 
+                (:index-name map1)
+                (:mapping2 map1)
                 :query (q/term :id (str/lower-case id))))) 0)))
 
 (defn search-channel
     "search the channel"
     [id conn map2]
     (:_source (nth (:hits (:hits (esd/search conn
-                (:index_name map2)  
-                (:mapping3 map2) 
+                (:index-name map2)
+                (:mapping3 map2)
                 :query (q/term :id (str/lower-case id))))) 0)))
+
+
