@@ -14,20 +14,33 @@
     "/slack-lens"
     request
     :summary "the html structure fof the web-interface"
-   (let [ x (:query-params request) [type cookie] (str/split (get (:headers request) "cookie") #"=")]
-   (if (query/validate-cookie type cookie)
-        (cond
-          (contains? x "channel")
-              (render/mustache "slack.mustache" (get x "channel"))
-          (not (contains? x "channel"))
-              (render/mustache "slack.mustache" "general" cookie))
-              (render/html "home.mustache"))))
+   (if (get (:headers request) "cookie")
+       (let [ x (:query-params request)
+              cookie (nth (str/split
+                        (nth (str/split
+                            (get (:headers request) "cookie") #"token=")
+                        1) #"; ")
+                      0)]
+       (if (query/validate-cookie cookie)
+            (cond
+              (contains? x "channel")
+                  (render/mustache "slack.mustache" (get x "channel") cookie)
+              (not (contains? x "channel"))
+                  (render/mustache "slack.mustache" "general" cookie))
+                  (render/html "home.mustache")))
+                  (render/html "home.mustache")))
 
   (GET*
     "/slack.css"
     []
     :summary "the slack-lens front end css"
     (render/css "slack.css"))
+
+  (GET*
+    "/home.css"
+    []
+    :summary "css for slack-lens home page"
+    (render/css "home.css"))
 
   (GET*
     "/slack.js"
@@ -52,6 +65,14 @@
     (contains? x "code") (oauth/codeHandle (get x "code"))
     (contains? x "error") (oauth/errorHandle (get x "error"))
     :else nil)))
+
+  (GET*
+    "/logout"
+    []
+    :query-params [token :- String]
+    (do
+      (query/logout token)
+      {:status 204 :headers { "Content-Type" "text/html"}}))
 
   (GET*
     "/channel"

@@ -42,7 +42,7 @@
                 "document.cookie = \"token="
                 token
                 ";expires=\" + d.toUTCString()+\";path=/\";"
-                "window.location.href='/v1/slack-lens'</script>")}
+                "setTimeout(function(){window.location.href='/v1/slack-lens'}, 500);</script>redirecting to home")}
     ))
 
 (defn errorHandle

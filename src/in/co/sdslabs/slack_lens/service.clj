@@ -9,6 +9,7 @@
    [compojure.api.sweet :refer :all]
    [compojure.route :as route]
    [compojure.api.meta]
+   [ring.middleware.resource :as res]
    [compojure.api.middleware :refer [api-middleware]]
 
    [in.co.sdslabs.slack-lens [resources :as resources]]))
@@ -51,6 +52,7 @@
 (def main-handler
   (as-> slack-lens-api $
       (wrap-with-logger $)
+      (res/wrap-resource $ "public")
       (wrap-content-type $)
           ;Add external middlewares here, these are called after the request handler
 ))
