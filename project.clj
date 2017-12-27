@@ -15,6 +15,7 @@
      [metosin/compojure-api "0.22.0"]
      [org.slf4j/slf4j-api "1.7.12"]
      [org.slf4j/slf4j-log4j12 "1.7.12"]
+     [buddy/buddy-auth "2.1.0"]
      [log4j/apache-log4j-extras "1.2.17"]
      [ring.middleware.logger "0.5.0"]
      [de.ubercode.clostache/clostache "1.3.1"]

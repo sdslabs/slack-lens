@@ -14,7 +14,7 @@ const botImg = "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2015-10-
     }
 
     function check(){
-     document.getElementById(active).style.backgroundColor = "#4c9689";
+     document.getElementById(active).style.backgroundColor = "#6698C8";
    }
    check();
 

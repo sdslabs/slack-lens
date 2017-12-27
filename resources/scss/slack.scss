@@ -65,7 +65,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
 }
 
 #icons{
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .star,.user,.pin{
@@ -75,7 +75,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
 }
 
 #rightIcons{
-  height:15px;
+  height:8px;
 }
 
 #wrapper1{
@@ -112,7 +112,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   opacity: 0.5;
   font-weight: 100;
   color: $icon-color;
-  
+
 }
 
 #wrapper3{
@@ -162,6 +162,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
 }
 
 #search{
+  border-radius: 5px;
   border-radius: 0;
   text-align:right;
   position: absolute;
@@ -172,7 +173,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   padding-right: 10px;
   font-family:"lato";
   font-size: 12px;
-  
+
   box-sizing: border-box;
 }
 
@@ -201,14 +202,14 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   opacity: 0.5;
   font-weight: 100;
   color: #2C2D30;
-  
+
 }
 
 .bottom-header-line{
   margin-left: 8px;
   width: 98%;
   margin-top: 0;
-  
+
 }
 
 #channel-title{
@@ -217,6 +218,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   font-size: 18px;
   font-weight: 800;
   padding-left: 20px;
+  padding-top: 5px;
   z-index: 3;
 }
 
@@ -299,8 +301,8 @@ table {
   font-weight: 900;
   padding: 0 1rem;
   color: #ffffff;
-  background: #3e313c;
-  border-bottom: 2px solid #372c36;
+  background:#313e4d;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
   float: left;
   cursor: pointer;
 }
@@ -315,6 +317,25 @@ table {
   cursor: pointer;
 }
 
+.color {
+  box-sizing: border-box;
+  color: rgb(193, 197, 202);
+  cursor: pointer;
+  font-family: NotoSansJP, Slack-Lato, appleLogo, sans-serif;
+  font-size: 16px;
+  font-variant: common-ligatures;
+  font-variant-ligatures: common-ligatures;
+  line-height: 32px;
+  text-align: left;
+  text-decoration: none solid rgb(193, 197, 202);
+  text-size-adjust: 100%;
+  white-space: nowrap;
+  column-rule-color: rgb(193, 197, 202);
+  user-select: none;
+  caret-color: rgb(193, 197, 202);
+  border: 0px none rgb(193, 197, 202);
+  outline: rgb(193, 197, 202) none 0px;
+}
 .channel-menu_prefix {
   color: #9e9ea6;
   padding-right: 0.1rem;
@@ -326,7 +347,7 @@ table {
   width: 220px;
   float: left;
   color: #ab9ba9;
-  background-color: #4d394b;
+  background-color: rgb(49, 62, 77);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -366,14 +387,14 @@ table {
 .channel {
   height: 24px;
   line-height: 24px;
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-  margin-right: 17px;
+  margin-right: 0;
   color: #ffffff;
+
   padding-left: 1rem;
 }
 ul>li:hover{
-  background: rgba(34, 5, 0,.3);
+  background: rgba(208, 208, 208, 0.5);
+  opacity: 0.5;
   cursor: hand;
 }
 
@@ -417,7 +438,7 @@ ul>li:hover{
   border-radius: 0.2rem;
   width: 36px;
   height: 36px;
-  
+
   background-size: cover;
 }
 
@@ -455,8 +476,8 @@ ul>li:hover{
   width: 220px;
   height: 100%;
   cursor: pointer;
-  background: #3e313c;
-  border-top: 2px solid #372c36;
+  background: #313e4d;
+  border-top: 2px solid rgba(0,0,0,.5);
   padding: 7px 0 9px 8px;
   height: 4rem;
   position: fixed;
