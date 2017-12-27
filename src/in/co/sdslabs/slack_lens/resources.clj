@@ -3,7 +3,9 @@
     [ring.util.http-response :as http]
     [compojure.api.sweet :refer [defroutes* GET*]]
     [compojure.api.meta]
+    [clojure.string :as str]
     [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]
+    [in.co.sdslabs.slack-lens.models.query :as query]
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
 
 
@@ -12,12 +14,14 @@
     "/slack-lens"
     request
     :summary "the html structure fof the web-interface"
-   (let [ x (:query-params request)]
+   (let [ x (:query-params request) [type cookie] (str/split (get (:headers request) "cookie") #"=")]
+   (if (query/validate-cookie type cookie)
         (cond
           (contains? x "channel")
               (render/mustache "slack.mustache" (get x "channel"))
           (not (contains? x "channel"))
-              (render/mustache "slack.mustache" "general"))))
+              (render/mustache "slack.mustache" "general" cookie))
+              (render/html "home.mustache"))))
 
   (GET*
     "/slack.css"

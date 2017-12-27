@@ -22,12 +22,18 @@
     (slurp (clojure.java.io/resource
             (str "js/" js-file))) {}))
 
+(defn render_html [html-file]
+  (clostache/render
+    (slurp (clojure.java.io/resource
+            (str "views/" html-file))) {}))
+
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
-(defn mustache [filename active]
+(defn mustache [filename active token]
   (render-template  filename {:data {:active active
                                      :slack-name (:slack-name query/config)
+                                     :user (query/user-info token)
                                      :channels (query/ch-search 0 100)}}))
 (defn message [filename channel]
    (render-template filename {:data (json/generate-string
@@ -38,6 +44,9 @@
 
 (defn js [filename]
   (render_js filename))
+
+(defn html [filename]
+  (render_html filename))
 
 (defn thread [filename thread_ts]
   (render-template  filename {:data (json/generate-string {

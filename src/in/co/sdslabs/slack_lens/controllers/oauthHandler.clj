@@ -30,7 +30,7 @@
                     true)
             token (random-token)]
     (query/feed-user-data (assoc
-        (select-keys (:user response) [:image_24 :email :name :id])
+        (select-keys (:user response) [:image_48 :email :name :id])
         :token token))
     {:status 200
     :headers {

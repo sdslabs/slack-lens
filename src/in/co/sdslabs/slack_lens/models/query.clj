@@ -52,6 +52,15 @@
                                                                       {:missing {:field :thread_ts}}]}}}}
                             :from from :size size))))
 
+(defn user-info
+  "get user details"
+  [token]
+  (nth (:hits (:hits (esd/search es-conn
+                            (:index-name config)
+                            (:mapping4 config)
+                            :query (q/term :token token))))
+                            0))
+
 (defn ch-search
   "search the channels"
   [from size]
@@ -67,3 +76,13 @@
   [data]
   (es/elastic-update (rename-keys (assoc (select-keys config [:index-name :mapping4])
                           :response data :conn es-conn) { :mapping4 :mapping })))
+
+
+(defn validate-cookie
+  [type token]
+  (if (= type "token")
+    (not (empty? (:hits (:hits (esd/search  es-conn
+                    (:index-name config)
+                    (:mapping4 config)
+                    :query (q/term :token token))))))
+    nil))
