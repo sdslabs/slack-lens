@@ -38,11 +38,11 @@
         <div id="wrapper3">
           <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
           <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
-          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
+          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true" onclick="dropdownHandle()"></i>
         </div>
       </div>
 
-      <div id="icons">
+      <div id="icons" style="pointer-events:none;">
         <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
         <h3 id="line"> | </h3>
         <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
@@ -52,6 +52,9 @@
 
     </div>
   </div>
+        <div id="dropdown" >
+        <button id="logout">logout</button>
+        </div>
   <div class="main">
     <div class="listings">
       <div class="listings_channels">

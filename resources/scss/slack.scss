@@ -31,6 +31,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   color: blue;
   text-decoration: none;
   font:italic bold inherit Georgia, serif;
+
   &:hover{
     font-size:1.01em;
   }
@@ -137,6 +138,7 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
 }
 .menu{
   left:70%;
+  cursor: pointer;
 }
 
 .box_{
@@ -491,7 +493,7 @@ ul>li:hover{
   border-radius: 0.2rem;
   width: 48px;
   height: 48px;
-  margin-left:30px;
+  margin-left:10px;
   background-size: cover;
   margin-right: 8px;
 }
@@ -515,7 +517,6 @@ ul>li:hover{
   font-weight: 900;
   line-height: 1.5rem;
   margin-top: 0.2rem;
-  max-width: 120px;
 }
 
 .connection_icon {
@@ -548,3 +549,34 @@ ul>li:hover{
   min-height: 41px !important;
   padding: 9px 5px 9px 8px;
 }
+
+#dropdown {
+  position: absolute;
+  right: 0px;
+  width: 140px;
+  height: 35px;
+  background-color: #f9f9f9;
+  display: none;
+  padding-top: 8px;
+  padding-right: 24px;
+  z-index:100;
+  cursor: hand;
+
+  a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background-color: #f9f9f9;
+
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }
+  #logout {
+    width:132px;
+    height: 35px;
+  }
+}
+
+
