@@ -30,10 +30,10 @@
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
-(defn mustache [filename active token]
+(defn mustache [filename active cookie]
   (render-template  filename {:data {:active active
                                      :slack-name (:slack-name query/config)
-                                     :user (query/user-info token)
+                                     :user (query/user-info cookie)
                                      :channels (query/ch-search 0 100)}}))
 (defn message [filename channel]
    (render-template filename {:data (json/generate-string

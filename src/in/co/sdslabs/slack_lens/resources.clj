@@ -13,22 +13,22 @@
   (GET*
     "/slack-lens"
     request
-    :summary "the html structure fof the web-interface"
-   (if (get (:headers request) "cookie")
-       (let [ x (:query-params request)
-              cookie (nth (str/split
-                        (nth (str/split
-                            (get (:headers request) "cookie") #"token=")
-                        1) #"; ")
-                      0)]
-       (if (query/validate-cookie cookie)
+    :summary "route for homepage"
+    (if (not= (.indexOf (get (:headers request) "cookie") "cookie=") -1)
+        (let [ x (:query-params request)
+               cookie (-> (get (:headers request) "cookie")
+                         (str/split #"cookie=")
+                         (nth 1)
+                         (str/split #"; ")
+                         (nth 0))]
+          (if (query/validate-cookie cookie)
             (cond
               (contains? x "channel")
-                  (render/mustache "slack.mustache" (get x "channel") cookie)
+                (render/mustache "slack.mustache" (get x "channel") cookie)
               (not (contains? x "channel"))
-                  (render/mustache "slack.mustache" "general" cookie))
-                  (render/html "home.mustache")))
-                  (render/html "home.mustache")))
+                (render/mustache "slack.mustache" "general" cookie))
+            (render/html "home.mustache")))
+        (render/html "home.mustache")))
 
   (GET*
     "/slack.css"

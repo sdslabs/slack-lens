@@ -49,7 +49,7 @@
                            :properties {:id {:type "string"}
                                         :name {:type "string"}
                                         :image_48 {:type "string"}
-                                        :token {:type "string"}
+                                        :cookie {:type "string"}
                                         :email {:type "string"}
                                         :access_token {:type "string"}
                                         }

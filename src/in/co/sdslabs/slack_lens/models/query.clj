@@ -54,11 +54,11 @@
 
 (defn user-info
   "get user details"
-  [token]
+  [cookie]
   (nth (:hits (:hits (esd/search es-conn
                             (:index-name config)
                             (:mapping4 config)
-                            :query (q/term :token token))))
+                            :query (q/term :cookie cookie))))
                             0))
 
 (defn ch-search
@@ -79,10 +79,9 @@
 
 
 (defn validate-cookie
-  [type token]
-  (if (= type "token")
+  [cookie]
     (not (empty? (:hits (:hits (esd/search  es-conn
                     (:index-name config)
                     (:mapping4 config)
-                    :query (q/term :token token))))))
-    nil))
+                    :query (q/term :cookie cookie)))))))
+

@@ -16,9 +16,9 @@
        slurp
        (json/parse-string true)))
 
-(defn random-token
+(defn random-cookie
   []
-  (let [randomdata (nonce/random-bytes 16)]
+  (let [randomdata (nonce/random-bytes 32)]
     (codecs/bytes->hex randomdata)))
 
 
@@ -28,10 +28,10 @@
                             :client_id (:client_id (get-config))
                             :client_secret (:client_secret (get-config))}}))
                     true)
-            token (random-token)]
+            cookie (random-cookie)]
     (query/feed-user-data (assoc
         (select-keys (:user response) [:image_48 :email :name :id])
-        :token token))
+        :cookie cookie))
     {:status 200
     :headers {
                 "Content-Type" "text/html"}
@@ -39,8 +39,8 @@
                 "d.setTime("
                 (+  (c/to-long (str (l/local-now))) (apply * 7 [24 3600 1000]))
                 ");"
-                "document.cookie = \"token="
-                token
+                "document.cookie = \"cookie="
+                cookie
                 ";expires=\" + d.toUTCString()+\";path=/\";"
                 "setTimeout(function(){window.location.href='/v1/slack-lens'}, 500);</script>redirecting to home")}
     ))
