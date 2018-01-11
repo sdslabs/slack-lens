@@ -5,83 +5,118 @@
             [clojure.set :refer [rename-keys]]
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; client side query handler
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; some useful constants
 (def config (main/get-config))
 (def es-conn (es/connect-es config))
+
 
 (defn search
   "search the channels"
   [channel from size keymap]
-  (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping1 config)
-                            :query (q/term keymap channel)
-                            :from from :size size))))
+  (-> (esd/search es-conn
+          (:index-name config)
+          (:mapping1 config)
+          :query (q/term keymap channel)
+          :from from :size size)
+      (:hits )
+      (:hits )))
 
 (defn search-miss
   "search the channels"
   [channel from size keymap]
-  (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping1 config)
-                            :query (q/term keymap channel)
-                            :filter {:missing {:field :thread_ts}}
-                            :from from :size size))))
+  (-> (esd/search es-conn
+          (:index-name config)
+          (:mapping1 config)
+          :query (q/term keymap channel)
+          :filter {:missing {:field :thread_ts}}
+          :from from :size size)
+      (:hits )
+      (:hits )))
+
+
+;; searching using multiple conditions
+(defn- search-by-multiple-conditions
+  [arg from size]
+  (as-> arg $
+  (array-map :must $)
+  (array-map :bool $)
+  (array-map :filter $)
+  (array-map :filtered $)
+  (array-map :query $)
+  (esd/search es-conn
+      (:index-name config)
+      (:mapping1 config)
+      $
+      :from from :size size)
+  (:hits $)
+  (:hits $)))
 
 (defn date-search
   "search the channels"
   [ts length channel from size keymap]
-  (prn ts)
-  (prn keymap)
-  (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping1 config)
-                            :query {:filtered {:filter {:bool {:must [(q/range keymap {:gte ts})
-                                                                      (if (= 0 length) nil (q/range keymap {:lte (+ ts length)}))
-                                                                      (q/term :channel channel)
-                                                                      {:missing {:field :thread_ts}}]}}}}
-                            :from from :size size))))
+  (search-by-multiple-conditions
+      [(q/range keymap {:gte ts})
+       (if (= 0 length)
+            nil
+            (q/range keymap
+                {:lte (+ ts length)}))
+       (q/term :channel channel)
+       {:missing {:field :thread_ts}}]
+      from size))
 
 (defn user-message
   "search the channels"
   [person channel from size]
-  (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping1 config)
-                            :query {:filtered {:filter {:bool {:must [(q/term :channel channel)
-                                                                      (q/term :name person)
-                                                                      {:missing {:field :thread_ts}}]}}}}
-                            :from from :size size))))
+  (search-by-multiple-conditions
+      [(q/term :channel channel)
+       (q/term :name person)
+       {:missing {:field :thread_ts}}]
+      from size))
 
 (defn user-info
   "get user details"
   [cookie]
-  (nth (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping4 config)
-                            :query (q/term :cookie cookie))))
-                            0))
+  (-> (esd/search es-conn
+          (:index-name config)
+          (:mapping4 config)
+          :query (q/term :cookie cookie))
+      (:hits )
+      (:hits )
+      (nth 0)))
 
 (defn ch-search
   "search the channels"
   [from size]
-  (:hits (:hits (esd/search es-conn
-                            (:index-name config)
-                            (:mapping3 config)
-                            :query (q/match-all)
-                            :from from :size size))))
+  (-> (esd/search es-conn
+          (:index-name config)
+          (:mapping3 config)
+          :query (q/match-all)
+          :from from :size size)
+      (:hits )
+      (:hits )))
 
 
 (defn feed-user-data
   "data of the user is feeded"
   [data]
-  (es/elastic-update (rename-keys (assoc (select-keys config [:index-name :mapping4])
-                          :response data :conn es-conn) { :mapping4 :mapping })))
-
+  (as-> config $
+  (select-keys $ [:index-name :mapping4])
+  (assoc $ :response data
+           :conn es-conn)
+  (rename-keys $ { :mapping4 :mapping })
+  (es/elastic-update $)))
 
 (defn validate-cookie
   [cookie]
-    (not (empty? (:hits (:hits (esd/search  es-conn
-                    (:index-name config)
-                    (:mapping4 config)
-                    :query (q/term :cookie cookie)))))))
-
+  (as-> (esd/search  es-conn
+              (:index-name config)
+              (:mapping4 config)
+              :query (q/term :cookie cookie)) $
+        (:hits $)
+        (:hits $)
+        (empty? $)
+        (not $)))
