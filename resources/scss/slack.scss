@@ -1,4 +1,8 @@
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+
 $icon-color: #2C2D30;
+$gray: #92959E;
 
 
 /* Default properties*/
@@ -27,216 +31,6 @@ article, aside, details, figure, figcaption, footer, header, hgroup, menu, nav, 
   vertical-align: middle;
 }
 
-.message-history a, #sidebar a{
-  color: blue;
-  text-decoration: none;
-  font:italic bold inherit Georgia, serif;
-
-  &:hover{
-    font-size:1.01em;
-  }
-}
-
-
-/* Head */
-#header_ {
-  width: calc(100% - 220px);
-  float: right;
-  height: 53px;
-  background:none;
-  background-size: cover;
-  border-radius: 0%;
-  border-bottom:1px solid rgba(0,0,0,.2);
-  z-index: 1;
-}
-.search-bottom{
-  position: absolute;
-  display: block;
-  margin: auto;
-  left: 28%;
-  bottom: 3%;
-  height: 5%;
-  width: 70%;
-  font-weight: 100;
-  padding-left: 28px;
-  font-family:"lato";
-  font-size: 12px;
-  opacity: 0.6;
-  color: $icon-color;
-}
-
-#icons{
-  padding-bottom: 10px;
-}
-
-.star,.user,.pin{
-  padding-left: 3%;
-  opacity: 0.6;
-  z-index: 3;
-}
-
-#rightIcons{
-  height:8px;
-}
-
-#wrapper1{
-  position: absolute;
-  top: 45%;
-  right: 350px;
-  width: 100px;
-  height: 20px;
-}
-
-.phone, .cog, .details{
- position: relative;
- color: $icon-color;
- opacity: 0.7;
-}
-
-
-.phone{
- left:10%;
-}
-.cog{
- left:40%;
-}
-.details{
- left:70%;
-}
-
-#line3{
-  position: absolute;
-  right: 33%;
-  top: 8.5%;
-  font-family:"lato";
-  font-size: 18px;
-  opacity: 0.5;
-  font-weight: 100;
-  color: $icon-color;
-
-}
-
-#wrapper3{
-  position: absolute;
-  top: 45%;
-  right: 20px;
-  width: 100px;
-  height: 20px;
-}
-
-.at, .star-o, .menu{
-  position: relative;
-  color: $icon-color;
-  opacity: 0.7;
-}
-.at{
-  left:10%;
-}
-
-.star-o{
-  left:40%;
-}
-.menu{
-  left:70%;
-  cursor: pointer;
-}
-
-.box_{
-  display:inline-block;
-  width:1px;
-  height:1px;
-}
-
-
-#wrapper2{
-  position: absolute;
-  top: 33%;
-  right: 150px;
-  width: 180px;
-  height: 25px;
-}
-.search-glass{
- position: relative;
- left:5%;
- top:20%;
- opacity: 0.5;
- z-index: 3;
-}
-
-#search{
-  border-radius: 5px;
-  border-radius: 0;
-  text-align:right;
-  position: absolute;
-  left: 0%;
-  height: 100%;
-  width: 130px;
-  font-weight: 100;
-  padding-right: 10px;
-  font-family:"lato";
-  font-size: 12px;
-
-  box-sizing: border-box;
-}
-
-
-#number{
-  text-align:right;
-  position: absolute;
-  right:0;
-  height: 100%;
-  width: 35px;
-  font-weight: 100;
-  padding-left: 1px;
-  font-family:"lato";
-  font-size: 12px;
-  opacity: 0.6;
-  border-radius: 0;
-  box-sizing: border-box;
-}
-
-#line, #line2{
-  position: absolute;
-  left: 14%;
-  top: 46.5%;
-  font-family:"lato";
-  font-size: 13px;
-  opacity: 0.5;
-  font-weight: 100;
-  color: #2C2D30;
-
-}
-
-.bottom-header-line{
-  margin-left: 8px;
-  width: 98%;
-  margin-top: 0;
-
-}
-
-#channel-title{
-  color: $icon-color;
-  font-family:"lato";
-  font-size: 18px;
-  font-weight: 800;
-  padding-left: 20px;
-  padding-top: 5px;
-  z-index: 3;
-}
-
-/* Head */
-
-#mySidebar{
-  background-color:#fff;
-  position:absolute ;
-  right:-30% ;
-  top:53px;
-  width:30%;
-  height:calc(100% - 53px);
-  z-index:20;
-  box-shadow: -2px 2px 7px black;
-}
-
 html {
   margin-left:auto;
   margin-right:auto;
@@ -253,6 +47,7 @@ body {
   margin: 0;
   padding-top: 53px;
   padding-bottom: 64px;
+  font: 14px/20px "Lato", Arial, sans-serif;
 }
 
 a img {
@@ -276,12 +71,246 @@ table {
   border-spacing: 0;
 }
 
+#sidebar {
+  padding:0px 8px;
+}
+
+.message-history a, #sidebar a{
+  color: blue;
+  text-decoration: none;
+  font:italic bold inherit Georgia, serif;
+
+  &:hover{
+    font-size:1.01em;
+  }
+}
+
+
+/* Head */
+
+.search-bottom{
+  position: absolute;
+  display: block;
+  margin: auto;
+  left: 28%;
+  bottom: 3%;
+  height: 5%;
+  width: 70%;
+  font-weight: 100;
+  padding-left: 28px;
+  font-family:"lato";
+  font-size: 12px;
+  opacity: 0.6;
+  color: $icon-color;
+}
+
+
+
+.star,.user,.pin{
+  padding-left: 3%;
+  opacity: 0.6;
+  z-index: 3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#mySidebar{
+  background-color:#fff;
+  position:absolute ;
+  right:-30% ;
+  top:53px;
+  width:30%;
+  height:calc(100% - 53px);
+  z-index:20;
+  box-shadow: 1px .5px 7px black;
+}
+
+
+
+
+/* header */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   height: 53px;
   width: 100%;
+
+
+  /* common properties */
+  .box_{
+    display:inline-block;
+    width:1px;
+    height:1px;
+  }
+
+  #icons{
+    padding-bottom: 10px;
+  }
+  /* common properties */
+
+  /* different layers of element */
+  #line, #line2{
+    position: absolute;
+    left: 14%;
+    top: 46.5%;
+    font-family:"lato";
+    font-size: 13px;
+    opacity: 0.5;
+    font-weight: 100;
+    color: #2C2D30;
+
+  }
+
+  #line3{
+    position: absolute;
+    right: 33%;
+    top: 8.5%;
+    font-family:"lato";
+    font-size: 18px;
+    opacity: 0.5;
+    font-weight: 100;
+    color: $icon-color;
+
+  }
+
+  .bottom-header-line{
+    margin-left: 8px;
+    width: 98%;
+    margin-top: 0;
+
+  }
+
+  #header_ {
+    width: calc(100% - 220px);
+    float: right;
+    height: 53px;
+    background:none;
+    background-size: cover;
+    border-radius: 0%;
+    border-bottom:1px solid rgba(0,0,0,.2);
+    z-index: 1;
+  }
+  /* different layers of element */
+
+  #channel-title{
+    color: $icon-color;
+    font-family:"lato";
+    font-size: 18px;
+    font-weight: 800;
+    padding-left: 20px;
+    padding-top: 5px;
+    z-index: 3;
+  }
+
+  #rightIcons{
+    height:8px;
+
+    #wrapper1{
+      position: absolute;
+      top: 45%;
+      right: 350px;
+      width: 100px;
+      height: 20px;
+
+
+      .phone, .cog, .details{
+        position: relative;
+        color: $icon-color;
+        opacity: 0.7;
+       }
+
+       .phone{
+        left:10%;
+       }
+       .cog{
+        left:40%;
+       }
+       .details{
+        left:70%;
+       }
+    }
+
+    #wrapper2{
+      position: absolute;
+      top: 33%;
+      right: 150px;
+      width: 180px;
+      height: 25px;
+
+      .search-glass{
+        position: relative;
+        left:5%;
+        top:20%;
+        opacity: 0.5;
+        z-index: 3;
+      }
+      input {
+        position: absolute;
+        text-align:right;
+        border: 1.5px solid grey;
+        font-family:"lato";
+        font-size: 14px;
+        font-weight: 100;
+        border-radius: 10px;
+        height: 120%;
+
+        &:focus {
+          border: none;
+        }
+       }
+
+
+       #search{
+         left: 0%;
+         width: 130px;
+         padding-right: 10px;
+        }
+
+        #number{
+         right:0;
+         width: 35px;
+         padding-left: 1px;
+         opacity: 0.6;
+       }
+    }
+
+
+    #wrapper3{
+      position: absolute;
+      top: 45%;
+      right: 20px;
+      width: 100px;
+      height: 20px;
+
+      .at, .star-o, .menu{
+        position: relative;
+        color: $icon-color;
+        opacity: 0.7;
+      }
+      .at{
+        left:10%;
+      }
+
+      .star-o{
+        left:40%;
+      }
+
+      .menu{
+        left:70%;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .main {
@@ -319,25 +348,7 @@ table {
   cursor: pointer;
 }
 
-.color {
-  box-sizing: border-box;
-  color: rgb(193, 197, 202);
-  cursor: pointer;
-  font-family: NotoSansJP, Slack-Lato, appleLogo, sans-serif;
-  font-size: 16px;
-  font-variant: common-ligatures;
-  font-variant-ligatures: common-ligatures;
-  line-height: 32px;
-  text-align: left;
-  text-decoration: none solid rgb(193, 197, 202);
-  text-size-adjust: 100%;
-  white-space: nowrap;
-  column-rule-color: rgb(193, 197, 202);
-  user-select: none;
-  caret-color: rgb(193, 197, 202);
-  border: 0px none rgb(193, 197, 202);
-  outline: rgb(193, 197, 202) none 0px;
-}
+
 .channel-menu_prefix {
   color: #9e9ea6;
   padding-right: 0.1rem;
@@ -352,6 +363,42 @@ table {
   background-color: rgb(49, 62, 77);
   overflow-y: auto;
   overflow-x: hidden;
+
+  .listings_channels {
+    margin: 1rem 0 2rem;
+
+    .listings_header {
+      text-align: left;
+      font-size: 0.8rem;
+      line-height: 1.25rem;
+      margin: 0 1rem 0.1rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #ab9ba9;
+      width: 165px;
+      position: relative;
+
+      .color {
+        box-sizing: border-box;
+        color: rgb(193, 197, 202);
+        cursor: pointer;
+        font-family: NotoSansJP, Slack-Lato, appleLogo, sans-serif;
+        font-size: 16px;
+        font-variant: common-ligatures;
+        font-variant-ligatures: common-ligatures;
+        line-height: 32px;
+        text-align: left;
+        text-decoration: none solid rgb(193, 197, 202);
+        text-size-adjust: 100%;
+        white-space: nowrap;
+        column-rule-color: rgb(193, 197, 202);
+        user-select: none;
+        caret-color: rgb(193, 197, 202);
+        border: 0px none rgb(193, 197, 202);
+        outline: rgb(193, 197, 202) none 0px;
+      }
+    }
+  }
 }
 
 .message-history {
@@ -364,83 +411,49 @@ table {
   overflow-x: hidden;
 }
 
-.listings_channels {
-  margin: 1rem 0 2rem;
-}
 
-.listings_header {
-  text-align: left;
-  font-size: 0.8rem;
-  line-height: 1.25rem;
-  margin: 0 1rem 0.1rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #ab9ba9;
-  width: 165px;
-  position: relative;
-}
+
+
 
 .channel_list {
   list-style-type: none;
   text-align: left;
   color: #ab9ba9;
+
+  .channel {
+    height: 24px;
+    line-height: 24px;
+    margin-right: 0;
+    color: #ffffff;
+    font:1.2em serif;
+    padding-left: 1rem;
+  }
 }
 
-.channel {
-  height: 24px;
-  line-height: 24px;
-  margin-right: 0;
-  color: #ffffff;
 
-  padding-left: 1rem;
-}
 ul>li:hover{
   background: rgba(208, 208, 208, 0.5);
   opacity: 0.5;
   cursor: hand;
 }
 
-.unread {
-  color: #fff;
-  background: #eb4d5c;
-  border-radius: 9px;
-  padding: 2px 9px;
-  font-size: 0.8rem;
-  line-height: 14px;
-  font-weight: 700;
-  vertical-align: baseline;
-  white-space: nowrap;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
-  float: right;
-  margin-right: 3px;
-  margin-top: 3px;
-}
-
-.channel_prefix {
-  color: #b2d5c9;
-}
-
-.disclaimer {
-  font-size: 0.8rem;
-  padding-left: 1rem;
-  margin-right: 17px;
-}
-
 .message {
   position: relative;
   margin-top: 0.5rem;
-  padding: 0.25rem 2rem 0.1rem 3rem;
+  background-color: rgb(230,230,230);
+  padding: 0.25rem 2rem .25rem 3rem;
+  border-radius: 5px;
   min-height: 36px;
+  box-shadow: 1px 1px 6px darkgrey;
 }
 
 .message_profile-pic {
   position: absolute;
-  left: 0;
+  left: 7px;
   display: block;
   border-radius: 0.2rem;
   width: 36px;
   height: 36px;
-
   background-size: cover;
 }
 
@@ -552,13 +565,12 @@ ul>li:hover{
 
 #dropdown {
   position: absolute;
-  right: 0px;
-  width: 140px;
-  height: 35px;
-  background-color: #f9f9f9;
+  right: 10px;
+  padding: 10px;
+  background-color: rgba(139, 133, 133, 0.4);
   display: none;
   padding-top: 8px;
-  padding-right: 24px;
+  padding-right: 10px;
   z-index:100;
   cursor: hand;
 
@@ -574,9 +586,81 @@ ul>li:hover{
     }
   }
   #logout {
-    width:132px;
+    width:130px;
     height: 35px;
+    background-color: #3498DB;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
   }
 }
 
 
+/* channel search button */
+.search {
+  padding: 10px;
+
+  input {
+    border-radius: 3px;
+    border: none;
+    padding: 10px;
+    color: white;
+    background: #6A6C75;
+    width: 90%;
+    font-size: 14px;
+
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: lightgrey;
+    }
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: lightgrey;
+    }
+  }
+
+  .fa-search {
+    position: relative;
+    left: -25px;
+  }
+}
+/* channel search button */
+
+
+/*sideBarHeader*/
+.sidebar-header {
+  padding: 5px;
+  border-bottom: 2px solid white;
+  height: 60px;
+  background: #F2F5F8;
+
+  .sidebar-about {
+    float: left;
+    padding-left: 10px;
+    margin-top: 6px;
+    .sidebar-with {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .sidebar-num-messages {
+      color: $gray;
+    }
+  }
+
+
+  #close-button {
+    float: right;
+    color: black;
+    background-color: rgb(190, 189, 189);
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    cursor: hand;
+    &:hover{
+    transform :scale(1.3);
+    }
+  }
+}
+/*sideBarHeader*/

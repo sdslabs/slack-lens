@@ -58,11 +58,11 @@
 
   :scss {:builds
          {:develop    {:source-dir "resources/scss/"
-                       :dest-dir   "resources/css/"
+                       :dest-dir   "resources/public/css/"
                        :executable "sassc"
                        :args       ["-m" "-I" "resources/scss/" "-t" "nested"]}
           :production {:source-dir "resources/scss/"
-                       :dest-dir   "resources/css/"
+                       :dest-dir   "resources/public/css/"
                        :executable "sassc"
                        :args       ["-I" "resources/scss/" "-t" "compressed"]}}}
 

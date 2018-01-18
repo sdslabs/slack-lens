@@ -28,7 +28,8 @@ function decodeHtml(html) {
 }
 
 function time_stamp(stamp) {
-  return (new Date(stamp)).toString().split("G")[0];
+  return (new Date(stamp)).toString().split("G")[0]
+          .replace(/(\w+) (\w+ [\d]{2} [\d]{4}) (\d{2}:\d{2}):(\d{2})/, "$3 ($2)");
 }
 
 function eventRefresh() {
@@ -51,7 +52,6 @@ function loadDoc(url, loadWhere) {
         parent = document.getElementsByClassName("message-history")[0].innerHTML = null;
 
       for (x in tmp) {
-        //a+="<div class='message'>";
         var messageDiv = document.createElement("div");
         messageDiv.setAttribute("class", "message");
         if (tmp[x]._source.replies) {
@@ -146,3 +146,24 @@ document.getElementById("dropdown").onclick = function logout(e) {
   document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   loadDoc("/v1/logout?token=" + token, "logout");
 }
+
+(function(){
+  var searchFilter = {
+    options: { valueNames: ['name'] },
+    init: function() {
+      var userList = new List('people-list', this.options);
+      var noItems = $('<li id="no-items-found">No items found</li>');
+
+      userList.on('updated', function(list) {
+        if (list.matchingItems.length === 0) {
+          $(list.list).append(noItems);
+        } else {
+          noItems.detach();
+        }
+      });
+    }
+  };
+
+  searchFilter.init();
+
+})();
