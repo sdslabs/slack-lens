@@ -1,18 +1,32 @@
 <html>
+
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title></title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link href="slack.css" rel="stylesheet" type="text/css"/>
+  <link href="/css/slack.css" rel="stylesheet" type="text/css" />
 
 </head>
+
 <body style="overflow:hidden;">
-  <div   id="mySidebar" style="overflow:scroll;">
-    <button onclick="w3_close()">Close &times;</button>
-    <div id="sidebar" style="padding-left:20px;"></div>
+  <div id="mySidebar" style="overflow:scroll;">
+
+
+    <!-- sideBar Header-->
+    <div class="sidebar-header">
+      <div class="sidebar-about">
+        <div class="sidebar-with">Topic</div>
+        <div class="sidebar-num-messages">already 1 902 messages</div>
+      </div>
+      <button onclick="w3_close()" id="close-button">&times;</button>
+    </div>
+    <hr style="color:white;height:2px;margin:0;" />
+    <!-- sideBar Header-->
+
+    <div id="sidebar" style="padding-left:5px;"></div>
   </div>
 
   {{#data}}
@@ -52,22 +66,27 @@
 
     </div>
   </div>
-        <div id="dropdown" >
-        <button id="logout">logout</button>
-        </div>
+  <div id="dropdown">
+    <button id="logout">logout</button>
+  </div>
   <div class="main">
     <div class="listings">
       <div class="listings_channels">
         <h2 class="listings_header">Channels</h2>
-        <button type="button" id="slackBUTTON_45">
-          <i class="color"></i>
-        </button>
+        <i class="color"></i>
+        <div class="search">
+          <input type="text" placeholder="search" />
+          <i class="fa fa-search"></i>
+        </div>
         <ul class="channel_list">
-          {{#channels}}
-          {{#_source}}
-          <li class="channel" id="{{name}}" onclick="location='slack-lens?channel={{name}}'"><a class="channel_name"><span><span class="prefix"># </span> {{name}}</span></a></li>
-          {{/_source}}
-          {{/channels}}
+          {{#channels}} {{#_source}}
+          <li class="channel" id="{{name}}" onclick="location='slack-lens?channel={{name}}'">
+            <a class="channel_name">
+              <span>
+                <span class="prefix"># </span> {{name}}</span>
+            </a>
+          </li>
+          {{/_source}} {{/channels}}
         </ul>
       </div>
     </div>
@@ -75,23 +94,21 @@
     </div>
     <div class="footer">
       <div class="user-menu">
-      {{#user}}
-      {{#_source}}
+        {{#user}} {{#_source}}
         <img class="user-menu_profile-pic" src="{{image_48}}">
         <span class="user-menu_username">{{name}}</span>
         <span class="connection_status">online</span>
-      {{/_source}}
-      {{/user}}
+        {{/_source}} {{/user}}
       </div>
       <div class="input-box">
-        <input class="input-box_text" type="text"/>
+        <input class="input-box_text" type="text" />
       </div>
     </div>
     <script>
-      var active="{{active}}";
+      var active = "{{active}}";
     </script>
-    <script src="/v1/slack.js">
-    </script>
-    {{/data}}
-  </body>
-  </html>
+    <script src="/js/slack.js">
+    </script> {{/data}}
+</body>
+
+</html>
