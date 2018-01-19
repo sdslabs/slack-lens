@@ -63,15 +63,21 @@
 (defn elastic-update
   [{:keys [conn index-name response mapping]}]
   (if (:name response)
-  (let [present  (:hits (:hits (esd/search conn index-name mapping
-                                :query (q/term
-                                              :id (str/lower-case (:id response))))))]
-  (if (not (empty? present))
-  (esd/update-with-script conn index-name mapping (:_id (nth  present 0))
-                                              (str "ctx._source.cookie = \"" (:cookie response) "\""))
-  (esd/create conn index-name mapping response)
-                                              )))
-      nil)
+      (let [present (as-> (:id response) $
+            (str/lower-case $)
+            (q/term :id $)
+            (array-map :query $)
+            (esd/search conn index-name mapping $)
+            (:hits $)
+            (:hits $))]
+        (if (not (empty? present))
+          (esd/update-with-script conn
+              index-name
+              mapping (:_id (nth  present 0))
+              (str "ctx._source.cookie = \"" (:cookie response) "\""))
+          (esd/create conn index-name mapping response)))
+      nil))
+
 
 
 (defn elastic-delete
@@ -84,17 +90,22 @@
 (defn search-user
     "search the user"
     [id conn map1]
-    (:_source (nth (:hits (:hits (esd/search conn
-                (:index-name map1)
-                (:mapping2 map1)
-                :query (q/term :id (str/lower-case id))))) 0)))
+    (as-> (str/lower-case id) $
+          (q/term :id $)
+          (esd/search conn (:index-name map1) (:mapping2 map1) :query $)
+          (:hits $)
+          (:hits $)
+          (nth $ 0)
+          (:_source $)))
 
 (defn search-channel
     "search the channel"
     [id conn map2]
-    (:_source (nth (:hits (:hits (esd/search conn
-                (:index-name map2)
-                (:mapping3 map2)
-                :query (q/term :id (str/lower-case id))))) 0)))
-
+    (as-> (str/lower-case id) $
+          (q/term :id $)
+          (esd/search conn (:index-name map2) (:mapping3 map2) :query $)
+          (:hits $)
+          (:hits $)
+          (nth $ 0)
+          (:_source $)))
 
