@@ -104,11 +104,11 @@
   "data of the user is feeded"
   [data]
   (as-> config $
-  (select-keys $ [:index-name :mapping4])
-  (assoc $ :response data
-           :conn es-conn)
-  (rename-keys $ { :mapping4 :mapping })
-  (es/elastic-update $)))
+    (select-keys $ [:index-name :mapping4])
+    (assoc $ :response data
+             :conn es-conn)
+    (rename-keys $ { :mapping4 :mapping })
+    (es/elastic-update $)))
 
 (defn validate-cookie
   [cookie]

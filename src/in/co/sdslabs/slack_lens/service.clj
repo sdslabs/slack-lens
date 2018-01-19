@@ -10,6 +10,7 @@
    [compojure.route :as route]
    [compojure.api.meta]
    [ring.middleware.resource :as res]
+   [in.co.sdslabs.slack-lens.middleware.cookie-handler :refer [wrap-cookies]]
    [compojure.api.middleware :refer [api-middleware]]
 
    [in.co.sdslabs.slack-lens [resources :as resources]]))
@@ -53,6 +54,7 @@
   (as-> slack-lens-api $
       (wrap-with-logger $)
       (res/wrap-resource $ "public")
+      (wrap-cookies $)
       (wrap-content-type $)
           ;Add external middlewares here, these are called after the request handler
 ))

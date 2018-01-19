@@ -9,25 +9,33 @@
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
 
 
+(defn cookie-present?
+  [cookie-str]
+  (if cookie-str
+      (not= (.indexOf cookie-str "cookie=") -1)
+      false))
+
+(defn get-cookie
+  [cookie-str]
+  (-> cookie-str
+      (str/split #"cookie=")
+      (nth 1)
+      (str/split #"; ")
+      (nth 0)))
+
 (defroutes* v1_routes
   (GET*
     "/slack-lens"
     request
     :summary "route for homepage"
-    (if (not= (.indexOf (get (:headers request) "cookie") "cookie=") -1)
-        (let [ x (:query-params request)
-               cookie (-> (get (:headers request) "cookie")
-                         (str/split #"cookie=")
-                         (nth 1)
-                         (str/split #"; ")
-                         (nth 0))]
-          (if (query/validate-cookie cookie)
-            (cond
-              (contains? x "channel")
-                (render/mustache "slack.mustache" (get x "channel") cookie)
-              (not (contains? x "channel"))
-                (render/mustache "slack.mustache" "general" cookie))
-            (render/html "home.mustache")))
+    (if (:authenticated request)
+      (let [cookie (:cookie request) params (:query-params request)]
+        (cond
+        ;; where channel is present in query-string
+          (contains? params "channel")
+            (render/mustache "slack.mustache" (get params "channel") cookie)
+          (not (contains? params "channel"))
+            (render/mustache "slack.mustache" "general" cookie)))
         (render/html "home.mustache")))
 
   (GET*
@@ -66,13 +74,6 @@
     (contains? x "error") (oauth/errorHandle (get x "error"))
     :else nil)))
 
-  (GET*
-    "/logout"
-    []
-    :query-params [token :- String]
-    (do
-      (query/logout token)
-      {:status 204 :headers { "Content-Type" "text/html"}}))
 
   (GET*
     "/channel"

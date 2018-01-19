@@ -68,7 +68,7 @@
                                               :id (str/lower-case (:id response))))))]
   (if (not (empty? present))
   (esd/update-with-script conn index-name mapping (:_id (nth  present 0))
-                                              (str "ctx._source.token = \"" (:token response) "\""))
+                                              (str "ctx._source.cookie = \"" (:cookie response) "\""))
   (esd/create conn index-name mapping response)
                                               )))
       nil)
