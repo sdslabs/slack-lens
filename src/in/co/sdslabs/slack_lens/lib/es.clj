@@ -51,14 +51,21 @@
 
 (defn elastic-update-message
   [{:keys [conn index-name response mapping]}]
-(time (Thread/sleep 2000))
+  (time (Thread/sleep 2000))
 
-  (esd/update-with-script conn index-name mapping
-     (:_id (nth (:hits (:hits (esd/search conn index-name mapping
-                                 :query (q/term
-                                            :ts (str/lower-case ( :thread_ts response))))))
-             0))
-     (str "ctx._source.replies = " (:replies response))))
+    (as-> (:thread_ts response) $
+        (str/lower-case (:thread_ts response))
+        (q/term :ts $)
+        (esd/search conn index-name mapping $)
+        (:hits $)
+        (:hits $)
+        (nth $ 0)
+        (:_id $)
+        (esd/update-with-script conn
+            index-name
+            mapping
+            $ (str "ctx._source.replies = " (:replies response)))))
+
 
 (defn elastic-update
   [{:keys [conn index-name response mapping]}]
