@@ -9,19 +9,6 @@
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
 
 
-(defn cookie-present?
-  [cookie-str]
-  (if cookie-str
-      (not= (.indexOf cookie-str "cookie=") -1)
-      false))
-
-(defn get-cookie
-  [cookie-str]
-  (-> cookie-str
-      (str/split #"cookie=")
-      (nth 1)
-      (str/split #"; ")
-      (nth 0)))
 
 (defroutes* v1_routes
   (GET*
@@ -31,31 +18,12 @@
     (if (:authenticated request)
       (let [cookie (:cookie request) params (:query-params request)]
         (cond
-        ;; where channel is present in query-string
+          ;; where channel is present in query-string
           (contains? params "channel")
             (render/mustache "slack.mustache" (get params "channel") cookie)
           (not (contains? params "channel"))
             (render/mustache "slack.mustache" "general" cookie)))
-        (render/html "home.mustache")))
-
-  (GET*
-    "/slack.css"
-    []
-    :summary "the slack-lens front end css"
-    (render/css "slack.css"))
-
-  (GET*
-    "/home.css"
-    []
-    :summary "css for slack-lens home page"
-    (render/css "home.css"))
-
-  (GET*
-    "/slack.js"
-    []
-    :description
-    "the javascript code for the dynamic functionality in web-interface"
-    (render/js "slack.js"))
+        (render/render-template "home.mustache" {})))
 
   (GET*
     "/thread"
@@ -69,10 +37,10 @@
   request
   :summary "authentization grant handling"
    (let [ x (:query-params request)]
-        (cond
-    (contains? x "code") (oauth/codeHandle (get x "code"))
-    (contains? x "error") (oauth/errorHandle (get x "error"))
-    :else nil)))
+      (cond
+        (contains? x "code") (oauth/codeHandle (get x "code"))
+        (contains? x "error") (oauth/errorHandle (get x "error"))
+        :else nil)))
 
 
   (GET*
@@ -82,14 +50,14 @@
     :query-params [channel :- String]
     (render/message "empty-file" channel))
 
-    (GET*
+  (GET*
     "/usermes"
     []
     :summary "ajax request for getting messages is handled here"
     :query-params [person :- String, channel :- String]
     (render/userMes "empty-file" person channel))
 
-      (GET*
+  (GET*
     "/data"
     []
     :summary "filtering the messages by date"

@@ -11,7 +11,8 @@
   (doseq [x (map #(conj
                    (select-keys % [:id :name])
                    (select-keys (get % :profile) [:image_48]))
-                 (:members (user/list @conn)))] (es/elastic-feed  (assoc user-type :response x))))
+                 (:members (user/list @conn)))]
+      (es/elastic-feed  (assoc user-type :response x))))
 
 (defn insert-channels
   [channel-type]

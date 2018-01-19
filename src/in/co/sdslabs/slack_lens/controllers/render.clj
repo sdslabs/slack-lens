@@ -8,63 +8,54 @@
    [clj-time.core :as t]
    [clojure.string :as str]))
 
+(defn date-format
+  [date]
+  (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
+    (/ (c/to-long
+       (f/unparse multi-parser (f/parse multi-parser date)))
+       1000.0)))
+
 (defn read-template [template-name]
   (slurp (clojure.java.io/resource
           (str "views/" template-name))))
-
-(defn render_css [css-file]
-  (clostache/render
-    (slurp (clojure.java.io/resource
-          (str "css/" css-file))) {}))
-
-(defn render_js [js-file]
-  (clostache/render
-    (slurp (clojure.java.io/resource
-            (str "js/" js-file))) {}))
-
-(defn render_html [html-file]
-  (clostache/render
-    (slurp (clojure.java.io/resource
-            (str "views/" html-file))) {}))
 
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
 (defn mustache [filename active cookie]
-  (render-template  filename {:data {:active active
-                                     :slack-name (:slack-name query/config)
-                                     :user (query/user-info cookie)
-                                     :channels (query/ch-search 0 100)}}))
+  (as-> {:active active
+         :slack-name (:slack-name query/config)
+         :user (query/user-info cookie)
+         :channels (query/ch-search 0 100)} $
+  (array-map :data $)
+  (render-template filename $)))
+
 (defn message [filename channel]
-   (render-template filename {:data (json/generate-string
-                     {:messages (query/search-miss (str/lower-case channel) 0 100 :channel)})}))
-
-(defn css [filename]
-  (render_css filename))
-
-(defn js [filename]
-  (render_js filename))
-
-(defn html [filename]
-  (render_html filename))
+  (as-> (query/search-miss (str/lower-case channel) 0 100 :channel) $
+      (array-map :messages $)
+      (json/generate-string $)
+      (array-map :data $)
+      (render-template filename $)))
 
 (defn thread [filename thread_ts]
-  (render-template  filename {:data (json/generate-string {
-                                      :messages (query/search thread_ts 0 100 :thread_ts)})}))
+  (as-> (query/search thread_ts 0 100 :thread_ts) $
+      (array-map :messages $)
+      (json/generate-string $)
+      (array-map :data $)
+      (render-template filename $)))
 
 (defn date-range [filename date channel length]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
-    (render-template  filename {:data (json/generate-string
-                                       {:messages (query/date-search
-                                                   (/ (c/to-long
-                                                       (f/unparse multi-parser (f/parse multi-parser date)))
-                                                      1000.0)
-                                                   (* 86400 length)
-                                                   channel 0 100 :ts)})})))
+    (as-> (query/date-search (date-format date) (* 86400 length) channel 0 100 :ts) $
+        (array-map :messages $)
+        (json/generate-string $)
+        (array-map :data $)
+        (render-template filename $))))
 
 (defn userMes
   [filename person channel]
-  (render-template filename {:data
-                                (json/generate-string
-                                  {:messages
-                                    (query/user-message person channel 0 100)})}))
+    (as-> (query/user-message person channel 0 100) $
+        (array-map :messages $)
+        (json/generate-string $)
+        (array-map :data $)
+        (render-template filename $)))
