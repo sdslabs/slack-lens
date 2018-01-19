@@ -5,9 +5,9 @@
             [clojure.set :refer [rename-keys]]
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; client side query handler
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; client side query handler            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; some useful constants
 (def config (main/get-config))

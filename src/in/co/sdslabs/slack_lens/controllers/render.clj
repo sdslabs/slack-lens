@@ -8,6 +8,11 @@
    [clj-time.core :as t]
    [clojure.string :as str]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;rendering views for routes                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; helper functions
 (defn date-format
   [date]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
@@ -22,6 +27,8 @@
 (defn render-template [template-file params]
   (clostache/render (read-template template-file) params))
 
+
+;; render functions
 (defn mustache [filename active cookie]
   (as-> {:active active
          :slack-name (:slack-name query/config)
@@ -44,6 +51,14 @@
       (array-map :data $)
       (render-template filename $)))
 
+(defn userMes
+  [filename person channel]
+    (as-> (query/user-message person channel 0 100) $
+        (array-map :messages $)
+        (json/generate-string $)
+        (array-map :data $)
+        (render-template filename $)))
+
 (defn date-range [filename date channel length]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
     (as-> (query/date-search (date-format date) (* 86400 length) channel 0 100 :ts) $
@@ -52,10 +67,3 @@
         (array-map :data $)
         (render-template filename $))))
 
-(defn userMes
-  [filename person channel]
-    (as-> (query/user-message person channel 0 100) $
-        (array-map :messages $)
-        (json/generate-string $)
-        (array-map :data $)
-        (render-template filename $)))

@@ -36,7 +36,7 @@
   "/slack/oauth"
   request
   :summary "authentization grant handling"
-   (let [ x (:query-params request)]
+  (let [ x (:query-params request)]
       (cond
         (contains? x "code") (oauth/codeHandle (get x "code"))
         (contains? x "error") (oauth/errorHandle (get x "error"))
