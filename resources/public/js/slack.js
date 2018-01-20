@@ -28,17 +28,17 @@ function decodeHtml(html) {
 
 function time_stamp(stamp) {
   return (new Date(stamp)).toString().split("G")[0]
-          .replace(/(\w+) (\w+ [\d]{2} [\d]{4}) (\d{2}:\d{2}):(\d{2})/, "$3 ($2)");
+    .replace(/(\w+) (\w+ [\d]{2} [\d]{4}) (\d{2}:\d{2}):(\d{2})/, "$3 ($2)");
 }
 
-document.body.addEventListener('click', function(event) {
+document.body.addEventListener('click', function (event) {
   if (event.target.className.split(" ").includes("ref")) {
-    let name = event.target.text.replace("@","");
-    loadDoc("usermes?person=" + name + "&channel=" + active, "User" , ": " +name);
+    let name = event.target.text.replace("@", "");
+    loadDoc("usermes?person=" + name + "&channel=" + active, "User", ": " + name);
   }
 });
 
-function loadDoc(url, loadWhere ,name =null) {
+function loadDoc(url, loadWhere, name = null) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -140,4 +140,19 @@ function logout() {
   document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
+function myFunction() {
 
+  let input = document.getElementById("channel-search");
+  let filter = input.value.toUpperCase();
+  let ul = document.getElementById("channel_list");
+  let li = ul.querySelectorAll(".channel_name .user_name");
+
+  for (i = 0; i < li.length; i++) {
+    let text = li[i].innerText.toUpperCase();
+    if (text.indexOf(filter) > -1) {
+      li[i].parentElement.parentElement.style.display = "block";
+    } else {
+      li[i].parentElement.parentElement.style.display = "none";
+    }
+  }
+}

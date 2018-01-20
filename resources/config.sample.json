@@ -1,11 +1,13 @@
-{   
+{
     "slack-name": "SLACK-NAME",
 	"index_name": "DATABASE-NAME",
 	"url": "DATABASE-URL",
 	"mapping1": "MESSAGE-TABLE-NAME",
     "mapping2": "USER-INFO-TABLE-NAME",
     "mapping3": "CHANNEL-INFO-TABLE-NAME",
-    "mapping4": "LOGIN-USER-TABLE-NAME",
+    "mapping4": "LOGIN-USER-DETAILS-TABLE-NAME",
+    "mapping5": "COOKIE-TABLE-NAME",
+    "allowed-team": "TEAM-ID",
     "client_id": "",
     "client_secret": ""
 }
