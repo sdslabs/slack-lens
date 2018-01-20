@@ -87,10 +87,25 @@
           (esd/create conn index-name mapping response)))
       nil))
 
-(defn store-token
+(defn store-cookie
   [{:keys [conn index-name response mapping]}]
   (esd/create conn index-name mapping response))
 
+(defn delete-cookie
+  [{:keys [conn index-name cookie mapping]}]
+      (let [row (as-> (str/lower-case cookie) $
+            (q/term :cookie $)
+            (esd/search conn index-name mapping :query $)
+            (do (prn $) $)
+            (:hits $)
+            (:hits $))]
+          (if (not (empty? row))
+            (as-> row $
+                (nth $ 0)
+                (:_id $)
+                (esd/delete conn index-name mapping $)
+                (do (prn $) true))
+            false)))
 
 (defn elastic-delete
   "Creates document with options passed as param and sets it's

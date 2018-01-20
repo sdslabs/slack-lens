@@ -4,6 +4,7 @@
     [compojure.api.sweet :refer [defroutes* GET*]]
     [compojure.api.meta]
     [clojure.string :as str]
+    [ring.util.response :as response]
     [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]
     [in.co.sdslabs.slack-lens.models.query :as query]
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
@@ -18,7 +19,7 @@
     (if (:authenticated request)
       (let [cookie (:cookie request) params (:query-params request)]
         (cond
-          ;; where channel is present in query-string
+          ;; when channel is present in query-string
           (contains? params "channel")
             (render/mustache "slack.mustache" (get params "channel") cookie)
           (not (contains? params "channel"))
@@ -42,6 +43,18 @@
         (contains? x "error") (oauth/errorHandle (get x "error"))
         :else nil)))
 
+
+  (GET*
+    "/logout"
+    request
+    :summary "logout"
+    (prn request)
+    (let [ params (:query-params request)]
+      (cond
+        ;; when user-cookie is passed
+        (contains? params "user")
+          (query/logout (get params "user"))
+        :else (merge (response/response "error") :status 400))))
 
   (GET*
     "/channel"

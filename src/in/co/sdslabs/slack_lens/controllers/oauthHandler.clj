@@ -65,7 +65,7 @@
     (as-> {:cookie cookie} $
         (assoc $ :id (get-in response [:user :id]))
         (assoc $ :team (get-in response [:team :id]))
-        (query/feed-token $))
+        (query/feed-cookie $))
 
     {:status 200
     :headers { "Content-Type" "text/html" }

@@ -151,11 +151,21 @@
         (empty? $)
         (not $)))
 
-(defn feed-token
+(defn feed-cookie
   [data]
   (as-> config $
-  (select-keys $ [:index-name :mapping5])
-  (assoc $ :response data
-           :conn es-conn)
-  (rename-keys $ {:mapping5 :mapping})
-  (es/store-token $)))
+    (select-keys $ [:index-name :mapping5])
+    (assoc $ :response data
+             :conn es-conn)
+    (rename-keys $ {:mapping5 :mapping})
+    (es/store-cookie $)))
+
+
+(defn logout
+  [cookie]
+  (as-> config $
+    (select-keys $ [:index-name :mapping5])
+    (assoc $ :cookie cookie
+             :conn es-conn)
+    (rename-keys $ {:mapping5 :mapping})
+    (es/delete-cookie $)))
