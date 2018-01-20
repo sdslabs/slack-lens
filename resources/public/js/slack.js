@@ -9,8 +9,7 @@ function w3_close() {
 
 function fetchMessage(path, parameter, query) {
   var url = "/v1/" + path + "?" + parameter + "=" + query;
-  console.log(url);
-  loadDoc(url, "thread");
+  loadDoc(url, "Thread");
 }
 
 function check() {
@@ -32,20 +31,22 @@ function time_stamp(stamp) {
           .replace(/(\w+) (\w+ [\d]{2} [\d]{4}) (\d{2}:\d{2}):(\d{2})/, "$3 ($2)");
 }
 
-function eventRefresh() {
-  $(".ref").click(function (x) {
-    console.log(x.target.innerHTML);
-    loadDoc("usermes?person=" + x.target.innerHTML.match(/(\d|\w)+/g) + "&channel=" + active, "thread");
-  });
-}
+document.body.addEventListener('click', function(event) {
+  if (event.target.className.split(" ").includes("ref")) {
+    let name = event.target.text.replace("@","");
+    loadDoc("usermes?person=" + name + "&channel=" + active, "User" , ": " +name);
+  }
+});
 
-function loadDoc(url, loadWhere) {
+function loadDoc(url, loadWhere ,name =null) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var tmp = JSON.parse(decodeHtml(this.responseText)).messages;
-      if (loadWhere == "thread") {
+      if (loadWhere == "Thread" || loadWhere == "User") {
         document.getElementById("sidebar").innerHTML = null;
+        document.getElementById("count").innerHTML = tmp.length;
+        document.getElementById("sidebar-with").innerHTML = loadWhere + (name ? name : "");
         w3_open();
       }
       else if (loadWhere == "mainview")
@@ -94,14 +95,13 @@ function loadDoc(url, loadWhere) {
           messageDiv.appendChild(file);
         }
 
-        if (loadWhere == "thread") {
+        if (loadWhere == "Thread" || loadWhere == "User") {
           document.getElementById("sidebar").appendChild(messageDiv);
           w3_open();
         }
         else if (loadWhere == "mainview")
           parent = document.getElementsByClassName("message-history")[0].appendChild(messageDiv);
       }
-      eventRefresh();
     }
   };
   if (loadWhere == "logout") {
@@ -132,38 +132,6 @@ function dropdownHandle() {
   }
 }
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-  if (!(event.target.matches('.menu') || event.target.matches('#dropdown') || event.target.matches('#logout'))) {
-    document.getElementById("dropdown").style.display = "none";
-  }
 
-}
 
-document.getElementById("dropdown").onclick = function logout(e) {
-  e.preventDefault();
-  let token = document.cookie.split("token=")[1].split("; ")[0];
-  document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  loadDoc("/v1/logout?token=" + token, "logout");
-}
 
-(function(){
-  var searchFilter = {
-    options: { valueNames: ['name'] },
-    init: function() {
-      var userList = new List('people-list', this.options);
-      var noItems = $('<li id="no-items-found">No items found</li>');
-
-      userList.on('updated', function(list) {
-        if (list.matchingItems.length === 0) {
-          $(list.list).append(noItems);
-        } else {
-          noItems.detach();
-        }
-      });
-    }
-  };
-
-  searchFilter.init();
-
-})();
