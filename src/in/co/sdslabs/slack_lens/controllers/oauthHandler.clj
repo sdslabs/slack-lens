@@ -59,8 +59,13 @@
 
     (as-> (:user response) $
           (select-keys $ [:image_48 :email :name :id])
-          (assoc $ :cookie cookie :team (get-in response [:team :id]))
+          (assoc $ :team (get-in response [:team :id]) :access_token (:access_token response))
           (query/feed-user-data $))
+
+    (as-> {:cookie cookie} $
+        (assoc $ :id (get-in response [:user :id]))
+        (assoc $ :team (get-in response [:team :id]))
+        (query/feed-token $))
 
     {:status 200
     :headers { "Content-Type" "text/html" }

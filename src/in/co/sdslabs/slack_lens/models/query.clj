@@ -3,6 +3,7 @@
             [clojurewerkz.elastisch.query :as q]
             [in.co.sdslabs.slack-lens.lib.es :as es]
             [clojure.set :refer [rename-keys]]
+            [clojure.string :as str]
             [in.co.sdslabs.slack-lens.listener.main :as main]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -22,8 +23,8 @@
           (:mapping1 config)
           :query (q/term keymap channel)
           :from from :size size)
-      (:hits )
-      (:hits )))
+      (:hits)
+      (:hits)))
 
 (defn search-miss
   "search the channels"
@@ -34,8 +35,48 @@
           :query (q/term keymap channel)
           :filter {:missing {:field :thread_ts}}
           :from from :size size)
-      (:hits )
-      (:hits )))
+      (:hits)
+      (:hits)))
+
+(defn id-team
+  [data]
+  [(as-> (:id data) $
+         (str/lower-case $)
+         (q/term :id $))
+
+   (as-> (:team data) $
+         (str/lower-case $)
+         (q/term :team $))])
+
+
+(defn- get-user-details
+ [arg]
+  (as-> arg $
+    (array-map :must $)
+    (array-map :bool $)
+    (array-map :filter $)
+    (array-map :filtered $)
+    (esd/search es-conn
+      (:index-name config)
+      (:mapping4 config) :query $)
+    (:hits $)
+    (:hits $)
+    (nth $ 0)))
+
+(defn user-info
+  "get user details"
+  [cookie]
+  (as-> (esd/search es-conn
+          (:index-name config)
+          (:mapping5 config)
+          :query (q/term :cookie cookie)) $
+        (:hits $)
+        (:hits $)
+        (nth $ 0)
+        (:_source $)
+        (select-keys $ [:id :team])
+        (id-team $)
+        (get-user-details $)))
 
 
 ;; searching using multiple conditions
@@ -46,14 +87,13 @@
   (array-map :bool $)
   (array-map :filter $)
   (array-map :filtered $)
-  (array-map :query $)
   (esd/search es-conn
       (:index-name config)
       (:mapping1 config)
-      $
-      :from from :size size)
+      :query $)
   (:hits $)
   (:hits $)))
+
 
 (defn date-search
   "search the channels"
@@ -77,16 +117,6 @@
        {:missing {:field :thread_ts}}]
       from size))
 
-(defn user-info
-  "get user details"
-  [cookie]
-  (-> (esd/search es-conn
-          (:index-name config)
-          (:mapping4 config)
-          :query (q/term :cookie cookie))
-      (:hits )
-      (:hits )
-      (nth 0)))
 
 (defn ch-search
   "search the channels"
@@ -108,15 +138,24 @@
     (assoc $ :response data
              :conn es-conn)
     (rename-keys $ { :mapping4 :mapping })
-    (es/elastic-update $)))
+    (es/store-user-data $)))
 
 (defn validate-cookie
   [cookie]
   (as-> (esd/search  es-conn
               (:index-name config)
-              (:mapping4 config)
+              (:mapping5 config)
               :query (q/term :cookie cookie)) $
         (:hits $)
         (:hits $)
         (empty? $)
         (not $)))
+
+(defn feed-token
+  [data]
+  (as-> config $
+  (select-keys $ [:index-name :mapping5])
+  (assoc $ :response data
+           :conn es-conn)
+  (rename-keys $ {:mapping5 :mapping})
+  (es/store-token $)))

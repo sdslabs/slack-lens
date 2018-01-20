@@ -54,9 +54,10 @@
   (time (Thread/sleep 2000))
 
     (as-> (:thread_ts response) $
-        (str/lower-case (:thread_ts response))
+        (str/lower-case $)
         (q/term :ts $)
-        (esd/search conn index-name mapping $)
+        (esd/search conn index-name mapping :query $)
+        (do (prn $) $)
         (:hits $)
         (:hits $)
         (nth $ 0)
@@ -67,24 +68,28 @@
             $ (str "ctx._source.replies = " (:replies response)))))
 
 
-(defn elastic-update
+(defn store-user-data
   [{:keys [conn index-name response mapping]}]
-  (if (:name response)
+  (if (:id response)
       (let [present (as-> (:id response) $
             (str/lower-case $)
             (q/term :id $)
             (array-map :query $)
             (esd/search conn index-name mapping $)
             (:hits $)
+            (do (prn $) $)
             (:hits $))]
         (if (not (empty? present))
           (esd/update-with-script conn
               index-name
               mapping (:_id (nth  present 0))
-              (str "ctx._source.cookie = \"" (:cookie response) "\""))
+              (str "ctx._source.access_token = \"" (:access_token response) "\""))
           (esd/create conn index-name mapping response)))
       nil))
 
+(defn store-token
+  [{:keys [conn index-name response mapping]}]
+  (esd/create conn index-name mapping response))
 
 
 (defn elastic-delete
