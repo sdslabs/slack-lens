@@ -62,14 +62,24 @@
           (assoc $ :team (get-in response [:team :id]) :access_token (:access_token response))
           (query/feed-user-data $))
 
-    (as-> {:cookie cookie} $
-        (assoc $ :id (get-in response [:user :id]))
-        (assoc $ :team (get-in response [:team :id]))
-        (query/feed-cookie $))
+    (if (as-> (get-config) $
+        (:allowed-team $)
+        (= (get-in response [:team :id]) $))
 
-    {:status 200
-    :headers { "Content-Type" "text/html" }
-    :body (redirect cookie)}))
+        (do
+          (as-> {:cookie cookie} $
+              (assoc $ :id (get-in response [:user :id]))
+              (assoc $ :team (get-in response [:team :id]))
+              (query/feed-cookie $))
+          {:status 200
+          :headers { "Content-Type" "text/html" }
+          :body (redirect cookie)})
+
+        {:status 401
+         :headers { "Content-Type" "text/html" }
+         :body (str "Register with  "
+                    (:slack-name (get-config))
+                    " workspace for using SLACK-LENS.")})))
 
 (defn errorHandle
     [error]
