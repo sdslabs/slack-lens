@@ -5,11 +5,11 @@
             [manifold.stream :as s]
             [manifold.time :as t]
             [manifold.bus :as bus]
-            [clojure.core.async :refer [timeout <! go]]))
+            [clojure.core.async :refer [timeout <! go go-loop]]))
 
 (def event-bus (bus/event-bus))
 
-(def conn-reset-delay 30000)
+(def conn-reset-delay 60000)
 
 (def rtm-conn (atom nil))
 
@@ -20,7 +20,11 @@
 
 (defn- test-check
   [options]
-  (if (options :token) (:url (rtm/start options)) (:api-url options)))
+  (if (options :token)
+  (do (try
+     (:url (rtm/start options))
+     (catch Exception e (str "caught exception: " (.getMessage e)))))
+   (:api-url options)))
 
 (defn- get-rtm-ws-url
   [url token]
@@ -50,7 +54,8 @@
           (= (:subtype data-map) "message_replied") (thread-check data-map func)                ;; for updating the reply_count for a thread
           (or (some (partial = (:subtype data-map)) ["file_share" "bot_message"])
                (not (data-map :subtype)))
-      (bus/publish! event-bus (:type data-map) data))))
+      (do
+      (bus/publish! event-bus (:type data-map) data)))))
 
 (defn connect
   [url token]
@@ -59,17 +64,22 @@
 
 (defn subscribe
   [type func]
-  (let [message-stream (bus/subscribe event-bus type)]  
+  (let [message-stream (bus/subscribe event-bus type)]
     (future (s/consume func message-stream))))
 
 (defn- reset-conn
   [options func]
-  (let [conn (connect (:url options) (:token options))]
-    (s/consume #(publish-events % func) (->> conn (s/buffer 100)))
-    (go
-      (<! (timeout conn-reset-delay))
-      (s/close! conn))))
+  (if-let [conn (connect (:url options) (:token options))]
+    (do
+      (s/consume #(publish-events % func) (->> conn (s/buffer 100)))
+      (go
+        (<! (timeout conn-reset-delay))
+        (s/close! conn)))))
+
 
 (defn start
   [options func]
-  (t/every conn-reset-delay #(reset-conn options func)))
+  (go-loop [iteration-no 1]
+         (reset-conn options func)
+         (<! (timeout conn-reset-delay))
+         (recur (inc iteration-no))))

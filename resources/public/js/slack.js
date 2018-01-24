@@ -60,7 +60,7 @@ function loadDoc(url, loadWhere, name = null) {
           threadLink.setAttribute("onclick", "return fetchMessage('thread', 'thread_ts' , " + tmp[x]._source.ts + ")");
           threadLink.setAttribute("href", "#");
           threadLink.setAttribute("style", "position:absolute;right:5%");
-          threadLink.textContent = "thread";
+          threadLink.textContent = "thread: "+ tmp[x]._source.replies;
           messageDiv.appendChild(threadLink);
         }
 

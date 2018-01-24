@@ -53,19 +53,22 @@
   [{:keys [conn index-name response mapping]}]
   (time (Thread/sleep 2000))
 
-    (as-> (:thread_ts response) $
+    (let [found (as-> (:thread_ts response) $
         (str/lower-case $)
         (q/term :ts $)
         (esd/search conn index-name mapping :query $)
         (do (prn $) $)
         (:hits $)
-        (:hits $)
+        (:hits $))]
+        (if (empty? found)
+        nil
+        (as-> found $
         (nth $ 0)
         (:_id $)
         (esd/update-with-script conn
             index-name
             mapping
-            $ (str "ctx._source.replies = " (:replies response)))))
+            $ (str "ctx._source.replies = " (:replies response)))))))
 
 
 (defn store-user-data

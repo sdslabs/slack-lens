@@ -33,6 +33,7 @@
           (:index-name config)
           (:mapping1 config)
           :query (q/term keymap channel)
+          :sort {:ts {:order :asc}}
           :filter {:missing {:field :thread_ts}}
           :from from :size size)
       (:hits)

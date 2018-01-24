@@ -40,7 +40,7 @@
                            :properties {:id {:type "string"}
                                         :name {:type "string"}}}})
 
-(def mapping4 {"login" {:_all {:enabled true}
+(def mapping4 {"user-details" {:_all {:enabled true}
 
                            :_id {:path "id"}
 
@@ -49,8 +49,16 @@
                            :properties {:id {:type "string"}
                                         :name {:type "string"}
                                         :image_48 {:type "string"}
-                                        :cookie {:type "string"}
+                                        :team {:type "string"}
                                         :email {:type "string"}
-                                        :access_token {:type "string"}
-                                        }
-                                        }})
+                                        :access_token {:type "string"}}}})
+
+(def mapping5 {"login" {:_all {:enabled true}
+
+                           :_id {:path "id"}
+
+                           :_timestamp {:enabled true :path "timestamp"}
+
+                           :properties {:id {:type "string"}
+                                        :team {:type "string"}
+                                        :cookie {:type "string"}}}})
