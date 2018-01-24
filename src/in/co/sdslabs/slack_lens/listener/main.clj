@@ -97,9 +97,9 @@
   [options]
   (let [conn-options (setup-elastic)
         rtm-conn (rtm/start options #(es/elastic-update-message (assoc conn-options :response % )))]
-       (if (:index_exist conn-options)
-         nil
-         (map-db/main options (:conn conn-options) (get-config)))
+       (if (or (not (:index_exist conn-options))  (:update options))
+         (map-db/main options (:conn conn-options) (get-config))
+         nil)
        (rtm/subscribe "message"
          (fn [x]
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)

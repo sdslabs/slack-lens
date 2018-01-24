@@ -24,7 +24,18 @@
 (defn main
   [options es-conn config]
   (let [user-type {:conn es-conn :index-name (:index-name config)  :mapping (:mapping2 config)}
-        channel-type {:conn es-conn :index-name (:index-name config)  :mapping (:mapping3 config)}]
+        channel-type {:conn es-conn :index-name (:index-name config)  :mapping (:mapping3 config)}
+        update-tables (:update options)]
     (swap! conn conj {:api-url (:url options) :token (:token options)})
-    (insert-users user-type)
-    (insert-channels channel-type)))
+    (if update-tables
+      (do (if
+          ;; only update the channel table
+            (.contains update-tables "channel")
+              (insert-users user-type))
+          (if
+          ;; only update the user table
+            (.contains update-tables "user")
+              (insert-channels channel-type)))
+      ;; to fetch the user and channel ids for first time.
+      (do (insert-users user-type)
+          (insert-channels channel-type)))))

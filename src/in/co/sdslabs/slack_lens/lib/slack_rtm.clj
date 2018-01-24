@@ -69,6 +69,7 @@
 
 (defn- reset-conn
   [options func]
+  (prn "running")
   (if-let [conn (connect (:url options) (:token options))]
     (do
       (s/consume #(publish-events % func) (->> conn (s/buffer 100)))
@@ -81,5 +82,6 @@
   [options func]
   (go-loop [iteration-no 1]
          (reset-conn options func)
+         (prn iteration-no)
          (<! (timeout conn-reset-delay))
          (recur (inc iteration-no))))

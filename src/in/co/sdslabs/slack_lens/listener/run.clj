@@ -6,6 +6,8 @@
 (def ^:private cli-options
   [["-t" "--token TOKEN" "Slack Bot Token"
     :default nil]
+   ["-i" "--update channel&user" "Update user and channel tables"
+    :default nil]
    ["-u" "--url URL" "URL for connection to Slack API"
     :default "https://slack.com/api"]
    ["-h" "--help HELP" "Help"]])
