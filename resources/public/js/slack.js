@@ -38,6 +38,48 @@ document.body.addEventListener('click', function (event) {
   }
 });
 
+function renderServiceMes(attachments, messageDiv) {
+  for( x in attachments){
+
+    let text = attachments[x].text;
+    let topic = attachments[x].fallback;
+    let image_url = attachments[x].image_url;
+    let title_link = attachments[x].title_link;
+    let service_icon = attachments[x].service_icon;
+
+
+    let serviceContainer = document.createElement("div");
+    serviceContainer.setAttribute("class", "attachment-container");
+    serviceContainer.style.borderLeft = "5px solid #" + attachments[x].color;
+
+    let icon= document.createElement("img");
+    icon.setAttribute("src", service_icon);
+    icon.setAttribute("class", "service-icon");
+    serviceContainer.appendChild(icon);
+
+    let title =document.createElement("span");
+    title.textContent = topic;
+    serviceContainer.appendChild(title);
+
+    serviceContainer.appendChild(document.createElement("br"));
+
+    let anchor =document.createElement("a");
+    anchor.setAttribute("href", title_link);
+    anchor.textContent = title_link;
+    serviceContainer.appendChild(anchor);
+
+    let img= document.createElement("img");
+    img.setAttribute("src", image_url);
+    img.setAttribute("class", "service-img");
+    serviceContainer.appendChild(img);
+
+    messageDiv.appendChild(serviceContainer);
+
+
+  }
+}
+
+
 function renderInfo(attachments, messageDiv) {
   for (x in attachments) {
     let fallback = attachments[x].fallback.split('\t');
@@ -56,7 +98,7 @@ function renderInfo(attachments, messageDiv) {
     // container-user-addr
     let attachmentUserAddr = document.createElement("div");
     attachmentUserAddr.setAttribute("class", "attachment-user-addr");
-    attachmentUserAddr.textContent = "Address: "+ fallback[8];
+    attachmentUserAddr.textContent = "Address: " + fallback[8];
     attachmentContainer.appendChild(attachmentUserAddr);
 
 
@@ -128,8 +170,10 @@ function renderMessage(tmp, loadWhere) {
 
 
     let attachments = tmp[x]._source.attachments;
-    if (attachments) {
-      renderInfo(attachments, messageDiv, );
+    if (attachments && attachments[0].fields) {
+      renderInfo(attachments, messageDiv);
+    } else if (attachments && attachments[0].service_name) {
+      renderServiceMes(attachments, messageDiv);
     } else {
       var message = document.createElement("span");
       message.setAttribute("class", "message_content");

@@ -76,7 +76,7 @@ table {
 .attachment-container {
   margin: 10px 0;
   padding-left: 20px;
-  &>div {
+  &>div, &>span, &>a {
     margin-bottom: 3px;
   }
 }
@@ -93,6 +93,17 @@ table {
   }
 }
 
+.service-img {
+  height: 200px;
+  width: 100px;
+  display: block;
+}
+
+.service-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
 
 #sidebar {
   padding:0px 8px;
