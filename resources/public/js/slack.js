@@ -38,70 +38,149 @@ document.body.addEventListener('click', function (event) {
   }
 });
 
+function renderInfo(attachments, messageDiv) {
+  for (x in attachments) {
+    let fallback = attachments[x].fallback.split('\t');
+
+    // container
+    let attachmentContainer = document.createElement("div");
+    attachmentContainer.setAttribute("class", "attachment-container");
+    attachmentContainer.style.borderLeft = "5px solid #" + attachments[x].color;
+
+    // container-username
+    let attachmentUsername = document.createElement("div");
+    attachmentUsername.setAttribute("class", "attachment-user-name");
+    attachmentUsername.textContent = fallback[0];
+    attachmentContainer.appendChild(attachmentUsername);
+
+    // container-user-addr
+    let attachmentUserAddr = document.createElement("div");
+    attachmentUserAddr.setAttribute("class", "attachment-user-addr");
+    attachmentUserAddr.textContent = "Address: "+ fallback[8];
+    attachmentContainer.appendChild(attachmentUserAddr);
+
+
+    // container-user-mobile
+    let attachmentUserMobile = document.createElement("div");
+    attachmentUserMobile.setAttribute("class", "attachment-user-mobile");
+
+    let spanMobile = document.createElement("span");
+    spanMobile.innerHTML = "Mobile<br>";
+    let mobileAnchor = document.createElement("a");
+    mobileAnchor.setAttribute("href", "tel:" + fallback[3]);
+    mobileAnchor.textContent = fallback[3];
+
+    attachmentUserMobile.appendChild(spanMobile);
+    attachmentUserMobile.appendChild(mobileAnchor);
+
+    attachmentContainer.appendChild(attachmentUserMobile);
+
+
+    // container-user-email
+    let attachmentUserEmail = document.createElement("div");
+    attachmentUserEmail.setAttribute("class", "attachment-user-email");
+
+    let spanEmail = document.createElement("span");
+    spanEmail.innerHTML = "Email<br>";
+    let emailAnchor = document.createElement("a");
+    let email = fallback[4].split('>')[0].split('|')[1];
+    emailAnchor.setAttribute("href", "mailto:" + email);
+    emailAnchor.textContent = email;
+
+    attachmentUserEmail.appendChild(spanEmail);
+    attachmentUserEmail.appendChild(emailAnchor);
+
+    attachmentContainer.appendChild(attachmentUserEmail);
+    messageDiv.appendChild(attachmentContainer);
+  }
+}
+
+function renderMessage(tmp, loadWhere) {
+  for (x in tmp) {
+    var messageDiv = document.createElement("div");
+    messageDiv.setAttribute("class", "message");
+    if (tmp[x]._source.replies) {
+      var threadLink = document.createElement("a");
+      threadLink.setAttribute("onclick", "return fetchMessage('thread', 'thread_ts' , " + tmp[x]._source.ts + ")");
+      threadLink.setAttribute("href", "#");
+      threadLink.setAttribute("style", "position:absolute;right:5%");
+      threadLink.textContent = "thread: " + tmp[x]._source.replies;
+      messageDiv.appendChild(threadLink);
+    }
+
+    var userImage = document.createElement("img");
+    userImage.setAttribute("class", "message_profile-pic");
+    userImage.setAttribute("src", tmp[x]._source.image_48 || botImg);
+    messageDiv.appendChild(userImage);
+
+    var username = document.createElement("a");
+    username.setAttribute("href", "#");
+    username.setAttribute("class", "message_username ref");
+    username.textContent = tmp[x]._source.name || "Bot";
+    messageDiv.appendChild(username);
+
+    var tsElement = document.createElement("span");
+    tsElement.setAttribute("class", "message_timestamp");
+    tsElement.setAttribute("id", tmp[x]._source.ts);
+    tsElement.textContent = time_stamp(tmp[x]._source.ts * 1000);
+    messageDiv.appendChild(tsElement);
+
+
+
+    let attachments = tmp[x]._source.attachments;
+    if (attachments) {
+      renderInfo(attachments, messageDiv, );
+    } else {
+      var message = document.createElement("span");
+      message.setAttribute("class", "message_content");
+      message.innerHTML = tmp[x]._source.text;
+      messageDiv.appendChild(message);
+    }
+
+    if (tmp[x]._source.file) {
+      var file = document.createElement("img");
+      file.setAttribute("src", tmp[x]._source.file.thumb_360);
+      var br = document.createElement("br");
+
+      messageDiv.appendChild(br);
+      messageDiv.appendChild(file);
+    }
+    if (loadWhere == "Thread" || loadWhere == "User") {
+      document.getElementById("sidebar").appendChild(messageDiv);
+    } else if (loadWhere == "mainview") {
+      parent = document.getElementsByClassName("message-history")[0].appendChild(messageDiv);
+    }
+  }
+}
+
+function mainview(tmp, loadWhere) {
+  parent = document.getElementsByClassName("message-history")[0].innerHTML = null;
+  messageDiv = renderMessage(tmp, loadWhere);
+}
+
+function sidebar(tmp, loadWhere) {
+  document.getElementById("sidebar").innerHTML = null;
+  document.getElementById("count").innerHTML = tmp.length;
+  document.getElementById("sidebar-with").innerHTML = loadWhere + (name ? name : "");
+  messageDiv = renderMessage(tmp, loadWhere);
+  w3_open();
+}
+
 function loadDoc(url, loadWhere, name = null) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var tmp = JSON.parse(decodeHtml(this.responseText)).messages;
+      console.log(tmp);
+
       if (loadWhere == "Thread" || loadWhere == "User") {
-        document.getElementById("sidebar").innerHTML = null;
-        document.getElementById("count").innerHTML = tmp.length;
-        document.getElementById("sidebar-with").innerHTML = loadWhere + (name ? name : "");
-        w3_open();
+        sidebar(tmp, loadWhere);
+        document.getElementById("sidebar").appendChild(messageDiv);
       }
-      else if (loadWhere == "mainview")
-        parent = document.getElementsByClassName("message-history")[0].innerHTML = null;
-
-      for (x in tmp) {
-        var messageDiv = document.createElement("div");
-        messageDiv.setAttribute("class", "message");
-        if (tmp[x]._source.replies) {
-          var threadLink = document.createElement("a");
-          threadLink.setAttribute("onclick", "return fetchMessage('thread', 'thread_ts' , " + tmp[x]._source.ts + ")");
-          threadLink.setAttribute("href", "#");
-          threadLink.setAttribute("style", "position:absolute;right:5%");
-          threadLink.textContent = "thread: "+ tmp[x]._source.replies;
-          messageDiv.appendChild(threadLink);
-        }
-
-        var userImage = document.createElement("img");
-        userImage.setAttribute("class", "message_profile-pic");
-        userImage.setAttribute("src", tmp[x]._source.image_48 || botImg);
-        messageDiv.appendChild(userImage);
-
-        var username = document.createElement("a");
-        username.setAttribute("href", "#");
-        username.setAttribute("class", "message_username ref");
-        username.textContent = tmp[x]._source.name || "Bot";
-        messageDiv.appendChild(username);
-
-        var tsElement = document.createElement("span");
-        tsElement.setAttribute("class", "message_timestamp");
-        tsElement.setAttribute("id", tmp[x]._source.ts);
-        tsElement.textContent = time_stamp(tmp[x]._source.ts * 1000);
-        messageDiv.appendChild(tsElement);
-
-        var message = document.createElement("span");
-        message.setAttribute("class", "message_content");
-        message.innerHTML = tmp[x]._source.text;
-        messageDiv.appendChild(message);
-
-        if (tmp[x]._source.file) {
-          var file = document.createElement("img");
-          file.setAttribute("src", tmp[x]._source.file.thumb_360);
-          var br = document.createElement("br");
-
-          messageDiv.appendChild(br);
-          messageDiv.appendChild(file);
-        }
-
-        if (loadWhere == "Thread" || loadWhere == "User") {
-          document.getElementById("sidebar").appendChild(messageDiv);
-          w3_open();
-        }
-        else if (loadWhere == "mainview")
-          parent = document.getElementsByClassName("message-history")[0].appendChild(messageDiv);
+      else if (loadWhere == "mainview") {
+        mainview(tmp, loadWhere);
       }
+
     }
   };
   if (loadWhere == "logout") {

@@ -73,6 +73,27 @@ table {
   border-spacing: 0;
 }
 
+.attachment-container {
+  margin: 10px 0;
+  padding-left: 20px;
+  &>div {
+    margin-bottom: 3px;
+  }
+}
+
+.attachment-user-name {
+  font-weight: bold;
+}
+
+.attachment-user-mobile, .attachment-user-email {
+  display: inline-block;
+  margin: 10px 70px 0 0;
+  &>span {
+    font-weight: bold;
+  }
+}
+
+
 #sidebar {
   padding:0px 8px;
   background-color: #e9ece5;
