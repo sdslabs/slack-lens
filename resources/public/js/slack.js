@@ -226,7 +226,6 @@ function loadDoc(url, loadWhere, name = null) {
 
       if (loadWhere == "Thread" || loadWhere == "User") {
         sidebar(tmp, loadWhere);
-        document.getElementById("sidebar").appendChild(messageDiv);
       }
       else if (loadWhere == "mainview") {
         mainview(tmp, loadWhere);

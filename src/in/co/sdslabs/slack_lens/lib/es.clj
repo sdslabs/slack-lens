@@ -65,7 +65,7 @@
         (as-> found $
         (nth $ 0)
         (:_id $)
-        (if (= "message_replied" (:subtype response))
+        (if (not (= "message_deleted" (:subtype response)))
           (esd/update-with-script conn
             index-name
             mapping

@@ -5,6 +5,7 @@
             [manifold.stream :as s]
             [manifold.time :as t]
             [manifold.bus :as bus]
+            [clojure.set :refer [rename-keys]]
             [clojure.core.async :refer [timeout <! go go-loop]]))
 
 (def event-bus (bus/event-bus))
@@ -52,7 +53,13 @@
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
     (println (data-map :subtype))
     (cond
-          (= (:subtype data-map) "message_replied") (thread-check data-map func)                ;; for updating the reply_count for a thread
+          ;; for updating the reply_count for a thread
+          (= (:subtype data-map) "message_replied") (thread-check data-map func)
+          ;; if the message is deleted
+          (= (:subtype data-map) "message_deleted") (as-> [:deleted_ts :subtype] $
+                                  (select-keys data-map $)
+                                  (rename-keys $ {:deleted_ts :thread_ts})
+                                  (func $))
           (or (some (partial = (:subtype data-map)) ["file_share" "bot_message"])
                (not (data-map :subtype)))
       (do
