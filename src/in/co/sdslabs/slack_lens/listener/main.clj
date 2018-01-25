@@ -104,4 +104,5 @@
          (fn [x]
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
+               (time (Thread/sleep 1000000000000))
     rtm-conn))

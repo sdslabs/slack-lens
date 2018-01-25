@@ -51,7 +51,7 @@
 
 (defn elastic-update-message
   [{:keys [conn index-name response mapping]}]
-  (time (Thread/sleep 2000))
+  (time (Thread/sleep 1000))
 
     (let [found (as-> (:thread_ts response) $
         (str/lower-case $)
@@ -65,10 +65,15 @@
         (as-> found $
         (nth $ 0)
         (:_id $)
-        (esd/update-with-script conn
+        (if (= "message_replied" (:subtype response))
+          (esd/update-with-script conn
             index-name
             mapping
-            $ (str "ctx._source.replies = " (:replies response)))))))
+            $ (str "ctx._source.replies = " (:replies response)))
+          (esd/update-with-script conn
+            index-name
+            mapping
+            $ (str "ctx._source.deleted = " true)))))))
 
 
 (defn store-user-data

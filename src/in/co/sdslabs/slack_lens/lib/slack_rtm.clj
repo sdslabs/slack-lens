@@ -22,7 +22,7 @@
   [options]
   (if (options :token)
   (do (try
-     (:url (rtm/start options))
+        (:url (rtm/start options))
      (catch Exception e (str "caught exception: " (.getMessage e)))))
    (:api-url options)))
 
@@ -33,12 +33,13 @@
 
 (defn- get-rtm-ws-connection
   [url]
+  (prn url)
   (if-let [socket (try
                     @(http/websocket-client url)
                     (catch Exception e
-                      nil))]
+                      (prn "error with socket")))]
     socket
-    nil))
+    (prn "no socket found")))
 
 (defn- thread-check
   [data func]

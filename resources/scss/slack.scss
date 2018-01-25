@@ -480,55 +480,61 @@ ul>li:hover{
   min-height: 36px;
   box-shadow: 1px 1px 6px darkgrey;
 
-}
-
-.message_profile-pic {
-  position: absolute;
-  left: 7px;
-  display: block;
-  border-radius: 0.2rem;
-  width: 36px;
-  height: 36px;
-  background-size: cover;
-}
-
-.message_username {
-  cursor: hand;
-  font-weight: 900;
-  padding-right: 0.25rem;
-  color: #3d3c40 !important;
-  margin-left: 0;
-  font-style: normal;
-  text-decoration: none;
-}
-
-.message_timestamp {
-  text-align: left;
-  display: inline;
-  position: relative;
-  top: 0;
-  left: 0;
-  color: #939496;
-  font-size: 12px;
-  line-height: 1.2rem;
-  width: 36px;
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.message_content {
-  display: block;
-  min-height: 1rem;
-
-  a {
-    background-color:#eaf5fc;
-    border-radius: 10px;
+  .deleted {
+    float:right;
+    background-color: rgba(189, 107, 107, 0.774);
+    color: red;
   }
 
-  a:visited, a:hover, a:link {
-    color:#0576b9;
+  .message_profile-pic {
+    position: absolute;
+    left: 7px;
+    display: block;
+    border-radius: 0.2rem;
+    width: 36px;
+    height: 36px;
+    background-size: cover;
+  }
+
+  .message_username {
+    cursor: hand;
+    font-weight: 900;
+    padding-right: 0.25rem;
+    color: #3d3c40 !important;
+    margin-left: 0;
+    font-style: normal;
+    text-decoration: none;
+  }
+
+  .message_timestamp {
+    text-align: left;
+    display: inline;
+    position: relative;
+    top: 0;
+    left: 0;
+    color: #939496;
+    font-size: 12px;
+    line-height: 1.2rem;
+    width: 36px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .message_content {
+    display: block;
+    min-height: 1rem;
+
+    a {
+      background-color:#eaf5fc;
+      border-radius: 10px;
+    }
+
+    a:visited, a:hover, a:link {
+      color:#0576b9;
+    }
   }
 }
+
 
 .user-menu {
   float: left;

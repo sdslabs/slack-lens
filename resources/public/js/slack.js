@@ -39,7 +39,7 @@ document.body.addEventListener('click', function (event) {
 });
 
 function renderServiceMes(attachments, messageDiv) {
-  for( x in attachments){
+  for (x in attachments) {
 
     let text = attachments[x].text;
     let topic = attachments[x].fallback;
@@ -52,23 +52,23 @@ function renderServiceMes(attachments, messageDiv) {
     serviceContainer.setAttribute("class", "attachment-container");
     serviceContainer.style.borderLeft = "5px solid #" + attachments[x].color;
 
-    let icon= document.createElement("img");
+    let icon = document.createElement("img");
     icon.setAttribute("src", service_icon);
     icon.setAttribute("class", "service-icon");
     serviceContainer.appendChild(icon);
 
-    let title =document.createElement("span");
+    let title = document.createElement("span");
     title.textContent = topic;
     serviceContainer.appendChild(title);
 
     serviceContainer.appendChild(document.createElement("br"));
 
-    let anchor =document.createElement("a");
+    let anchor = document.createElement("a");
     anchor.setAttribute("href", title_link);
     anchor.textContent = title_link;
     serviceContainer.appendChild(anchor);
 
-    let img= document.createElement("img");
+    let img = document.createElement("img");
     img.setAttribute("src", image_url);
     img.setAttribute("class", "service-img");
     serviceContainer.appendChild(img);
@@ -150,18 +150,25 @@ function renderMessage(tmp, loadWhere) {
       messageDiv.appendChild(threadLink);
     }
 
-    var userImage = document.createElement("img");
+    if (tmp[x]._source.deleted) {
+      let deleted = document.createElement("span");
+      deleted.textContent = "deleted";
+      deleted.setAttribute("class", "deleted");
+      messageDiv.appendChild(deleted);
+    }
+
+    let userImage = document.createElement("img");
     userImage.setAttribute("class", "message_profile-pic");
     userImage.setAttribute("src", tmp[x]._source.image_48 || botImg);
     messageDiv.appendChild(userImage);
 
-    var username = document.createElement("a");
+    let username = document.createElement("a");
     username.setAttribute("href", "#");
     username.setAttribute("class", "message_username ref");
     username.textContent = tmp[x]._source.name || "Bot";
     messageDiv.appendChild(username);
 
-    var tsElement = document.createElement("span");
+    let tsElement = document.createElement("span");
     tsElement.setAttribute("class", "message_timestamp");
     tsElement.setAttribute("id", tmp[x]._source.ts);
     tsElement.textContent = time_stamp(tmp[x]._source.ts * 1000);
