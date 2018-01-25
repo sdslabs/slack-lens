@@ -145,7 +145,7 @@ function renderMessage(tmp, loadWhere) {
       var threadLink = document.createElement("a");
       threadLink.setAttribute("onclick", "return fetchMessage('thread', 'thread_ts' , " + tmp[x]._source.ts + ")");
       threadLink.setAttribute("href", "#");
-      threadLink.setAttribute("style", "position:absolute;right:5%");
+      threadLink.setAttribute("style", "float: right;");
       threadLink.textContent = "thread: " + tmp[x]._source.replies;
       messageDiv.appendChild(threadLink);
     }
