@@ -1,4 +1,7 @@
 const botImg = "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2015-10-09/12167763254_75a2d1841d07a114dcc3_36.jpg";
+var fetch = 1;
+var fetched = 0;
+
 function w3_open() {
   document.getElementById("mySidebar").style.right = "0";
 }
@@ -18,12 +21,59 @@ function check() {
 check();
 
 
+
+
+
 var input = document.getElementById('search');
-loadDoc("/v1/channel?channel=" + active, "mainview");
+loadDoc("/v1/channel?channel=" + active + "&start=" + 0, "mainview");
 function decodeHtml(html) {
   var txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
+}
+
+input.addEventListener('keypress', function (e) {
+  if ((e.which || e.keyCode) == 13) {
+    if (!/(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/.test(input.value)) {
+      alert("Enter correct format of date");
+      return;
+    }
+    input.blur();
+    loadDoc("data?date=" + input.value + "&length=" + document.getElementById("number").value + "&channel=" + active + "&start=" + 0, "mainview");
+    input.value = "";
+  }
+});
+
+function dropdownHandle() {
+  let display = document.getElementById("dropdown").style.display;
+  if ("inline-block" == display) {
+    document.getElementById("dropdown").style.display = "none";
+  } else if (display == "none" || display == "") {
+    document.getElementById("dropdown").style.display = "inline-block";
+  }
+}
+
+function logout() {
+  let cookie = document.cookie.split("cookie=")[1].split("; ")[0];
+  loadDoc("/v1/logout?user=" + cookie, "logout");
+  document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+function myFunction() {
+
+  let input = document.getElementById("channel-search");
+  let filter = input.value.toUpperCase();
+  let ul = document.getElementById("channel_list");
+  let li = ul.querySelectorAll(".channel_name .user_name");
+
+  for (i = 0; i < li.length; i++) {
+    let text = li[i].innerText.toUpperCase();
+    if (text.indexOf(filter) > -1) {
+      li[i].parentElement.parentElement.style.display = "block";
+    } else {
+      li[i].parentElement.parentElement.style.display = "none";
+    }
+  }
 }
 
 function time_stamp(stamp) {
@@ -199,15 +249,40 @@ function renderMessage(tmp, loadWhere) {
     if (loadWhere == "Thread" || loadWhere == "User") {
       document.getElementById("sidebar").appendChild(messageDiv);
     } else if (loadWhere == "mainview") {
-      parent = document.getElementsByClassName("message-history")[0].appendChild(messageDiv);
+      fetched+=1;
+      console.log(fetched);
+      let parent = document.getElementsByClassName("message-history")[0];
+      parent.insertBefore(messageDiv, parent.firstChild);
     }
+  }
+  if (loadWhere == "mainview" && tmp.length != 0) {
+    fetch =1;
   }
 }
 
-function mainview(tmp, loadWhere) {
-  parent = document.getElementsByClassName("message-history")[0].innerHTML = null;
-  messageDiv = renderMessage(tmp, loadWhere);
+
+function checkScroll () {
+
+  if(this.scrollTop < 5 && fetch){
+    console.log("harsh is don ");
+    fetch =0;
+    loadDoc("/v1/channel?channel=" + active + "&start=" + fetched, "mainview",false);
+  }
 }
+function mainview(tmp, loadWhere, setNull) {
+  if(setNull)
+    document.getElementsByClassName("message-history")[0].innerHTML = null;
+
+    messageDiv = renderMessage(tmp, loadWhere);
+
+  let objDiv = document.getElementsByClassName("message-history")[0];
+
+  if(setNull){
+    objDiv.scrollTop = objDiv.scrollHeight;
+    objDiv.onscroll = checkScroll;
+  }
+}
+
 
 function sidebar(tmp, loadWhere) {
   document.getElementById("sidebar").innerHTML = null;
@@ -217,7 +292,7 @@ function sidebar(tmp, loadWhere) {
   w3_open();
 }
 
-function loadDoc(url, loadWhere, name = null) {
+function loadDoc(url, loadWhere, setNull = true) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -228,9 +303,8 @@ function loadDoc(url, loadWhere, name = null) {
         sidebar(tmp, loadWhere);
       }
       else if (loadWhere == "mainview") {
-        mainview(tmp, loadWhere);
+        mainview(tmp, loadWhere, setNull);
       }
-
     }
   };
   if (loadWhere == "logout") {
@@ -240,48 +314,4 @@ function loadDoc(url, loadWhere, name = null) {
   xhttp.send();
 }
 
-input.addEventListener('keypress', function (e) {
-  if ((e.which || e.keyCode) == 13) {
-    if (!/(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/.test(input.value)) {
-      alert("Enter correct format of date");
-      return;
-    }
-    input.blur();
-    loadDoc("data?date=" + input.value + "&length=" + document.getElementById("number").value + "&channel=" + active, "mainview");
-    input.value = "";
-  }
-});
 
-function dropdownHandle() {
-  let display = document.getElementById("dropdown").style.display;
-  if ("inline-block" == display) {
-    document.getElementById("dropdown").style.display = "none";
-  } else if (display == "none" || display == "") {
-    document.getElementById("dropdown").style.display = "inline-block";
-  }
-}
-
-
-
-function logout() {
-  let cookie = document.cookie.split("cookie=")[1].split("; ")[0];
-  loadDoc("/v1/logout?user=" + cookie, "logout");
-  document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-}
-
-function myFunction() {
-
-  let input = document.getElementById("channel-search");
-  let filter = input.value.toUpperCase();
-  let ul = document.getElementById("channel_list");
-  let li = ul.querySelectorAll(".channel_name .user_name");
-
-  for (i = 0; i < li.length; i++) {
-    let text = li[i].innerText.toUpperCase();
-    if (text.indexOf(filter) > -1) {
-      li[i].parentElement.parentElement.style.display = "block";
-    } else {
-      li[i].parentElement.parentElement.style.display = "none";
-    }
-  }
-}
