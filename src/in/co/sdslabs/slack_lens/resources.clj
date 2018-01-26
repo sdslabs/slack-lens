@@ -60,8 +60,8 @@
     "/channel"
     []
     :summary "passing channel's name list"
-    :query-params [channel :- String]
-    (render/message "empty-file" channel))
+    :query-params [channel :- String, start :- Long]
+    (render/message "empty-file" channel start))
 
   (GET*
     "/usermes"
@@ -74,5 +74,5 @@
     "/data"
     []
     :summary "filtering the messages by date"
-    :query-params [date :- String, channel :- String, length :- Long]
-    (render/date-range "empty-file" date channel length)))
+    :query-params [date :- String, channel :- String, length :- Long, start :- Long]
+    (render/date-range "empty-file" date channel length start)))

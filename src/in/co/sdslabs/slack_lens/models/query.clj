@@ -33,7 +33,7 @@
           (:index-name config)
           (:mapping1 config)
           :query (q/term keymap channel)
-          :sort {:ts {:order :asc}}
+          :sort {:ts {:order :desc}}
           :filter {:missing {:field :thread_ts}}
           :from from :size size)
       (:hits)
@@ -91,7 +91,9 @@
   (esd/search es-conn
       (:index-name config)
       (:mapping1 config)
-      :query $)
+      :query $
+      :sort {:ts {:order :desc}}
+      :from from :size size)
   (:hits $)
   (:hits $)))
 
