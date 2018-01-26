@@ -4,7 +4,6 @@
     [compojure.api.sweet :refer [defroutes* GET*]]
     [compojure.api.meta]
     [clojure.string :as str]
-    [ring.util.response :as response]
     [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]
     [in.co.sdslabs.slack-lens.models.query :as query]
     [ring.util.response :refer [redirect]]
@@ -50,13 +49,17 @@
     "/logout"
     request
     :summary "logout"
-    (prn request)
-    (let [ params (:query-params request)]
+    (let [cookie (:cookie request)]
       (cond
         ;; when user-cookie is passed
-        (contains? params "user")
-          (query/logout (get params "user"))
-        :else (merge (response/response "error") :status 400))))
+        cookie
+          (do (query/logout cookie)
+            {:body  "user logged out"
+                      :headers { "Content-Type" "text/html" }
+                      :status 204})
+          :else {:body  "cookie is invalid."
+                      :headers { "Content-Type" "text/html" }
+                      :status 400})))
 
   (GET*
     "/channel"
