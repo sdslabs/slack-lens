@@ -188,6 +188,8 @@ function renderInfo(attachments, messageDiv) {
 }
 
 function renderMessage(tmp, loadWhere) {
+  let elem =document.getElementsByClassName("message-history")[0];
+  let height = elem.scrollHeight;
   for (x in tmp) {
     var messageDiv = document.createElement("div");
     messageDiv.setAttribute("class", "message");
@@ -234,7 +236,9 @@ function renderMessage(tmp, loadWhere) {
     } else {
       var message = document.createElement("span");
       message.setAttribute("class", "message_content");
-      message.innerHTML = tmp[x]._source.text;
+      let text = tmp[x]._source.text;
+      let res = text.replace(/<(\w+:)(\S*)>/g," <a href='$1$2' target='_blank'>$1$2</a>");
+      message.innerHTML = res;
       messageDiv.appendChild(message);
     }
 
@@ -250,13 +254,13 @@ function renderMessage(tmp, loadWhere) {
       document.getElementById("sidebar").appendChild(messageDiv);
     } else if (loadWhere == "mainview") {
       fetched+=1;
-      console.log(fetched);
       let parent = document.getElementsByClassName("message-history")[0];
       parent.insertBefore(messageDiv, parent.firstChild);
     }
   }
   if (loadWhere == "mainview" && tmp.length != 0) {
     fetch =1;
+    elem.scrollTop = elem.scrollHeight - height;
   }
 }
 
@@ -264,7 +268,6 @@ function renderMessage(tmp, loadWhere) {
 function checkScroll () {
 
   if(this.scrollTop < 5 && fetch){
-    console.log("harsh is don ");
     fetch =0;
     loadDoc("/v1/channel?channel=" + active + "&start=" + fetched, "mainview",false);
   }
