@@ -104,7 +104,6 @@
       (let [row (as-> (str/lower-case cookie) $
             (q/term :cookie $)
             (esd/search conn index-name mapping :query $)
-            (do (prn $) $)
             (:hits $)
             (:hits $))]
           (if (not (empty? row))

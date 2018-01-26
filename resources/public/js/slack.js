@@ -55,8 +55,7 @@ function dropdownHandle() {
 
 function logout() {
   let cookie = document.cookie.split("cookie=")[1].split("; ")[0];
-  loadDoc("/v1/logout?user=" + cookie, "logout");
-  document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  loadDoc("/v1/logout", "logout");
 }
 
 function myFunction() {
@@ -188,7 +187,7 @@ function renderInfo(attachments, messageDiv) {
 }
 
 function renderMessage(tmp, loadWhere) {
-  let elem =document.getElementsByClassName("message-history")[0];
+  let elem = document.getElementsByClassName("message-history")[0];
   let height = elem.scrollHeight;
   for (x in tmp) {
     var messageDiv = document.createElement("div");
@@ -237,7 +236,7 @@ function renderMessage(tmp, loadWhere) {
       var message = document.createElement("span");
       message.setAttribute("class", "message_content");
       let text = tmp[x]._source.text;
-      let res = text.replace(/<(\w+:)(\S*)>/g," <a href='$1$2' target='_blank'>$1$2</a>");
+      let res = text.replace(/<(\w+:)(\S*)>/g, " <a href='$1$2' target='_blank'>$1$2</a>");
       message.innerHTML = res;
       messageDiv.appendChild(message);
     }
@@ -253,34 +252,34 @@ function renderMessage(tmp, loadWhere) {
     if (loadWhere == "Thread" || loadWhere == "User") {
       document.getElementById("sidebar").appendChild(messageDiv);
     } else if (loadWhere == "mainview") {
-      fetched+=1;
+      fetched += 1;
       let parent = document.getElementsByClassName("message-history")[0];
       parent.insertBefore(messageDiv, parent.firstChild);
     }
   }
   if (loadWhere == "mainview" && tmp.length != 0) {
-    fetch =1;
+    fetch = 1;
     elem.scrollTop = elem.scrollHeight - height;
   }
 }
 
 
-function checkScroll () {
+function checkScroll() {
 
-  if(this.scrollTop < 5 && fetch){
-    fetch =0;
-    loadDoc("/v1/channel?channel=" + active + "&start=" + fetched, "mainview",false);
+  if (this.scrollTop < 5 && fetch) {
+    fetch = 0;
+    loadDoc("/v1/channel?channel=" + active + "&start=" + fetched, "mainview", false);
   }
 }
 function mainview(tmp, loadWhere, setNull) {
-  if(setNull)
+  if (setNull)
     document.getElementsByClassName("message-history")[0].innerHTML = null;
 
-    messageDiv = renderMessage(tmp, loadWhere);
+  messageDiv = renderMessage(tmp, loadWhere);
 
   let objDiv = document.getElementsByClassName("message-history")[0];
 
-  if(setNull){
+  if (setNull) {
     objDiv.scrollTop = objDiv.scrollHeight;
     objDiv.onscroll = checkScroll;
   }
@@ -309,12 +308,14 @@ function loadDoc(url, loadWhere, setNull = true) {
         mainview(tmp, loadWhere, setNull);
       }
     }
+    if (this.status == 204 && loadWhere == "logout") {
+      document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = "/v1/slack-lens";
+    }
   };
-  if (loadWhere == "logout") {
-    window.location.href = "/v1/slack-lens";
-  }
   xhttp.open("GET", url, true);
   xhttp.send();
+
 }
 
 
