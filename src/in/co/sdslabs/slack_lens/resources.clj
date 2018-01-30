@@ -12,7 +12,7 @@
 
 (defroutes* v1_routes
   (GET*
-    "/slack-lens"
+    "/"
     request
     :summary "route for homepage"
     (if (:authenticated request)
@@ -33,7 +33,7 @@
     (render/thread "empty-file" thread_ts))
 
   (GET*
-  "/slack/oauth"
+  "/oauth"
   request
   :summary "authentization grant handling"
   (let [ x (:query-params request)]

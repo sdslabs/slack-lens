@@ -34,15 +34,7 @@
   (middlewares []
     ;; Add any internal middlewares to list above so these will be called before request
     ;; by default the ui is deployed at "/", use the path param to deploy somewhere else
-               (swagger-ui)
-               (swagger-docs
-                {:info
-                 {:title "slack-lens"
-                  :description "slack-lens API"
-                  :version "v1"}
-                 :tags
-                 [{:name "v1" :description "slack-lens API"}]})
-               (context* "/v1" []
+               (context* "" []
                          :tags ["v1"]
                          resources/v1_routes)
                (route/not-found "404 Not Found\n")))

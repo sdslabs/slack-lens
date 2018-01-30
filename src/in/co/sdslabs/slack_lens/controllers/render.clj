@@ -41,7 +41,7 @@
   (render-template filename $)))
 
 (defn message [filename channel start]
-  (as-> (query/search-miss (str/lower-case channel) start (+ start no-of-messages) :channel) $
+  (as-> (query/search-miss (str/lower-case channel) start no-of-messages :channel) $
       (array-map :messages $)
       (json/generate-string $)
       (array-map :data $)
@@ -64,7 +64,7 @@
 
 (defn date-range [filename date channel length start]
   (let [multi-parser (f/formatter (t/default-time-zone) "YYYY-MM-dd" "dd/MM/YYYY")]
-    (as-> (query/date-search (date-format date) (* 86400 length) channel start (+ start no-of-messages) :ts) $
+    (as-> (query/date-search (date-format date) (* 86400 length) channel start no-of-messages :ts) $
         (array-map :messages $)
         (json/generate-string $)
         (array-map :data $)

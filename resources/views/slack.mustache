@@ -75,22 +75,20 @@
         <i class="color"></i>
 
         <div class="search">
-          <input type="text" placeholder="search" id="channel-search" onkeyup="myFunction()"/>
+          <input type="text" placeholder="search" id="channel-search" onkeyup="myFunction()" />
           <i class="fa fa-search"></i>
         </div>
         <ul id="channel_list">
 
-          {{#channels}}
-          {{#_source}}
-          <li class="channel clearfix" id="{{name}}" onclick="location='slack-lens?channel={{name}}'">
+          {{#channels}} {{#_source}}
+          <li class="channel clearfix" id="{{name}}" onclick="location='/?channel={{name}}'">
             <a class="channel_name">
               <span class="user_name">
                 <span class="prefix"># </span> {{name}}
               </span>
             </a>
           </li>
-          {{/_source}}
-          {{/channels}}
+          {{/_source}} {{/channels}}
         </ul>
 
       </div>

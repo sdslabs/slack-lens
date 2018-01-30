@@ -11,7 +11,7 @@ function w3_close() {
 }
 
 function fetchMessage(path, parameter, query) {
-  var url = "/v1/" + path + "?" + parameter + "=" + query;
+  var url = "/" + path + "?" + parameter + "=" + query;
   loadDoc(url, "Thread");
 }
 
@@ -25,7 +25,7 @@ check();
 
 
 var input = document.getElementById('search');
-loadDoc("/v1/channel?channel=" + active + "&start=" + 0, "mainview");
+loadDoc("/channel?channel=" + active + "&start=" + 0, "mainview");
 function decodeHtml(html) {
   var txt = document.createElement("textarea");
   txt.innerHTML = html;
@@ -55,7 +55,7 @@ function dropdownHandle() {
 
 function logout() {
   let cookie = document.cookie.split("cookie=")[1].split("; ")[0];
-  loadDoc("/v1/logout", "logout");
+  loadDoc("/logout", "logout");
 }
 
 function myFunction() {
@@ -268,7 +268,7 @@ function checkScroll() {
 
   if (this.scrollTop < 5 && fetch) {
     fetch = 0;
-    loadDoc("/v1/channel?channel=" + active + "&start=" + fetched, "mainview", false);
+    loadDoc("/channel?channel=" + active + "&start=" + fetched, "mainview", false);
   }
 }
 function mainview(tmp, loadWhere, setNull) {
@@ -310,7 +310,7 @@ function loadDoc(url, loadWhere, setNull = true) {
     }
     if (this.status == 204 && loadWhere == "logout") {
       document.cookie = "cookie=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      window.location.href = "/v1/slack-lens";
+      window.location.href = "/slack-lens";
     }
   };
   xhttp.open("GET", url, true);

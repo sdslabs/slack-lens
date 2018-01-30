@@ -6,7 +6,7 @@
 
         <div class="message">
         {{#replies}}
-        <a style="position:absolute;right:5%" href="/v1/thread?thread_ts={{ts}}">thread</a>
+        <a style="position:absolute;right:5%" href="/thread?thread_ts={{ts}}">thread</a>
         {{/replies}}
         <img class="message_profile-pic" href="" style="background-image: url({{image_48}});"></img><a class="message_username" href="">{{user}}</a><span class="message_timestamp" id="{{ts}}" onload="time_stamp({{ts}})">{{ts}}</span><span class="message_star"></span><span class="message_content">{{text}}</span></div>
         {{/_source}}
