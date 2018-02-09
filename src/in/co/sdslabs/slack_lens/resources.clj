@@ -33,6 +33,13 @@
     (render/thread "empty-file" thread_ts))
 
   (GET*
+    "/edited"
+    []
+    :summary "data for the thread related messages"
+    :query-params [edited_ts :- Double]
+    (render/edited "empty-file" edited_ts))
+
+  (GET*
   "/oauth"
   request
   :summary "authentization grant handling"

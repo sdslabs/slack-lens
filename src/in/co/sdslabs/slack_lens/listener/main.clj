@@ -71,10 +71,11 @@
 
 (defn- get-proper-response
   [response]
-  (-> (json/parse-string response true)
+  (-> response
       (parser)
       (ts :ts)
       (ts :thread_ts)
+      (ts :edited_ts)
       (user-map)
       (channel-map)))
 
@@ -96,7 +97,7 @@
 (defn start
   [options]
   (let [conn-options (setup-elastic)
-        rtm-conn (rtm/start options #(es/elastic-update-message (assoc conn-options :response % )))]
+       rtm-conn (rtm/start options #(es/thread-and-edit (assoc conn-options :response % )))]
        (if (or (not (:index_exist conn-options))  (:update options))
          (map-db/main options (:conn conn-options) (get-config))
          nil)
