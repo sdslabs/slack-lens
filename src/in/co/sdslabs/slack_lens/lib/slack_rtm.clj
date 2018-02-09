@@ -48,10 +48,17 @@
            :thread_ts
            (get-in data [:message :thread_ts])}))
 
+(defn- add-edit-message
+  [data]
+  (let [message-to-be-filtered (:message data) edited (:edited message-to-be-filtered)]
+  (as-> (dissoc message-to-be-filtered :edited) $
+    (rename-keys $ {:ts :edited_ts})
+    (assoc  $ :ts (:ts edited))
+    (assoc $ :channel (:channel data)))))
+
 (defn- publish-events
   [data func]
   (let [data-map (dissoc (json/parse-string data true) :source_team)]
-    (println (data-map :subtype))
     (cond
           ;; for updating the reply_count for a thread
           (= (:subtype data-map) "message_replied") (thread-check data-map func)
@@ -60,10 +67,13 @@
                                   (select-keys data-map $)
                                   (rename-keys $ {:deleted_ts :thread_ts})
                                   (func $))
-          (or (some (partial = (:subtype data-map)) ["file_share" "bot_message"])
+          (or (some (partial = (:subtype data-map)) ["file_share" "bot_message" "message_changed"])
                (not (data-map :subtype)))
-      (do
-      (bus/publish! event-bus (:type data-map) data)))))
+      (if (= "message_changed" (:subtype data-map))
+        (do (func {:edited_ts (get-in data-map [:message :ts])})
+            (bus/publish! event-bus (:type data-map) (add-edit-message data-map)))
+      (bus/publish! event-bus (:type data-map) data-map))
+      )))
 
 (defn connect
   [url token]

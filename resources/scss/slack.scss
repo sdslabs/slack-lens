@@ -480,13 +480,18 @@ ul>li:hover{
   min-height: 36px;
   box-shadow: 1px 1px 6px darkgrey;
 
-  .deleted {
+  .deleted , .edited {
     float:right;
     background-color: rgba(189, 107, 107, 0.774);
     color: red;
     margin-right: 5px;
   }
 
+  .edited {
+    background-color: rgba(121, 189, 107, 0.774);
+    color: green;
+    cursor: hand;
+  }
   .message_profile-pic {
     position: absolute;
     left: 7px;
