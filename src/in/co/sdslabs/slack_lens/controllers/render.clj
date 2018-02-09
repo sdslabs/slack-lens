@@ -54,6 +54,13 @@
       (array-map :data $)
       (render-template filename $)))
 
+(defn edited [filename edited_ts]
+  (as-> (query/search edited_ts 0 100 :edited_ts) $
+      (array-map :messages $)
+      (json/generate-string $)
+      (array-map :data $)
+      (render-template filename $)))
+
 (defn userMes
   [filename person channel]
     (as-> (query/user-message person channel 0 100) $

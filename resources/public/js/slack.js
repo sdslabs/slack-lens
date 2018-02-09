@@ -207,6 +207,14 @@ function renderMessage(tmp, loadWhere) {
       deleted.setAttribute("class", "deleted");
       messageDiv.appendChild(deleted);
     }
+    if (tmp[x]._source.edited) {
+      let edited = document.createElement("span");
+      edited.textContent = "edited";
+      edited.setAttribute("href", "#");
+      edited.setAttribute("onclick", "return fetchMessage('edited', 'edited_ts' , " + tmp[x]._source.ts + ")");
+      edited.setAttribute("class", "edited");
+      messageDiv.appendChild(edited);
+    }
 
     let userImage = document.createElement("img");
     userImage.setAttribute("class", "message_profile-pic");
@@ -249,7 +257,7 @@ function renderMessage(tmp, loadWhere) {
       messageDiv.appendChild(br);
       messageDiv.appendChild(file);
     }
-    if (loadWhere == "Thread" || loadWhere == "User") {
+    if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited") {
       document.getElementById("sidebar").appendChild(messageDiv);
     } else if (loadWhere == "mainview") {
       fetched += 1;
@@ -301,7 +309,7 @@ function loadDoc(url, loadWhere, setNull = true) {
       var tmp = JSON.parse(decodeHtml(this.responseText)).messages;
       console.log(tmp);
 
-      if (loadWhere == "Thread" || loadWhere == "User") {
+      if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited") {
         sidebar(tmp, loadWhere);
       }
       else if (loadWhere == "mainview") {

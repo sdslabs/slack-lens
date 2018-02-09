@@ -18,13 +18,13 @@
 (defn search
   "search the channels"
   [channel from size keymap]
-  (-> (esd/search es-conn
+  (as-> (esd/search es-conn
           (:index-name config)
           (:mapping1 config)
           :query (q/term keymap channel)
-          :from from :size size)
-      (:hits)
-      (:hits)))
+          :from from :size size) $
+      (:hits $)
+      (:hits $)))
 
 (defn search-miss
   "search the channels"
@@ -34,7 +34,7 @@
           (:mapping1 config)
           :query (q/term keymap channel)
           :sort {:ts {:order :desc}}
-          :filter {:missing {:field :thread_ts}}
+          :filter {:missing {:field [:thread_ts :edited_ts]}}
           :from from :size size)
       (:hits)
       (:hits)))
