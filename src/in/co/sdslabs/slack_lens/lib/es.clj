@@ -75,6 +75,30 @@
             mapping
             $ (str "ctx._source.deleted = " true)))))))
 
+(defn elastic-edit-message
+  [{:keys [conn index-name response mapping]}]
+    (time (Thread/sleep 1000))
+    (let [found (as-> (:edited_ts response) $
+        (str/lower-case $)
+        (q/term :ts $)
+        (esd/search conn index-name mapping :query $)
+        (:hits $)
+        (:hits $))]
+        (if (empty? found)
+        nil
+        (do (as-> found $
+        (nth $ 0)
+        (:_id $)
+          (esd/update-with-script conn
+            index-name
+            mapping
+            $ (str "ctx._source.edited = " true)))))))
+
+(defn thread-and-edit
+  [query]
+  (if (get-in query [:response :edited_ts])
+    (elastic-edit-message query)
+    (elastic-update-message query)))
 
 (defn store-user-data
   [{:keys [conn index-name response mapping]}]
