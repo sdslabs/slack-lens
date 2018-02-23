@@ -83,4 +83,4 @@
 
 (defn errorHandle
     [error]
-    (str error " <br> return to <a href='/v1/slack-lens' >home-page</a>"))
+    (str error " <br> return to <a href='/slack-lens' >home-page</a>"))
