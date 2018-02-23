@@ -7,9 +7,11 @@
     [ring.util.response :as response]
     [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]
     [in.co.sdslabs.slack-lens.models.query :as query]
+    [ring.util.response :refer [redirect]]
     [in.co.sdslabs.slack-lens.controllers.render :as render]))
 
-
+(defroutes* redir
+  (GET* "/" [] (redirect "/v1/slack-lens")))
 
 (defroutes* v1_routes
   (GET*

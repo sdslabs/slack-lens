@@ -41,7 +41,8 @@
     {:port 40000
      :init in.co.sdslabs.slack-lens.service/initialize!
      :handler in.co.sdslabs.slack-lens.service/main-handler
-     :destroy in.co.sdslabs.slack-lens.service/destroy!}
+     :destroy in.co.sdslabs.slack-lens.service/destroy!
+     :host "localhost"}
 
   :test-selectors {:default (complement :integration)
                    :integration :integration
