@@ -31,11 +31,11 @@
       (do (if
           ;; only update the channel table
             (.contains update-tables "channel")
-              (insert-users user-type))
-          (if
-          ;; only update the user table
-            (.contains update-tables "user")
-              (insert-channels channel-type)))
+            (insert-channels channel-type))
+            (if
+              ;; only update the user table
+              (.contains update-tables "user")
+              (insert-users user-type)))
       ;; to fetch the user and channel ids for first time.
       (do (insert-users user-type)
           (insert-channels channel-type)))))

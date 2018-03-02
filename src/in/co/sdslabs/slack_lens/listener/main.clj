@@ -71,13 +71,13 @@
 
 (defn- get-proper-response
   [response]
-  (-> response
-      (parser)
-      (ts :ts)
-      (ts :thread_ts)
-      (ts :edited_ts)
-      (user-map)
-      (channel-map)))
+  (as-> response $
+      (parser $)
+      (ts $ :ts)
+      (ts $ :thread_ts)
+      (ts $ :edited_ts)
+      (user-map $)
+      (channel-map $)))
 
 (defn setup-elastic
   []

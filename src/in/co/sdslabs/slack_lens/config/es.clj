@@ -3,62 +3,50 @@
 (def settings {"number_of_replicas" 0
                "number_of_shards" 1})
 
-(def mapping1 {"message" {:_all {:enabled true}
+(def mapping1 {"message" {
 
-                          :_id {:path "id"}
 
-                          :_timestamp {:enabled true :path "timestamp"}
 
-                          :properties {:id {:type "integer"}
-                                       :type {:type "string"}
-                                       :channel {:type "string"}
-                                       :user {:type "string"}
-                                       :image_48 {:type "string"}
-                                       :text {:type "string"}
+                          :properties {:id {:type "text"}
+                                       :type {:type "text"}
+                                       :channel {:type "text"}
+                                       :user {:type "text"}
+                                       :image_48 {:type "text"}
+                                       :text {:type "text"}
                                        :ts {:type "double"}
-                                       :team {:type "string"}
+                                       :team {:type "text"}
                                        :replies {:type "integer"
                                                  :null_value 0}
-                                       :thread_ts {:type "double"}}}})
+                                       :thread_ts {:type "double"}}}
 
-(def mapping2 {"pehchankaun" {:_all {:enabled true}
+,"pehchankaun" {
 
-                              :_id {:path "id"}
 
-                              :_timestamp {:enabled true :path "timestamp"}
 
-                              :properties {:id {:type "string"}
-                                           :user {:type "string"}
-                                           :image_48 {:type "string"}}}})
+                              :properties {:id {:type "text"}
+                                           :user {:type "text"}
+                                           :image_48 {:type "text"}}}
 
-(def mapping3 {"channels" {:_all {:enabled true}
+,"channels" {
 
-                           :_id {:path "id"}
 
-                           :_timestamp {:enabled true :path "timestamp"}
+                           :properties {:id {:type "text"}
+                                        :name {:type "text"}}}
 
-                           :properties {:id {:type "string"}
-                                        :name {:type "string"}}}})
+,"user-details" {
 
-(def mapping4 {"user-details" {:_all {:enabled true}
 
-                           :_id {:path "id"}
 
-                           :_timestamp {:enabled true :path "timestamp"}
+                           :properties {:id {:type "text"}
+                                        :name {:type "text"}
+                                        :image_48 {:type "text"}
+                                        :team {:type "text"}
+                                        :email {:type "text"}
+                                        :access_token {:type "text"}}}
 
-                           :properties {:id {:type "string"}
-                                        :name {:type "string"}
-                                        :image_48 {:type "string"}
-                                        :team {:type "string"}
-                                        :email {:type "string"}
-                                        :access_token {:type "string"}}}})
+,"login" {
 
-(def mapping5 {"login" {:_all {:enabled true}
 
-                           :_id {:path "id"}
-
-                           :_timestamp {:enabled true :path "timestamp"}
-
-                           :properties {:id {:type "string"}
-                                        :team {:type "string"}
-                                        :cookie {:type "string"}}}})
+                           :properties {:id {:type "text"}
+                                        :team {:type "text"}
+                                        :cookie {:type "text"}}}})

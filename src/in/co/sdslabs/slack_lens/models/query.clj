@@ -32,9 +32,13 @@
   (-> (esd/search es-conn
           (:index-name config)
           (:mapping1 config)
-          :query (q/term keymap channel)
+          :query (as-> "thread_ts" $
+                          (array-map :field $)
+                          (array-map :exists $)
+                          (merge {:must_not $}
+                                 {:must (q/term keymap channel)})
+                          (array-map :bool $))
           :sort {:ts {:order :desc}}
-          :filter {:missing {:field [:thread_ts :edited_ts]}}
           :from from :size size)
       (:hits)
       (:hits)))
@@ -55,8 +59,6 @@
   (as-> arg $
     (array-map :must $)
     (array-map :bool $)
-    (array-map :filter $)
-    (array-map :filtered $)
     (esd/search es-conn
       (:index-name config)
       (:mapping4 config) :query $)
@@ -85,9 +87,8 @@
   [arg from size]
   (as-> arg $
   (array-map :must $)
+  (merge $ {:must_not {:exists {:field "thread_ts"}}})
   (array-map :bool $)
-  (array-map :filter $)
-  (array-map :filtered $)
   (esd/search es-conn
       (:index-name config)
       (:mapping1 config)
@@ -107,8 +108,7 @@
             nil
             (q/range keymap
                 {:lte (+ ts length)}))
-       (q/term :channel channel)
-       {:missing {:field :thread_ts}}]
+       (q/term :channel channel)]
       from size))
 
 (defn user-message
@@ -116,8 +116,7 @@
   [person channel from size]
   (search-by-multiple-conditions
       [(q/term :channel channel)
-       (q/term :name person)
-       {:missing {:field :thread_ts}}]
+       (q/term :name person)]
       from size))
 
 
