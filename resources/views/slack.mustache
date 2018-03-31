@@ -1,119 +1,104 @@
 <html>
-
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title></title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link href="/css/slack.css" rel="stylesheet" type="text/css" />
-
-</head>
-
-<body style="overflow:hidden;">
-  <div id="mySidebar" style="overflow:scroll;">
-
-
-    <!-- sideBar Header-->
-    <div class="sidebar-header">
-      <div class="sidebar-about">
-        <div id="sidebar-with">Topic</div>
-        <div class="sidebar-num-messages">
-          <span id="count">0</span> messages</div>
-      </div>
-      <button onclick="w3_close()" id="close-button">&times;</button>
-    </div>
-    <!-- sideBar Header-->
-
-    <div id="sidebar" style="padding-left:5px;"></div>
-  </div>
-
-  {{#data}}
-  <div class="header">
-    <div class="team-menu">{{slack-name}}</div>
-    <div id="header_">
-
-      <h2 id="channel-title">
-        #{{active}}
-      </h2>
-
-      <div id="rightIcons">
-        <div id="wrapper1">
-          <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
-          <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
-          <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/css/slack.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body style="overflow:hidden;">
+    <div id="mySidebar" style="overflow:scroll;">
+      <!-- sideBar Header-->
+      <div class="sidebar-header">
+        <div class="sidebar-about">
+          <div id="sidebar-with">Topic</div>
+          <div class="sidebar-num-messages">
+            <span id="count">0</span> messages</div>
+          </div>
+          <button onclick="w3_close()" id="close-button">&times;</button>
         </div>
-        <div id="wrapper2">
-          <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
-          <input id="search" placeholder="dd/mm/yyyy" type="text">
-          <input id="number" type="number" value="0">
+        <!-- sideBar Header-->
+        <div id="sidebar" style="padding-left:5px;"></div>
+      </div>
+      {{#data}}
+      <div class="header">
+        <div class="team-menu">{{slack-name}}</div>
+        <div id="header_">
+          <h2 id="channel-title">
+          #{{active}}
+          </h2>
+          <div id="rightIcons">
+            <div id="wrapper1">
+              <i class="box_ phone fa fa-phone fa-lg" aria-hidden="true"></i>
+              <i class="box_ cog fa fa-cog fa-lg" aria-hidden="true"></i>
+              <i class="box_  details fa fa-list-alt fa-lg" aria-hidden="true"></i>
+            </div>
+            <div id="wrapper2">
+              <i class="box_ search-glass fa fa-search" aria-hidden="true"></i>
+              <input id="search" placeholder="dd/mm/yyyy" type="text">
+              <input id="number" type="number" value="0">
+            </div>
+            <div id="wrapper3">
+              <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
+              <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
+              <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true" onclick="dropdownHandle()"></i>
+            </div>
+          </div>
+          <div id="icons" style="pointer-events:none;">
+            <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
+            <h3 id="line"> | </h3>
+            <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
+            <h3 id="line2"> | </h3>
+            <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
+          </div>
         </div>
-        <div id="wrapper3">
-          <i class="box_ at fa fa-at fa-lg" aria-hidden="true"></i>
-          <i class="box_ star-o fa fa-star-o fa-lg" aria-hidden="true"></i>
-          <i class="box_ menu fa fa-ellipsis-v fa-lg" aria-hidden="true" onclick="dropdownHandle()"></i>
+      </div>
+      <div id="dropdown">
+        <button id="logout" onclick="logout()">logout</button>
+      </div>
+      <div class="main">
+        <div class="listings">
+          <div class="listings_channels">
+            <h2 class="listings_header">Channels</h2>
+            <i class="color"></i>
+            <div class="search">
+              <input type="text" placeholder="search" id="channel-search" onkeyup="myFunction()"/>
+              <i class="fa fa-search"></i>
+            </div>
+            <ul id="channel_list">
+              {{#channels}}
+              {{#_source}}
+              <li class="channel clearfix" id="{{name}}" onclick="location='slack-lens?channel={{name}}'">
+                <a class="channel_name">
+                  <span class="user_name">
+                    <span class="prefix"># </span> {{name}}
+                  </span>
+                </a>
+              </li>
+              {{/_source}}
+              {{/channels}}
+            </ul>
+          </div>
         </div>
-      </div>
-
-      <div id="icons" style="pointer-events:none;">
-        <i class="box_ star fa fa-star-o" aria-hidden="true"></i>
-        <h3 id="line"> | </h3>
-        <i class="box_ user fa fa-user-o" aria-hidden="true"></i>
-        <h3 id="line2"> | </h3>
-        <i class="box_ pin fa fa-thumb-tack" aria-hidden="true"></i>
-      </div>
-
-    </div>
-  </div>
-  <div id="dropdown">
-    <button id="logout" onclick="logout()">logout</button>
-  </div>
-  <div class="main">
-    <div class="listings">
-      <div class="listings_channels">
-        <h2 class="listings_header">Channels</h2>
-        <i class="color"></i>
-
-        <div class="search">
-          <input type="text" placeholder="search" id="channel-search" onkeyup="myFunction()"/>
-          <i class="fa fa-search"></i>
+        <div class="message-history">
         </div>
-        <ul id="channel_list">
-
-          {{#channels}}
-          {{#_source}}
-          <li class="channel clearfix" id="{{name}}" onclick="location='slack-lens?channel={{name}}'">
-            <a class="channel_name">
-              <span class="user_name">
-                <span class="prefix"># </span> {{name}}
-              </span>
-            </a>
-          </li>
-          {{/_source}}
-          {{/channels}}
-        </ul>
-
-      </div>
-    </div>
-    <div class="message-history">
-    </div>
-    <div class="footer">
-      <div class="user-menu">
-        {{#user}} {{#_source}}
-        <img class="user-menu_profile-pic" src="{{image_48}}">
-        <span class="user-menu_username">{{name}}</span>
-        <span class="connection_status">online</span>
-        {{/_source}} {{/user}}
-      </div>
-      <div class="input-box">
-        <input class="input-box_text" type="text" />
-      </div>
-    </div>
-    <script>
-      var active = "{{active}}";
-    </script>
-    <script src="/js/slack.js">
-    </script> {{/data}}
-</body>
-
-</html>
+        <div class="footer">
+          <div class="user-menu">
+            {{#user}} {{#_source}}
+            <img class="user-menu_profile-pic" src="{{image_48}}">
+            <span class="user-menu_username">{{name}}</span>
+            <span class="connection_status">online</span>
+            {{/_source}} {{/user}}
+          </div>
+          <div class="input-box">
+            <input class="input-box_text" type="text" />
+          </div>
+        </div>
+        <script>
+        var active = "{{active}}";
+        </script>
+        <script src="/js/slack.js">
+        </script> {{/data}}
+      </body>
+    </html>

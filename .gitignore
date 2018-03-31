@@ -13,5 +13,6 @@ pom.xml
 .nrepl-port
 .vagrant
 resources/css/
+.idea/
 .ideas/
 resources/config.json

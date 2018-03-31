@@ -76,4 +76,3 @@
         (json/generate-string $)
         (array-map :data $)
         (render-template filename $))))
-
