@@ -1,6 +1,7 @@
 const botImg = "https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2015-10-09/12167763254_75a2d1841d07a114dcc3_36.jpg";
 var fetch = 1;
 var fetched = 0;
+var countSidebarMessage = 0;
 
 function w3_open() {
   document.getElementById("mySidebar").style.right = "0";
@@ -26,6 +27,11 @@ function decodeHtml(html) {
   return txt.value;
 }
 
+function clearSidebar(){
+  countSidebarMessage = 0;
+  document.getElementById("sidebar").innerHTML = null;
+}
+
 loadDoc("/v1/channel?channel=" + active + "&start=" + 0, "mainview");
 
 var input = document.getElementById('search');
@@ -47,7 +53,11 @@ var messageSearchBox = document.getElementById('message-search');
 messageSearchBox.addEventListener('keypress', function (e) {
   if ((e.which || e.keyCode) == 13) {
     messageSearchBox.blur();
-    loadDoc("search?search-text=" + messageSearchBox.value + "&channel=" + active, "Thread");
+    clearSidebar();
+    for(i = 0; i < channels.length; i++){
+      var channelName = channels[i];
+      loadDoc("search?search-text=" + messageSearchBox.value + "&channel=" + channelName, "Search", true, channelName);
+    }
     messageSearchBox.value = "";
   }
 });
@@ -96,7 +106,7 @@ document.body.addEventListener('click', function (event) {
   }
 });
 
-function renderServiceMes(attachments, messageDiv) {
+function renderServiceMes(attachments, messageDiv) { 
   for (x in attachments) {
 
     let text = attachments[x].text;
@@ -266,7 +276,7 @@ function renderMessage(tmp, loadWhere) {
       messageDiv.appendChild(br);
       messageDiv.appendChild(file);
     }
-    if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited") {
+    if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited" || loadWhere == "Search") {
       document.getElementById("sidebar").appendChild(messageDiv);
     } else if (loadWhere == "mainview") {
       fetched += 1;
@@ -302,25 +312,36 @@ function mainview(tmp, loadWhere, setNull) {
   }
 }
 
+function appendHeadingToSidebar(headerText){
+  var headingStrip = document.createElement("h3");
+  headingStrip.innerHTML = headerText;
+  headingStrip.classList.add("sidebar-header-strip");
+  document.getElementById("sidebar").appendChild(headingStrip);
+}
 
-function sidebar(tmp, loadWhere) {
-  document.getElementById("sidebar").innerHTML = null;
-  document.getElementById("count").innerHTML = tmp.length;
+function sidebar(tmp, loadWhere, subHeading) {
+  // Sidebar gets cleared only once (from calling function) if search is executed
+  if(loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited")
+    clearSidebar();
+  if(loadWhere == "Search" && tmp.length > 0)
+    appendHeadingToSidebar("#"+subHeading);
+  countSidebarMessage = countSidebarMessage+parseInt(tmp.length);
+  document.getElementById("count").innerHTML = countSidebarMessage;
   document.getElementById("sidebar-with").innerHTML = loadWhere + (name ? name : "");
   messageDiv = renderMessage(tmp, loadWhere);
   w3_open();
 }
 
-function loadDoc(url, loadWhere, setNull = true) {
+function loadDoc(url, loadWhere, setNull = true, sidebarSubHeading) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var tmp = JSON.parse(decodeHtml(this.responseText)).messages;
-      console.log(tmp);
-
-
-      if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited" || loadWhere == "Search") {
+      if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited") {
         sidebar(tmp, loadWhere);
+      }
+      else if(loadWhere == "Search"){
+        sidebar(tmp, loadWhere, sidebarSubHeading);
       }
       else if (loadWhere == "mainview") {
         mainview(tmp, loadWhere, setNull);
