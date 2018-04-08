@@ -120,6 +120,14 @@
       from size))
 
 
+(defn message-search
+  "search for messages"
+  [search-text channel from size]
+    (search-by-multiple-conditions
+        [(q/term :channel channel)
+         {:common {:text {:query search-text}}}]
+        from size))
+
 (defn ch-search
   "search the channels"
   [from size]

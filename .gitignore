@@ -15,4 +15,5 @@ pom.xml
 resources/css/
 .idea/
 .ideas/
+.sass-cache/
 resources/config.json

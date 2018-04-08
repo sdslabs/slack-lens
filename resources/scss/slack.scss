@@ -617,6 +617,10 @@ ul>li:hover{
   bottom: 0;
   min-height: 41px !important;
   padding: 9px 5px 9px 8px;
+
+    &:focus{
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  }
 }
 
 #dropdown {

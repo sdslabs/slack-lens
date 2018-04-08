@@ -20,18 +20,15 @@ function check() {
 }
 check();
 
-
-
-
-
-var input = document.getElementById('search');
-loadDoc("/v1/channel?channel=" + active + "&start=" + 0, "mainview");
 function decodeHtml(html) {
   var txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
 }
 
+loadDoc("/v1/channel?channel=" + active + "&start=" + 0, "mainview");
+
+var input = document.getElementById('search');
 input.addEventListener('keypress', function (e) {
   if ((e.which || e.keyCode) == 13) {
     if (!/(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/.test(input.value)) {
@@ -43,6 +40,18 @@ input.addEventListener('keypress', function (e) {
     input.value = "";
   }
 });
+
+
+var messageSearchBox = document.getElementById('message-search');
+//  Universal searches get displayed in thread-view
+messageSearchBox.addEventListener('keypress', function (e) {
+  if ((e.which || e.keyCode) == 13) {
+    messageSearchBox.blur();
+    loadDoc("search?search-text=" + messageSearchBox.value + "&channel=" + active, "Thread");
+    messageSearchBox.value = "";
+  }
+});
+
 
 function dropdownHandle() {
   let display = document.getElementById("dropdown").style.display;
@@ -58,7 +67,7 @@ function logout() {
   loadDoc("/v1/logout", "logout");
 }
 
-function myFunction() {
+function filterChannels() {
 
   let input = document.getElementById("channel-search");
   let filter = input.value.toUpperCase();
@@ -309,7 +318,8 @@ function loadDoc(url, loadWhere, setNull = true) {
       var tmp = JSON.parse(decodeHtml(this.responseText)).messages;
       console.log(tmp);
 
-      if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited") {
+
+      if (loadWhere == "Thread" || loadWhere == "User" || loadWhere == "Edited" || loadWhere == "Search") {
         sidebar(tmp, loadWhere);
       }
       else if (loadWhere == "mainview") {

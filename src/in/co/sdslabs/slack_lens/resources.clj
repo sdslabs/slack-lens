@@ -87,4 +87,11 @@
     []
     :summary "filtering the messages by date"
     :query-params [date :- String, channel :- String, length :- Long, start :- Long]
-    (render/date-range "empty-file" date channel length start)))
+    (render/date-range "empty-file" date channel length start))
+
+  (GET*
+    "/search"
+    []
+    :summary "search by text"
+    :query-params [search-text :- String, channel :- String]
+    (render/search "empty-file" search-text channel)))

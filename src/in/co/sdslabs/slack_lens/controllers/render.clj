@@ -76,3 +76,11 @@
         (json/generate-string $)
         (array-map :data $)
         (render-template filename $))))
+
+(defn search
+  [filename text channel]
+    (as-> (query/message-search text channel 0 100) $
+        (array-map :messages $)
+        (json/generate-string $)
+        (array-map :data $)
+        (render-template filename $)))

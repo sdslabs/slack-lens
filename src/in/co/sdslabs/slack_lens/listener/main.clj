@@ -6,8 +6,8 @@
             [in.co.sdslabs.slack-lens.map-db :as map-db]
             [cheshire.core :as json]
             [clojure.string :as str]
-            [clojure.java.io :as jio]))
-
+            [clojure.java.io :as jio]
+            [clojure.tools.logging :as log]))
 
 
 (defn get-config
@@ -101,8 +101,10 @@
        (if (or (not (:index_exist conn-options))  (:update options))
          (map-db/main options (:conn conn-options) (get-config))
          nil)
-       (rtm/subscribe "message"
-         (fn [x]
+       (rtm/subscribe 
+          "message"
+          (fn [x]
+             (log/info (get-proper-response x))
              (es/elastic-feed (assoc conn-options :response (get-proper-response x)
                ))))
                (time (Thread/sleep 1000000000000))

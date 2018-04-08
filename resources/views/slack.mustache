@@ -63,7 +63,7 @@
             <h2 class="listings_header">Channels</h2>
             <i class="color"></i>
             <div class="search">
-              <input type="text" placeholder="search" id="channel-search" onkeyup="myFunction()"/>
+              <input type="text" placeholder="search" id="channel-search" onkeyup="filterChannels()"/>
               <i class="fa fa-search"></i>
             </div>
             <ul id="channel_list">
@@ -92,11 +92,18 @@
             {{/_source}} {{/user}}
           </div>
           <div class="input-box">
-            <input class="input-box_text" type="text" />
+            <input class="input-box_text" type="text" placeholder="Search message" id="message-search"/>
           </div>
         </div>
         <script>
-        var active = "{{active}}";
+          var active = "{{active}}";
+          var i = 0;
+          var channels =[];
+          {{#channels}}
+              {{#_source}}
+                channels[i++] = "{{name}}";
+              {{/_source}}
+          {{/channels}}
         </script>
         <script src="/js/slack.js">
         </script> {{/data}}
