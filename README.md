@@ -4,21 +4,28 @@ Slack-lens is leiningen project written in [clojure](https://clojure.org).Slack-
 
 A web interface is also implemented for viewing the messages .     
 
-## SetUp
+## Quick Setup
+**(Not preferred as VM will eat up your resources)**
 
     sudo apt-get install vagrant
     vagrant up
 
-## Alternate Manually setup
+## Alternate Manually setup 
+**(Preferred method)**
 ### Installing Leiningen
 Run [this](https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein) script to self install the leiningen package.
 
-### Install the elasticsearch 
-    wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
-    sudo dpkg -i elasticsearch-1.7.2.deb
+### Install the elasticsearch
+Run following commands to install elasticsearch locally
 
+    wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-5.6.0.deb
+    sudo dpkg -i elasticsearch-5.6.0.deb
+    
+Or use the elasticsearch docker image instead (to manage multiple versions of elasticsearch)
 
-
+    docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+    docker run -d -p 9200:9200 --name elasticsearch -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" -e "xpack.security.enabled=false" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+    
 ## Running
 
 For listening to the slack-rtm API 
@@ -27,6 +34,7 @@ For listening to the slack-rtm API
 
 To start a web server for slack-lens on localhost, run:
 
+    # Port is optional
     lein ring server-headless [port]
 
 By default, the server uses port 40000.  To query the service, run:
