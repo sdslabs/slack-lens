@@ -37,7 +37,7 @@
    rest api"
   [options]
   (try
-    (es/connect (:url options))
+    (es/connect (str "http://" (:host options) ":" (:port options)))
     (catch Exception e (log/info e))))
 
 (defn elastic-feed
