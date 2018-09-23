@@ -1,6 +1,6 @@
 {
   "slack-name": "SLACK-NAME",
-  "index_name": "DATABASE-NAME [eg. slack-lens]",
+  "index-name": "DATABASE-NAME [eg. slack-lens]",
   "host": "DATABASE-HOST [eg. 127.0.0.1]",
   "port": "ELASTICSEARCH-PORT [eg. 9200]",
   "mapping1": "MESSAGE-TABLE-NAME",
