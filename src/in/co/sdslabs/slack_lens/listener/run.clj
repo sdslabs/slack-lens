@@ -1,11 +1,12 @@
 (ns in.co.sdslabs.slack-lens.listener.run
   (:require [clojure.tools.cli :refer [parse-opts]]
             [clojure.string :as string]
-            [in.co.sdslabs.slack-lens.listener.main :as main]))
+            [in.co.sdslabs.slack-lens.listener.main :as main]
+            [in.co.sdslabs.slack-lens.controllers.oauthHandler :as oauth]))
 
 (def ^:private cli-options
   [["-t" "--token TOKEN" "Slack Bot Token"
-    :default nil]
+    :default (:token (oauth/get-config))]
    ["-i" "--update channel&user" "Update user and channel tables"
     :default nil]
    ["-u" "--url URL" "URL for connection to Slack API"
