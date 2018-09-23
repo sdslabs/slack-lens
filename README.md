@@ -1,8 +1,22 @@
-# slack-lens
+# Slack-lens
 
 Slack-lens is leiningen project written in [clojure](https://clojure.org).Slack-lens is for listening, storaging and retrieving the message so that the messages could still be found after 10,000 messages limit on slack.  Slack-lens use the [slack-rtm](https://api.slack.com/rtm) API to listen to every event that is triggered on the slack. Slack-lens listens to these and filters the events with `type = message`, then these are stored in elastic-search database. 
 
 A web interface is also implemented for viewing the messages .     
+
+## Prerequisites
+
+#### Slack API setup
+
+__Note:__ Only admin of slack workspace is authorised to get API token.
+
+* Goto [Legacy Token.](https://api.slack.com/custom-integrations/legacy-tokens") Copy the 'token' that starts with `xoxp`.
+* Goto [API setup](https://api.slack.com/apps "Slack API: Applications")
+* Create app for required workspace.
+* Get 'client id' and 'client secret'
+* Click 'OAuth & Permissions' on sidebar
+* Add new redirect url `http://localhost:40000/v1/slack/oauth`
+
 
 ## Quick Setup
 **(Not preferred as VM will eat up your resources)**
@@ -15,23 +29,26 @@ A web interface is also implemented for viewing the messages .
 ### Installing Leiningen
 Run [this](https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein) script to self install the leiningen package.
 
+### Configuration
+ 
+    cp resources/config.sample.json resources/config.json
+    
+Enter slack api credentials in config file 
+
 ### Install the elasticsearch
 Run following commands to install elasticsearch locally
+
+**Not preferred if different versions required**
 
     wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-5.6.0.deb
     sudo dpkg -i elasticsearch-5.6.0.deb
     
 Or use the elasticsearch docker image instead (to manage multiple versions of elasticsearch)
 
-    docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.0
-    docker run -d -p 9200:9200 --name elasticsearch -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" -e "xpack.security.enabled=false" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+**Preferred:**
 
-### Configuration
- 
-    cp resources/config.sample.json resources/config.json
-    
-Enter slack api credentials in config file 
-    
+    ./scripts/docker-elasticsearch-setup.sh
+
 ## Running
 
 For listening to the slack-rtm API 
