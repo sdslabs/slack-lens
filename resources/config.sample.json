@@ -8,6 +8,7 @@
   "mapping3": "CHANNEL-INFO-TABLE-NAME",
   "mapping4": "LOGIN-USER-DETAILS-TABLE-NAME",
   "mapping5": "COOKIE-TABLE-NAME",
+  "token": "LEGACY-TOKEN",
   "allowed-team": "TEAM-ID",
   "client_id": "SLACK-APP-CLIENT-ID",
   "client_secret": "SLACK-APP-CLIENT-SECRET"
