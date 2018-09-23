@@ -10,7 +10,7 @@ A web interface is also implemented for viewing the messages .
     sudo apt-get install vagrant
     vagrant up
 
-## Alternate Manually setup 
+## Alternate Manual setup 
 **(Preferred method)**
 ### Installing Leiningen
 Run [this](https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein) script to self install the leiningen package.
@@ -25,25 +25,34 @@ Or use the elasticsearch docker image instead (to manage multiple versions of el
 
     docker pull docker.elastic.co/elasticsearch/elasticsearch:5.6.0
     docker run -d -p 9200:9200 --name elasticsearch -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" -e "xpack.security.enabled=false" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+
+### Configuration
+ 
+    cp resources/config.sample.json resources/config.json
+    
+Enter slack api credentials in config file 
     
 ## Running
 
 For listening to the slack-rtm API 
 
-    lein run -m in.co.sdslabs.slack-lens.listener.run -t "Your Token" 
+    # To simply start listener based on saved configuration
+    lein run
+    # To specify entry point and token explicitly
+    lein run -m in.co.sdslabs.slack-lens.listener.run -t [Your Token] 
 
 To start a web server for slack-lens on localhost, run:
 
     # Port is optional
     lein ring server-headless [port]
 
-By default, the server uses port 40000.  To query the service, run:
+By default, the server uses port 40000. To run web interface, run this address in browser
 
-    curl -X GET http://localhost:40000
+    http://localhost:40000
 
 ## Testing
 
-For starting the local web-scoket server, and transmitting the messages for testing purposes
+For starting the local web-socket server, and transmitting the messages for testing purposes
 
     lein run -m in.co.sdslabs.slack-lens.test.message
 
