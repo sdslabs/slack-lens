@@ -40,7 +40,7 @@ Run following commands to install elasticsearch locally
 
 **Not preferred if different versions required**
 
-    wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-5.6.0.deb
+    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.0.deb
     sudo dpkg -i elasticsearch-5.6.0.deb
     
 Or use the elasticsearch docker image instead (to manage multiple versions of elasticsearch)
