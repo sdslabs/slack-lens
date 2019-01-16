@@ -3,7 +3,7 @@
     "FIXME: write description"
   :url "FIXME: Add a url"
   :min-lein-version "2.0.0"
-  :main "in.co.sdslabs.slack-lens.listener.run"
+  :main in.co.sdslabs.slack-lens.listener.run
   :dependencies
     [[org.clojure/clojure "1.7.0"]
      [org.clojure/tools.cli "0.3.1"]
@@ -24,6 +24,7 @@
      [aleph "0.4.0"]
      [manifold "0.1.0"]
      [cheshire "5.5.0"]
+     [clj-http "3.9.1"]
      [clojurewerkz/elastisch "2.1.0"]
      [clj-time "0.14.0"]]
 
