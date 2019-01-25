@@ -44,7 +44,7 @@
      :init in.co.sdslabs.slack-lens.service/initialize!
      :handler in.co.sdslabs.slack-lens.service/main-handler
      :destroy in.co.sdslabs.slack-lens.service/destroy!
-     :host "localhost"}
+     :host "0.0.0.0"}
 
   :test-selectors {:default (complement :integration)
                    :integration :integration
