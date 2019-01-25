@@ -37,7 +37,7 @@
    rest api"
   [options]
   (try
-    (es/connect (str "http://" (:host options) ":" (:port options)))
+    (es/connect (str "http://" (:host options) ":" (:port options)) {:basic-auth [(:es_user options) (:es_pass options)]})
     (catch Exception e (log/info e))))
 
 (defn elastic-feed

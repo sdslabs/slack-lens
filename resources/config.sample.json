@@ -3,6 +3,8 @@
   "index-name": "DATABASE-NAME [eg. slack-lens]",
   "host": "DATABASE-HOST [eg. 127.0.0.1]",
   "port": "ELASTICSEARCH-PORT [eg. 9200]",
+  "es_user": "ELASTICSEARCH-SECURITY-USERNAME",
+  "es_pass": "ELASTICSEARCH-SECURITY-PASSWORD",
   "mapping1": "MESSAGE-TABLE-NAME",
   "mapping2": "USER-INFO-TABLE-NAME",
   "mapping3": "CHANNEL-INFO-TABLE-NAME",
