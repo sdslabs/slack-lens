@@ -25,7 +25,8 @@
             (render/mustache "slack.mustache" (get params "channel") cookie)
           (not (contains? params "channel"))
             (render/mustache "slack.mustache" "general" cookie)))
-        (render/render-template "home.mustache" {:id (:client_id (oauth/get-config))})))
+        (render/render-template "home.mustache" {:id (:client_id (oauth/get-config))
+                                                 :slack-name (:slack-name query/config)})))
 
   (GET*
     "/thread"
