@@ -6,11 +6,27 @@ A web interface is also implemented for viewing the messages .
 
 ## Prerequisites
 
+### Install Leiningen
+
+```bash
+curl -s https://raw.githubusercontent.com/technomancy/leiningen/2.8.1/bin/lein > lein
+chmod +x lein
+sudo mv lein /usr/bin/lein
+```
+
+### Install Java
+
+```bash
+# Important
+# Install only java 8 as leiningen might not be compatible with later versions
+sudo apt install openjdk-8-jdk
+```
+
 #### Slack API setup
 
 __Note:__ Only admin of slack workspace is authorised to get API token.
 
-* Goto [Legacy Token.](https://api.slack.com/custom-integrations/legacy-tokens") Copy the 'token' that starts with `xoxp`.
+* Goto [Legacy Token.](https://api.slack.com/custom-integrations/legacy-tokens) Copy the 'token' that starts with `xoxp`.
 * Goto [API setup](https://api.slack.com/apps "Slack API: Applications")
 * Create app for required workspace.
 * Get 'client id' and 'client secret'
